@@ -88,13 +88,11 @@ module.exports = function(Polyglot) {
       this.polyInterface.removeNoticesAll();
     }
   };
-
   // Required so that the interface can find this Node class using the nodeDefId
   Controller.nodeDefId = nodeDefId;
 
   return Controller;
 };
-
 
 // Those are the standard properties of every nodes:
 // this.id              - Nodedef ID
