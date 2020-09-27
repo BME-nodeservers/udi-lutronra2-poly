@@ -18,8 +18,9 @@ const lock = new AsyncLock({ timeout: 500 });
 // Those are the node definitions that our nodeserver uses.
 // You will need to edit those files.
 const ControllerNode = require('./Nodes/ControllerNode.js')(Polyglot);
-const MyNode = require('./Nodes/MyNode.js')(Polyglot);
+// const MyNode = require('./Nodes/MyNode.js')(Polyglot);
 const MainRepeaterNode = require('./Nodes/MainRepeaterNode.js')(Polyglot);
+const MaestroDimmerNode = require('./Nodes/MaestroDimmerNode.js')(Polyglot);
 
 const typedParams = [
   { name: 'repeaters', title: 'Lutron Repeaters / Bridges', isList: true, 
@@ -50,7 +51,7 @@ const typedParams = [
 
 logger.info('Starting Lutron Node Server');
 
-const poly = new Polyglot.Interface([ControllerNode, MyNode, MainRepeaterNode]);
+const poly = new Polyglot.Interface([ControllerNode, MainRepeaterNode, MaestroDimmerNode]);
 
 poly.on('mqttConnected', function() {
   logger.info('MQTT Connection started');
@@ -263,9 +264,9 @@ function trapUncaughExceptions() {
   });
 }
 
-function useCloud() {
-  return process.env.MQTTENDPOINT && process.env.STAGE;
-}
+// function useCloud() {
+//   return process.env.MQTTENDPOINT && process.env.STAGE;
+// }
 
 // Starts the NodeServer!
 poly.start();

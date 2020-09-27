@@ -15,7 +15,8 @@ module.exports = function(Polyglot) {
 
   // In this example, we also need to have our custom node because we create
   // nodes from this controller. See onCreateNew
-  const MyNode = require('./MyNode.js')(Polyglot);
+  // const MyNode = require('./MyNode.js')(Polyglot);
+  // const MaestroDimmerNode = require('./MaestroDimmerNode.js')(Polyglot);
 
   class Controller extends Polyglot.Node {
     // polyInterface: handle to the interface
@@ -28,7 +29,7 @@ module.exports = function(Polyglot) {
       // Commands that this controller node can handle.
       // Should match the 'accepts' section of the nodedef.
       this.commands = {
-        CREATE_NEW: this.onCreateNew,
+        // CREATE_NEW: this.onCreateNew,
         DISCOVER: this.onDiscover,
         UPDATE_PROFILE: this.onUpdateProfile,
         REMOVE_NOTICES: this.onRemoveNotices,
@@ -47,31 +48,31 @@ module.exports = function(Polyglot) {
     // Creates a new node using MyNode class, using a sequence number.
     // It needs to be an async function because we use the
     // this.polyInterface.addNode async function
-    async onCreateNew() {
-      const prefix = 'node';
-      const nodes = this.polyInterface.getNodes();
+    // async onCreateNew() {
+    //   const prefix = 'node';
+    //   const nodes = this.polyInterface.getNodes();
 
-      // Finds the first available address and creates a node.
-      for (let seq = 0; seq < 999; seq++) {
-        // address will be <prefix><seq>
-        const address = prefix + seq.toString().padStart(3, '0');
+    //   // Finds the first available address and creates a node.
+    //   for (let seq = 0; seq < 999; seq++) {
+    //     // address will be <prefix><seq>
+    //     const address = prefix + seq.toString().padStart(3, '0');
 
-        if (!nodes[address]) {
-          // ISY Address will be n<profileNum>_<prefix><seq>
-          // name will be <prefix><seq>
-          try {
-            const result = await this.polyInterface.addNode(
-              new MyNode(this.polyInterface, this.address, address, address)
-            );
+    //     if (!nodes[address]) {
+    //       // ISY Address will be n<profileNum>_<prefix><seq>
+    //       // name will be <prefix><seq>
+    //       try {
+    //         const result = await this.polyInterface.addNode(
+    //           new MyNode(this.polyInterface, this.address, address, address)
+    //         );
 
-            logger.info('Add node worked: %s', result);
-          } catch (err) {
-            logger.errorStack(err, 'Add node failed:');
-          }
-          break;
-        }
-      }
-    }
+    //         logger.info('Add node worked: %s', result);
+    //       } catch (err) {
+    //         logger.errorStack(err, 'Add node failed:');
+    //       }
+    //       break;
+    //     }
+    //   }
+    // }
 
     // Here you could discover devices from a 3rd party API
     onDiscover() {

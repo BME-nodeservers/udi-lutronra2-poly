@@ -38,4 +38,24 @@
     </cmds>
   </nodedef>
 
+  <!-- Virtual node - dimmer -->
+  <nodedef id="MAESTRO_DIMMER" nls="MD">
+    <sts>
+      <st id="ST" editor="PERCENT"/>
+    </sts>
+    <cmds>
+      <sends>
+        <cmd id="DON"/>
+        <cmd id="DOF"/>
+      </sends>
+      <accepts>
+        <cmd id="DON">
+          <p id="" editor="PERCENT" optional="T"/>
+        </cmd>
+        <cmd id="DOF"/>
+        <cmd id="QUERY"/>
+      </accepts>
+    </cmds>
+  </nodedef>
+
 </nodeDefs>
