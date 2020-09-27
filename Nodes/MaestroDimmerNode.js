@@ -1,9 +1,7 @@
 'use strict';
 
-let RadioRa2 = require('../lib/radiora2');
-const EventEmitter = require('events').EventEmitter;
-const util = require('util');
-
+const EventEmitter = require('events');
+  
 // This is an example NodeServer Node definition.
 // You need one per nodedefs.
 
@@ -13,8 +11,7 @@ const nodeDefId = 'MAESTRO_DIMMER';
 module.exports = function(Polyglot) {
 // Utility function provided to facilitate logging.
   const logger = Polyglot.logger;
-  // var radiora2 = new RadioRa2();
-  var radiora2 = new RadioRa2();
+  
 
   // This is your custom Node class
   class MaestroDimmerNode extends Polyglot.Node {
@@ -22,10 +19,11 @@ module.exports = function(Polyglot) {
       super(nodeDefId, polyInterface, primary, address, name);     
 
       this.hint = '0x01020900'; // Example for a Dimmer switch
-
+      
       this.commands = {
         DON: this.onDON,
         DOF: this.onDOF,
+
         // You can use the query function from the base class directly
         QUERY: this.query,
       };
@@ -34,17 +32,18 @@ module.exports = function(Polyglot) {
         ST: {value: '0', uom: 51},
       };
 
-      
+      var obj = new EventEmitter();
+
     }
 
     onDON(message) {
-      logger.info('DON (%s): %s',
-        this.address,
-        message.value ? message.value : 'No value');
+      // logger.info('DON (%s): %s',
+      //   this.address,
+      //   message.value ? message.value : 'No value');
 
       // setDrivers accepts string or number (message.value is a string)
       this.setDriver('ST', message.value ? message.value : '100');
-      radiora2.emit('debug', "data from Maestro: DON");
+      obj.emit('DON', message);
     }
 
     onDOF() {
@@ -54,21 +53,11 @@ module.exports = function(Polyglot) {
 
   };
 
-  radiora2.on('debug', function(data) {
-    logger.info("data from the Maestro Node " + data);
-  }.bind(this));
-
-  // radiora2.on('debug', function(data) {
-  //   logger.info("data from the Maestro Node " + data);
-  // }.bind(this));
-
   // Required so that the interface can find this Node class using the nodeDefId
   MaestroDimmerNode.nodeDefId = nodeDefId;
 
   return MaestroDimmerNode;
 };
-
-
 
 
 // Those are the standard properties of every nodes:

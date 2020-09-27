@@ -14,25 +14,27 @@ const util = require('util');
 const nodeDefId = 'CONTROLLER';
 
 module.exports = function(Polyglot) {
-  // Utility function provided to facilitate logging.
   const logger = Polyglot.logger;
-
-  // In this example, we also need to have our custom node because we create
-  // nodes from this controller. See onCreateNew
-  // const MyNode = require('./MyNode.js')(Polyglot);
   const MaestroDimmerNode = require('./MaestroDimmerNode.js')(Polyglot);
-  // var dimmer = require('./MaestroDimmerNode.js')(emitCommands);
+  const DimmerNode = require('./MaestroDimmerNode.js');
 
   class Controller extends Polyglot.Node {
-    // polyInterface: handle to the interface
-    // address: Your node address, withouth the leading 'n999_'
-    // primary: Same as address, if the node is a primary node
-    // name: Your node name
     constructor(polyInterface, primary, address, name) {
       super(nodeDefId, polyInterface, primary, address, name);
 
-      // Commands that this controller node can handle.
-      // Should match the 'accepts' section of the nodedef.
+      // Works but is multiple messages -- too much
+      // polyInterface.on('messageReceived', function(data) {
+      //   if (!data['config']) {
+      //     logger.info("======TEST=======");
+      //     logger.debug('Repeater Message Received: %o', data);
+          
+      //   }
+      // });
+      var dimmerNode = new DimmerNode();
+      dimmerNode.on('DON', function(data) {
+        logger.info('Node Data ' + data);
+      });
+
       this.commands = {
         CREATE_NEW: this.onCreateNew,
         DISCOVER: this.onDiscover,
@@ -41,8 +43,6 @@ module.exports = function(Polyglot) {
         QUERY: this.query,
       };
 
-      // Status that this controller node has.
-      // Should match the 'sts' section of the nodedef.
       this.drivers = {
         ST: { value: '1', uom: 2 }, // uom 2 = Boolean. '1' is True.
       };
@@ -51,7 +51,6 @@ module.exports = function(Polyglot) {
       
       this.getDevices();
       this.repeaterSetup();
-
     }
 
     repeaterSetup() {
@@ -116,7 +115,7 @@ module.exports = function(Polyglot) {
 
     async createDevice(intId, devName) {
       const prefix = 'id';
-      var _address = prefix + intId;
+      var _address = this.address + prefix + intId;
       var _devName = devName;
       // const nodes = this.polyInterface.getNodes();
 
@@ -131,35 +130,6 @@ module.exports = function(Polyglot) {
         logger.errorStack(err, 'Add node failed:');
       }
     }
-
-    // Creates a new node using MyNode class, using a sequence number.
-    // It needs to be an async function because we use the
-    // this.polyInterface.addNode async function
-    // async onCreateNew() {
-    //   const prefix = 'node';
-    //   const nodes = this.polyInterface.getNodes();
-
-    //   // Finds the first available address and creates a node.
-    //   for (let seq = 0; seq < 999; seq++) {
-    //     // address will be <prefix><seq>
-    //     const address = prefix + seq.toString().padStart(3, '0');
-
-    //     if (!nodes[address]) {
-    //       // ISY Address will be n<profileNum>_<prefix><seq>
-    //       // name will be <prefix><seq>
-    //       try {
-    //         const result = await this.polyInterface.addNode(
-    //           new MyNode(this.polyInterface, this.address, address, address)
-    //         );
-
-    //         logger.info('Add node worked: %s', result);
-    //       } catch (err) {
-    //         logger.errorStack(err, 'Add node failed:');
-    //       }
-    //       break;
-    //     }
-    //   }
-    // }
 
     // Here you could discover devices from a 3rd party API
     onDiscover() {
@@ -179,106 +149,96 @@ module.exports = function(Polyglot) {
     lutronPrint(data) {
       logger.info("TESt ========== " + data);
     }
-  // };
 
-  // function LutronConnect(host, username, password) {
-  // LutronConnect(host, username, password) {
-  LutronConnect(host, username, password) {
+    LutronConnect(host, username, password) {
+      const prefix = "id";
+      var radiora2 = new RadioRa2();
 
-    // Get My nodes
-    const prefix = "id";
+      logger.info("Attempting Lutron Connection");
 
-    logger.info("Attempting Lutron Connection");
-    logger.info("Passed Host: " + host);
+      radiora2.on("messageReceived", function (data) {
+        logger.info("LUTRON " + data);
+      }.bind(this));
 
-    var radiora2 = new RadioRa2();
+      radiora2.on("loggedIn", function() {
+        logger.info("Connected to Lutron");
+      }.bind(this));
 
-    radiora2.on("messageReceived", function (data) {
-      logger.info("LUTRON " + data);
-    }.bind(this));
+      radiora2.on("debug", function(data) {
+        logger.info(data);
+      }.bind(this));
 
-    // radiora2.connect(host, username, password);
+      radiora2.on("info", function(data) {
+        logger.info(data);
+      }.bind(this));
 
-    radiora2.on("loggedIn", function() {
-      logger.info("Connected to Lutron");
-    }.bind(this));
+      radiora2.on("warn", function(data) {
+        logger.info(data);
+      }.bind(this));
 
-    radiora2.on("debug", function(data) {
-      logger.info(data);
-    }.bind(this));
+      radiora2.on("error", function(data) {
+        logger.info(data);
+      }.bind(this));
 
-    radiora2.on("info", function(data) {
-      logger.info(data);
-    }.bind(this));
+      radiora2.on("on", function(data) {
+        logger.info(data);
+        this.lutronPrint(data);
 
-    radiora2.on("warn", function(data) {
-      logger.info(data);
-    }.bind(this));
+      }.bind(this));
 
-    radiora2.on("error", function(data) {
-      logger.info(data);
-    }.bind(this));
+      radiora2.on("off", function(data) {
+        logger.info(data);
+      }.bind(this));
 
-    radiora2.on("on", function(data) {
-      logger.info(data);
-      this.lutronPrint(data);
+      radiora2.on("level", function(data) {
+        logger.info(data);
+      }.bind(this));
 
-    }.bind(this));
+      radiora2.on("buttonPress", function(data) {
+        logger.info(data);
+      }.bind(this));
 
-    radiora2.on("off", function(data) {
-      logger.info(data);
-    }.bind(this));
+      radiora2.on("buttonReleased", function(data) {
+        logger.info(data);
+      }.bind(this));
 
-    radiora2.on("level", function(data) {
-      logger.info(data);
-    }.bind(this));
+      radiora2.on("buttonHold", function(data) {
+        logger.info(data);
+      }.bind(this));
 
-    radiora2.on("buttonPress", function(data) {
-      logger.info(data);
-    }.bind(this));
+      radiora2.on("keypadbuttonLEDOn", function(data) {
+        logger.info(data);
+      }.bind(this));
 
-    radiora2.on("buttonReleased", function(data) {
-      logger.info(data);
-    }.bind(this));
+      radiora2.on("keypadbuttonLEDOff", function(data) {
+        logger.info(data);
+      }.bind(this));
 
-    radiora2.on("buttonHold", function(data) {
-      logger.info(data);
-    }.bind(this));
+      radiora2.on("groupOccupied", function(data) {
+        logger.info(data);
+      }.bind(this));
 
-    radiora2.on("keypadbuttonLEDOn", function(data) {
-      logger.info(data);
-    }.bind(this));
+      radiora2.on("groupUnoccupied", function(data) {
+        logger.info(data);
+      }.bind(this));
 
-    radiora2.on("keypadbuttonLEDOff", function(data) {
-      logger.info(data);
-    }.bind(this));
+      radiora2.on("groupUnknown", function(data) {
+        logger.info(data);
+      }.bind(this));
 
-    radiora2.on("groupOccupied", function(data) {
-      logger.info(data);
-    }.bind(this));
+      radiora2.connect(host, username, password);
 
-    radiora2.on("groupUnoccupied", function(data) {
-      logger.info(data);
-    }.bind(this));
-
-    radiora2.on("groupUnknown", function(data) {
-      logger.info(data);
-    }.bind(this));
-
-    radiora2.connect(host, username, password);
-
-
-    return;
-  }
+      return;
+    }
 
 };
-
 
   // Required so that the interface can find this Node class using the nodeDefId
   Controller.nodeDefId = nodeDefId;
 
   return Controller;
 };
+
 
 
 // Those are the standard properties of every nodes:

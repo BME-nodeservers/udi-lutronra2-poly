@@ -38,7 +38,7 @@
     </cmds>
   </nodedef>
 
-  <!-- Virtual node - dimmer -->
+  <!-- Maestro Dimmer node - dimmer -->
   <nodedef id="MAESTRO_DIMMER" nls="MD">
     <sts>
       <st id="ST" editor="PERCENT"/>

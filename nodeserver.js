@@ -90,7 +90,6 @@ poly.on('config', function(config) {
       if (Object.keys(config.typedCustomData).length > 0) {
         callAsync(CreateLutronControllers());
       }
-      
     }
 
     if (config.newParamsDetected) {
@@ -99,29 +98,10 @@ poly.on('config', function(config) {
   } 
 });
 
-// User just went through oAuth authorization. Available with PGC only.
-// poly.on('oauth', function(oAuth) {
-//   logger.info('Received OAuth code');
-//   // oAuth object should contain:
-//   // {
-//   //   code: "<the authorization code to use to get tokens>"
-//   //   state: "<the state worker you appended to the url>"
-//   // }
-//   // Use it to get access and refresh tokens
-// });
-
 // This is triggered every x seconds. Frequency is configured in the UI.
 poly.on('poll', function(longPoll) {
   callAsync(doPoll(longPoll));
 });
-
-// poly.on('oauth', function(oaMessage) {
-//   // oaMessage.code: Authorization code received after authorization
-//   // oaMessage.state: This must be the worker ID.
-
-//   logger.info('Received oAuth message %o', oaMessage);
-//   // From here, we need to process the authorization token
-// });
 
 // Received a 'stop' message from Polyglot. This NodeServer is shutting down
 poly.on('stop', async function() {
@@ -152,7 +132,7 @@ poly.on('mqttEnd', function() {
 poly.on('messageReceived', function(message) {
   // Only display messages other than config
   if (!message['config']) {
-    logger.debug('Message Received: %o', message);
+    // logger.debug('Message Received: %o', message);
   }
 });
 
