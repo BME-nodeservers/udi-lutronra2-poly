@@ -4,6 +4,9 @@ let RadioRa2 = require('../lib/radiora2');
 const EventEmitter = require('events').EventEmitter;
 const util = require('util');
 
+var lutronEvents = require('../lib/lutronEvents.js');
+var lutronEmitter = lutronEvents.lutronEmitter;
+
 // The controller node is a regular ISY node. It must be the first node created
 // by the node server. It has an ST status showing the nodeserver status, and
 // optionally node statuses. It usually has a few commands on the node to
@@ -16,23 +19,21 @@ const nodeDefId = 'CONTROLLER';
 module.exports = function(Polyglot) {
   const logger = Polyglot.logger;
   const MaestroDimmerNode = require('./MaestroDimmerNode.js')(Polyglot);
-  const DimmerNode = require('./MaestroDimmerNode.js');
 
   class Controller extends Polyglot.Node {
     constructor(polyInterface, primary, address, name) {
       super(nodeDefId, polyInterface, primary, address, name);
 
       // Works but is multiple messages -- too much
-      // polyInterface.on('messageReceived', function(data) {
-      //   if (!data['config']) {
-      //     logger.info("======TEST=======");
-      //     logger.debug('Repeater Message Received: %o', data);
-          
-      //   }
-      // });
-      var dimmerNode = new DimmerNode();
-      dimmerNode.on('DON', function(data) {
-        logger.info('Node Data ' + data);
+      polyInterface.on('messageReceived', function(data) {
+        if (!data['config']) {
+          if (data['node']) {
+            logger.debug('Repeater Message Received: %o', data);
+            for (var key of Object.keys(data)) {
+              logger.info(key);
+            };
+          };
+        };
       });
 
       this.commands = {
@@ -51,6 +52,11 @@ module.exports = function(Polyglot) {
       
       this.getDevices();
       this.repeaterSetup();
+
+      lutronEmitter.on('ST', function(message) {
+        logger.info('Node Message: ' + message);
+      });
+
     }
 
     repeaterSetup() {
@@ -108,7 +114,6 @@ module.exports = function(Polyglot) {
               this.createDevice(key.intId, key.name);
             }
           }
-          
         }
       }
     }
@@ -121,7 +126,6 @@ module.exports = function(Polyglot) {
 
       try {
         const result = await this.polyInterface.addNode(
-          // new MyNode(this.polyInterface, this.address, _address, _devName)
           new MaestroDimmerNode(this.polyInterface, this.address, _address, _devName)
         );
 
@@ -182,8 +186,6 @@ module.exports = function(Polyglot) {
 
       radiora2.on("on", function(data) {
         logger.info(data);
-        this.lutronPrint(data);
-
       }.bind(this));
 
       radiora2.on("off", function(data) {

@@ -1,6 +1,7 @@
 'use strict';
 
-const EventEmitter = require('events');
+var eventEmitter = require('../lib/lutronEvents.js');
+var lutronEmitter = eventEmitter.lutronEmitter;
   
 // This is an example NodeServer Node definition.
 // You need one per nodedefs.
@@ -32,8 +33,6 @@ module.exports = function(Polyglot) {
         ST: {value: '0', uom: 51},
       };
 
-      var obj = new EventEmitter();
-
     }
 
     onDON(message) {
@@ -43,14 +42,14 @@ module.exports = function(Polyglot) {
 
       // setDrivers accepts string or number (message.value is a string)
       this.setDriver('ST', message.value ? message.value : '100');
-      obj.emit('DON', message);
+      lutronEmitter.emit('ST', message.value ? message.value : '100');
     }
 
     onDOF() {
       logger.info('DOF (%s)', this.address);
       this.setDriver('ST', '0');
     }
-
+    
   };
 
   // Required so that the interface can find this Node class using the nodeDefId
