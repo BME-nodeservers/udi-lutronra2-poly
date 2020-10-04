@@ -5,20 +5,11 @@ trapUncaughExceptions();
 const fs = require('fs');
 const markdown = require('markdown').markdown; // For Polyglot-V2 only
 const AsyncLock = require('async-lock');
-
-// Loads the appropriate Polyglot interface module.
 const Polyglot = require('polyinterface');
-
-// If your nodeserver only supports the cloud, use pgc_interface only.
-
-// Use logger.<debug|info|warn|error>()
 const logger = Polyglot.logger;
 const lock = new AsyncLock({ timeout: 500 });
 
-// Those are the node definitions that our nodeserver uses.
-// You will need to edit those files.
 const ControllerNode = require('./Nodes/ControllerNode.js')(Polyglot);
-// const MyNode = require('./Nodes/MyNode.js')(Polyglot);
 const MainRepeaterNode = require('./Nodes/MainRepeaterNode.js')(Polyglot);
 const MaestroDimmerNode = require('./Nodes/MaestroDimmerNode.js')(Polyglot);
 
@@ -61,22 +52,12 @@ poly.on('config', function(config) {
   const nodesCount = Object.keys(config.nodes).length;
   logger.info('Config received has %d nodes', nodesCount);
 
-  // If this is the first config after a node server restart
   if (config.isInitialConfig) {
     poly.removeNoticesAll();
-
-    // Sets the configuration fields in the UI / Available in Polyglot V2 only
     poly.saveTypedParams(typedParams);
-
     const md = fs.readFileSync('./configdoc.md');
     poly.setCustomParamsDoc(markdown.toHTML(md.toString()));
 
-    // Sets the configuration fields in the UI
-    // initializeCustomParams(config.customParams);
-
-    // If we have no nodes yet, we add the first node: a controller node which
-    // holds the node server status and control buttons The first device to
-    // create should always be the nodeserver controller.
     if (!nodesCount) {
       try {
         logger.info('Auto-creating controller');
@@ -98,12 +79,10 @@ poly.on('config', function(config) {
   } 
 });
 
-// This is triggered every x seconds. Frequency is configured in the UI.
 poly.on('poll', function(longPoll) {
   callAsync(doPoll(longPoll));
 });
 
-// Received a 'stop' message from Polyglot. This NodeServer is shutting down
 poly.on('stop', async function() {
   logger.info('Graceful stop');
 
@@ -115,7 +94,6 @@ poly.on('stop', async function() {
   poly.stop();
 });
 
-// Received a 'delete' message from Polyglot. This NodeServer is being removed
 poly.on('delete', function() {
   logger.info('Nodeserver is being deleted');
 
@@ -123,9 +101,8 @@ poly.on('delete', function() {
   poly.stop();
 });
 
-// MQTT connection ended
 poly.on('mqttEnd', function() {
-  logger.info('MQTT connection ended.'); // May be graceful or not.
+  logger.info('MQTT connection ended.');
 });
 
 // Triggered for every message received from polyglot.
@@ -200,31 +177,6 @@ async function CreateLutronControllers() {
     }
 }
 
-// Sets the custom params as we want them. Keeps existing params values.
-// function initializeCustomParams(currentParams) {
-//   const defaultParamKeys = Object.keys(defaultParams);
-//   const currentParamKeys = Object.keys(currentParams);
-
-//   // Get orphan keys from either currentParams or defaultParams
-//   const differentKeys = defaultParamKeys.concat(currentParamKeys)
-//   .filter(function(key) {
-//     return !(key in defaultParams) || !(key in currentParams);
-//   });
-
-//   if (differentKeys.length) {
-//     let customParams = {};
-
-//     // Only keeps params that exists in defaultParams
-//     // Sets the params to the existing value, or default value.
-//     defaultParamKeys.forEach(function(key) {
-//       customParams[key] = currentParams[key] ?
-//         currentParams[key] : defaultParams[key];
-//     });
-
-//     poly.saveCustomParams(customParams);
-//   }
-// }
-
 // Call Async function from a non-asynch function without waiting for result,
 // and log the error if it fails
 function callAsync(promise) {
@@ -243,10 +195,6 @@ function trapUncaughExceptions() {
     logger.error(`uncaughtException REPORT THIS!: ${err.stack}`);
   });
 }
-
-// function useCloud() {
-//   return process.env.MQTTENDPOINT && process.env.STAGE;
-// }
 
 // Starts the NodeServer!
 poly.start();
