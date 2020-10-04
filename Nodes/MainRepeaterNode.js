@@ -6,6 +6,7 @@ const util = require('util');
 
 var lutronEvents = require('../lib/lutronEvents.js');
 var lutronEmitter = lutronEvents.lutronEmitter;
+var radiora2 = new RadioRa2();
 
 // The controller node is a regular ISY node. It must be the first node created
 // by the node server. It has an ST status showing the nodeserver status, and
@@ -25,16 +26,16 @@ module.exports = function(Polyglot) {
       super(nodeDefId, polyInterface, primary, address, name);
 
       // Works but is multiple messages -- too much
-      polyInterface.on('messageReceived', function(data) {
-        if (!data['config']) {
-          if (data['node']) {
-            logger.debug('Repeater Message Received: %o', data);
-            for (var key of Object.keys(data)) {
-              logger.info(key);
-            };
-          };
-        };
-      });
+      // polyInterface.on('messageReceived', function(data) {
+      //   if (!data['config']) {
+      //     if (data['node']) {
+      //       logger.debug('Repeater Message Received: %o', data);
+      //       for (var key of Object.keys(data)) {
+      //         logger.info(key);
+      //       };
+      //     };
+      //   };
+      // });
 
       this.commands = {
         CREATE_NEW: this.onCreateNew,
@@ -53,9 +54,9 @@ module.exports = function(Polyglot) {
       this.getDevices();
       this.repeaterSetup();
 
-      lutronEmitter.on('ST', function(message) {
-        logger.info('Node Message: ' + message);
-      });
+      // lutronEmitter.on('on', function(message) {
+      //   logger.info('Node Message: ' + message);
+      // });
 
     }
 
@@ -119,7 +120,7 @@ module.exports = function(Polyglot) {
     }
 
     async createDevice(intId, devName) {
-      const prefix = 'id';
+      const prefix = 'id_';
       var _address = this.address + prefix + intId;
       var _devName = devName;
       // const nodes = this.polyInterface.getNodes();
@@ -156,16 +157,22 @@ module.exports = function(Polyglot) {
 
     LutronConnect(host, username, password) {
       const prefix = "id";
-      var radiora2 = new RadioRa2();
+      // var radiora2 = new RadioRa2();
 
       logger.info("Attempting Lutron Connection");
+      radiora2.connect(host, username, password);
 
+      // Begin Listeners
       radiora2.on("messageReceived", function (data) {
         logger.info("LUTRON " + data);
       }.bind(this));
 
       radiora2.on("loggedIn", function() {
         logger.info("Connected to Lutron");
+      }.bind(this));
+
+      radiora2.on("sent", function(data) {
+        logger.info("Message Sent" + data);
       }.bind(this));
 
       radiora2.on("debug", function(data) {
@@ -228,12 +235,32 @@ module.exports = function(Polyglot) {
         logger.info(data);
       }.bind(this));
 
-      radiora2.connect(host, username, password);
+      // radiora2.connect(host, username, password);
+      
+      lutronEmitter.on('on', function(id) {
+        logger.info('Node On Message: ' + id);
+        // radiora2.setSwitchOn(id);
+        radiora2.setSwitchOn(id);
+      });
+
+      lutronEmitter.on('off', function(id) {
+        logger.info('Node Off Message: ' + id);
+        radiora2.setSwitchOff(id);
+      });
 
       return;
     }
 
 };
+
+// lutronEmitter.on('on', function(message) {
+//   logger.info('Node Message: ' + message);
+//   // radiora2.setSwitch(id, on)
+// });
+
+lutronEmitter.on('level', function(message) {
+  logger.info('Node Level Message: ' + message);
+});
 
   // Required so that the interface can find this Node class using the nodeDefId
   Controller.nodeDefId = nodeDefId;

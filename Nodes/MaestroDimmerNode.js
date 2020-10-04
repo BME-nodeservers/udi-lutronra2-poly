@@ -2,17 +2,17 @@
 
 var eventEmitter = require('../lib/lutronEvents.js');
 var lutronEmitter = eventEmitter.lutronEmitter;
-  
+
 // This is an example NodeServer Node definition.
 // You need one per nodedefs.
 
 // nodeDefId must match the nodedef id in your nodedef
 const nodeDefId = 'MAESTRO_DIMMER';
+var lutronId = '';
 
 module.exports = function(Polyglot) {
 // Utility function provided to facilitate logging.
   const logger = Polyglot.logger;
-  
 
   // This is your custom Node class
   class MaestroDimmerNode extends Polyglot.Node {
@@ -32,7 +32,10 @@ module.exports = function(Polyglot) {
       this.drivers = {
         ST: {value: '0', uom: 51},
       };
-
+      
+      var id = this.address.split("_");
+      logger.info("Split ID: " + id);
+      lutronId = id[1];
     }
 
     onDON(message) {
@@ -42,12 +45,24 @@ module.exports = function(Polyglot) {
 
       // setDrivers accepts string or number (message.value is a string)
       this.setDriver('ST', message.value ? message.value : '100');
-      lutronEmitter.emit('ST', message.value ? message.value : '100');
+      
+      if (!message.value) {
+        // lutronEmitter.emit('on', this.address + " " + "100");
+        lutronEmitter.emit('on', lutronId);
+      }
+      else {
+        logger.info("Logger with Leve: " + this.address + " " + message.value);
+        lutronEmitter.emit('level', this.address + " " + message.value);
+      }
+      
+      
+        // this.address + ":" + message.value ? message.value : '100');
     }
 
     onDOF() {
       logger.info('DOF (%s)', this.address);
       this.setDriver('ST', '0');
+      lutronEmitter.emit('off', lutronId);
     }
     
   };
