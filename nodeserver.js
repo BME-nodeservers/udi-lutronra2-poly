@@ -32,8 +32,8 @@ const typedParams = [
           desc: 'Name as it will appear in ISY'},
         {name: 'intId', title: 'Integration ID', type: 'NUMBER', 
           desc: 'Enter the device ID found in the Integration Report'},
-        // {name: 'deviceType', title: 'Device Type', type: 'NUMBER',
-        //   desc: 'Switch = X, Dimmer = Y, Occupancy = Z'},
+        {name: 'devType', title: 'Device Type', type: 'NUMBER',
+          desc: 'Dimmer = Y, Switch = X, Occupancy = Z'},
       ]
     },
   ]
