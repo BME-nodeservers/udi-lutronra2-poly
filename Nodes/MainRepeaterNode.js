@@ -199,20 +199,32 @@ module.exports = function(Polyglot) {
         // logger.info(id);
         var nodeAddr = this.address + "id_" + id;
         var node = this.polyInterface.getNode(nodeAddr);
-        logger.info('Received for Node: ' + nodeAddr);
-        node.setDriver('ST', '100');
+        if (node) {
+          logger.info('Received for Node: ' + nodeAddr);
+          node.setDriver('ST', '100');
+        }
+        
       }.bind(this));
 
       radiora2.on("off", function(id) {
         // logger.info(id);
         var nodeAddr = this.address + "id_" + id;
         var node = this.polyInterface.getNode(nodeAddr);
-        logger.info('Received for Node: ' + node);
-        node.setDriver('ST', '0');
+        if (node) {
+          logger.info('Received for Node: ' + nodeAddr);
+          node.setDriver('ST', '0');
+        }
+        
       }.bind(this));
 
       radiora2.on("level", function(id, level) {
-        logger.info("ID: " + id + " Level: " + level);
+        // logger.info("ID: " + id + " Level: " + level);
+        var nodeAddr = this.address + "id_" + id;
+        var node = this.polyInterface.getNode(nodeAddr);
+        if (node) {
+          logger.info('Received for Node: ' + nodeAddr);
+          node.setDriver('ST', Math.round(level));
+        }
       }.bind(this));
 
       radiora2.on("buttonPress", function(data) {
@@ -251,13 +263,19 @@ module.exports = function(Polyglot) {
       // Receive Events from ISY Admin Console
       lutronEmitter.on('on', function(id) {
         logger.info('Node On Message: ' + id);
+        radiora2.setSwitch(id, 100);
         // radiora2.setSwitchOn(id);
-        radiora2.setSwitchOn(id);
       });
 
       lutronEmitter.on('off', function(id) {
         logger.info('Node Off Message: ' + id);
-        radiora2.setSwitchOff(id);
+        radiora2.setSwitch(id, 0);
+        // radiora2.setSwitchOff(id);
+      });
+
+      lutronEmitter.on('level', function(id, level) {
+        logger.info('Node Level Message: ' + id + " Level:" + level);
+        radiora2.setDimmer(id, level);
       });
 
       // Connect to Main Repeater

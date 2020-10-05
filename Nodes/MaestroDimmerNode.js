@@ -39,28 +39,19 @@ module.exports = function(Polyglot) {
     }
 
     onDON(message) {
-      // logger.info('DON (%s): %s',
-      //   this.address,
-      //   message.value ? message.value : 'No value');
-
       // setDrivers accepts string or number (message.value is a string)
       this.setDriver('ST', message.value ? message.value : '100');
       
       if (!message.value) {
-        // lutronEmitter.emit('on', this.address + " " + "100");
         lutronEmitter.emit('on', lutronId);
       }
       else {
-        logger.info("Logger with Leve: " + this.address + " " + message.value);
-        lutronEmitter.emit('level', this.address + " " + message.value);
-      }
-      
-      
-        // this.address + ":" + message.value ? message.value : '100');
+        lutronEmitter.emit('level', lutronId, message.value);
+      }      
     }
 
     onDOF() {
-      logger.info('DOF (%s)', this.address);
+      // logger.info('DOF (%s)', this.address);
       this.setDriver('ST', '0');
       lutronEmitter.emit('off', lutronId);
     }
