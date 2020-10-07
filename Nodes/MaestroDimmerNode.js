@@ -17,10 +17,10 @@ module.exports = function(Polyglot) {
   // This is your custom Node class
   class MaestroDimmerNode extends Polyglot.Node {
     constructor(polyInterface, primary, address, name) {
-      super(nodeDefId, polyInterface, primary, address, name);     
+      super(nodeDefId, polyInterface, primary, address, name);
 
       this.hint = '0x01020900'; // Example for a Dimmer switch
-      
+
       this.commands = {
         DON: this.onDON,
         DOF: this.onDOF,
@@ -32,22 +32,21 @@ module.exports = function(Polyglot) {
       this.drivers = {
         ST: {value: '0', uom: 51},
       };
-      
-      var id = this.address.split("_");
-      logger.info("Split ID: " + id);
+
+      var id = this.address.split('_');
+      logger.info('Split ID: ' + id);
       lutronId = id[1];
     }
 
     onDON(message) {
       // setDrivers accepts string or number (message.value is a string)
       this.setDriver('ST', message.value ? message.value : '100');
-      
+
       if (!message.value) {
         lutronEmitter.emit('on', lutronId);
-      }
-      else {
+      } else {
         lutronEmitter.emit('level', lutronId, message.value);
-      }      
+      }
     }
 
     onDOF() {
@@ -55,7 +54,7 @@ module.exports = function(Polyglot) {
       this.setDriver('ST', '0');
       lutronEmitter.emit('off', lutronId);
     }
-    
+
   };
 
   // Required so that the interface can find this Node class using the nodeDefId

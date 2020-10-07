@@ -25,18 +25,6 @@ module.exports = function(Polyglot) {
     constructor(polyInterface, primary, address, name) {
       super(nodeDefId, polyInterface, primary, address, name);
 
-      // Works but is multiple messages -- too much
-      // polyInterface.on('messageReceived', function(data) {
-      //   if (!data['config']) {
-      //     if (data['node']) {
-      //       logger.debug('Repeater Message Received: %o', data);
-      //       for (var key of Object.keys(data)) {
-      //         logger.info(key);
-      //       };
-      //     };
-      //   };
-      // });
-
       this.commands = {
         CREATE_NEW: this.onCreateNew,
         DISCOVER: this.onDiscover,
@@ -50,13 +38,8 @@ module.exports = function(Polyglot) {
       };
 
       this.isController = true;
-      
       this.getDevices();
       this.repeaterSetup();
-
-      // lutronEmitter.on('on', function(message) {
-      //   logger.info('Node Message: ' + message);
-      // });
 
     }
 
@@ -72,7 +55,7 @@ module.exports = function(Polyglot) {
       const confKeys = Object.values(repeaters);
 
       for (var key of confKeys) {
-        var _ipJoin = key.ipAddress.toString().replace(/\./g, "");
+        var _ipJoin = key.ipAddress.toString().replace(/\./g, '');
         var _repeaterUID = _ipJoin.substring(_ipJoin.length - 3);
         var _address = 'lip' + _repeaterUID;
 
@@ -80,17 +63,14 @@ module.exports = function(Polyglot) {
           host = key.ipAddress;
           username = key.username;
           password = key.password;
-          type = "RadioRa2";
+          type = 'RadioRa2';
           try {
             this.LutronConnect(host, username, password);
-          } 
-          catch(err) {
-            logger.errorStack(err, "Connection to Main Repeater Failed");
+          } catch (err) {
+            logger.errorStack(err, 'Connection to Main Repeater Failed');
           }
         }
       }
-      // Disabled while testing configuration parameters
-      
     }
 
     getDevices() {
@@ -100,18 +80,18 @@ module.exports = function(Polyglot) {
       const confKeys = Object.values(repeaters);
 
       for (var key of confKeys) {
-        var _ipJoin = key.ipAddress.toString().replace(/\./g, "");
+        var _ipJoin = key.ipAddress.toString().replace(/\./g, '');
         var _repeaterUID = _ipJoin.substring(_ipJoin.length - 3);
         var _address = 'lip' + _repeaterUID;
 
         if (this.address === _address) {
           if (Object.values(key.devices).length > 0) {
             const devKeys = Object.values(key.devices);
-            logger.info("devs: " + devKeys);
+            logger.info('devs: ' + devKeys);
             for (var key of devKeys) {
-              logger.info("Dev Key name: " + key.name);
-              logger.info("Dev Key integrationID: " + key.intId);
-              logger.info("Dev Key deviceType: " + key.devType);
+              logger.info('Dev Key name: ' + key.name);
+              logger.info('Dev Key integrationID: ' + key.intId);
+              logger.info('Dev Key deviceType: ' + key.devType);
               this.createDevice(key.intId, key.devType, key.name);
             }
           }
@@ -124,11 +104,11 @@ module.exports = function(Polyglot) {
       var _address = this.address + prefix + intId;
       var _devName = devName;
       var _devType = devType;
-      // const nodes = this.polyInterface.getNodes();
 
       try {
         const result = await this.polyInterface.addNode(
-          new MaestroDimmerNode(this.polyInterface, this.address, _address, _devName)
+          new MaestroDimmerNode(this.polyInterface, this.address,
+            _address, _devName)
         );
 
         logger.info('Add node worked: %s', result);
@@ -153,73 +133,73 @@ module.exports = function(Polyglot) {
     }
 
     lutronPrint(data) {
-      logger.info("TESt ========== " + data);
+      logger.info('TESt ========== ' + data);
     }
 
     LutronConnect(host, username, password) {
       // const prefix = "id";
       // const nodes = this.polyInterface.getNodes();
-      
+
 
       // var radiora2 = new RadioRa2();
 
-      logger.info("Attempting Lutron Connection");
+      logger.info('Attempting Lutron Connection');
       // radiora2.connect(host, username, password);
 
       // Begin Listeners
-      radiora2.on("messageReceived", function (data) {
-        logger.info("LUTRON " + data);
-      }.bind(this));
+      radiora2.on('messageReceived', function(data) {
+        logger.info('LUTRON ' + data);
+      });
 
-      radiora2.on("loggedIn", function() {
-        logger.info("Connected to Lutron");
-      }.bind(this));
+      radiora2.on('loggedIn', function() {
+        logger.info('Connected to Lutron');
+      });
 
-      radiora2.on("sent", function(data) {
-        logger.info("Message Sent" + data);
-      }.bind(this));
+      radiora2.on('sent', function(data) {
+        logger.info('Message Sent' + data);
+      });
 
-      radiora2.on("debug", function(data) {
+      radiora2.on('debug', function(data) {
         logger.info(data);
-      }.bind(this));
+      });
 
-      radiora2.on("info", function(data) {
+      radiora2.on('info', function(data) {
         logger.info(data);
-      }.bind(this));
+      });
 
-      radiora2.on("warn", function(data) {
+      radiora2.on('warn', function(data) {
         logger.info(data);
-      }.bind(this));
+      });
 
-      radiora2.on("error", function(data) {
+      radiora2.on('error', function(data) {
         logger.info(data);
-      }.bind(this));
+      });
 
-      radiora2.on("on", function(id) {
+      radiora2.on('on', function(id) {
         // logger.info(id);
-        var nodeAddr = this.address + "id_" + id;
+        var nodeAddr = this.address + 'id_' + id;
         var node = this.polyInterface.getNode(nodeAddr);
         if (node) {
           logger.info('Received for Node: ' + nodeAddr);
           node.setDriver('ST', '100');
         }
-        
+
       }.bind(this));
 
-      radiora2.on("off", function(id) {
+      radiora2.on('off', function(id) {
         // logger.info(id);
-        var nodeAddr = this.address + "id_" + id;
+        var nodeAddr = this.address + 'id_' + id;
         var node = this.polyInterface.getNode(nodeAddr);
         if (node) {
           logger.info('Received for Node: ' + nodeAddr);
           node.setDriver('ST', '0');
         }
-        
+
       }.bind(this));
 
-      radiora2.on("level", function(id, level) {
+      radiora2.on('level', function(id, level) {
         // logger.info("ID: " + id + " Level: " + level);
-        var nodeAddr = this.address + "id_" + id;
+        var nodeAddr = this.address + 'id_' + id;
         var node = this.polyInterface.getNode(nodeAddr);
         if (node) {
           logger.info('Received for Node: ' + nodeAddr);
@@ -227,38 +207,38 @@ module.exports = function(Polyglot) {
         }
       }.bind(this));
 
-      radiora2.on("buttonPress", function(data) {
+      radiora2.on('buttonPress', function(data) {
         logger.info(data);
-      }.bind(this));
+      });
 
-      radiora2.on("buttonReleased", function(data) {
+      radiora2.on('buttonReleased', function(data) {
         logger.info(data);
-      }.bind(this));
+      });
 
-      radiora2.on("buttonHold", function(data) {
+      radiora2.on('buttonHold', function(data) {
         logger.info(data);
-      }.bind(this));
+      });
 
-      radiora2.on("keypadbuttonLEDOn", function(data) {
+      radiora2.on('keypadbuttonLEDOn', function(data) {
         logger.info(data);
-      }.bind(this));
+      });
 
-      radiora2.on("keypadbuttonLEDOff", function(data) {
+      radiora2.on('keypadbuttonLEDOff', function(data) {
         logger.info(data);
-      }.bind(this));
+      });
 
-      radiora2.on("groupOccupied", function(data) {
+      radiora2.on('groupOccupied', function(data) {
         logger.info(data);
-      }.bind(this));
+      });
 
-      radiora2.on("groupUnoccupied", function(data) {
+      radiora2.on('groupUnoccupied', function(data) {
         logger.info(data);
-      }.bind(this));
+      });
 
-      radiora2.on("groupUnknown", function(data) {
+      radiora2.on('groupUnknown', function(data) {
         logger.info(data);
-      }.bind(this));
-      
+      });
+
 
       // Receive Events from ISY Admin Console
       lutronEmitter.on('on', function(id) {
@@ -274,32 +254,31 @@ module.exports = function(Polyglot) {
       });
 
       lutronEmitter.on('level', function(id, level) {
-        logger.info('Node Level Message: ' + id + " Level:" + level);
+        logger.info('Node Level Message: ' + id + ' Level:' + level);
         radiora2.setDimmer(id, level);
       });
 
       // Connect to Main Repeater
       radiora2.connect(host, username, password);
-      return;
+      // return;
     }
 
-};
+  };
 
-// lutronEmitter.on('on', function(message) {
-//   logger.info('Node Message: ' + message);
-//   // radiora2.setSwitch(id, on)
-// });
+  // lutronEmitter.on('on', function(message) {
+  //   logger.info('Node Message: ' + message);
+  //   // radiora2.setSwitch(id, on)
+  // });
 
-lutronEmitter.on('level', function(message) {
-  logger.info('Node Level Message: ' + message);
-});
+  lutronEmitter.on('level', function(message) {
+    logger.info('Node Level Message: ' + message);
+  });
 
   // Required so that the interface can find this Node class using the nodeDefId
   Controller.nodeDefId = nodeDefId;
 
   return Controller;
 };
-
 
 
 // Those are the standard properties of every nodes:

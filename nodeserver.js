@@ -1,6 +1,6 @@
 'use strict';
 
-trapUncaughExceptions();
+trapUncaughtExceptions();
 
 const fs = require('fs');
 const markdown = require('markdown').markdown; // For Polyglot-V2 only
@@ -14,35 +14,36 @@ const MainRepeaterNode = require('./Nodes/MainRepeaterNode.js')(Polyglot);
 const MaestroDimmerNode = require('./Nodes/MaestroDimmerNode.js')(Polyglot);
 
 const typedParams = [
-  { name: 'repeaters', title: 'Lutron Repeaters / Bridges', isList: true, 
-  params: 
-  [
-    {name: 'name', title: 'Repeater Name', type: 'STRING', 
-      desc: 'Name as it will appear in ISY'},
-    {name: 'ipAddress', title: 'Repeater IP Address', type: 'STRING', 
-      desc: ''},
-    {name: 'username', title: 'Username', type: 'STRING',
-      desc: ''},
-    {name: 'password', title: 'Password', type: 'STRING',
-      desc: ''},
-    { name: 'devices', title: 'Lutron Devices', isList: true, 
-      params: 
-      [
-        {name: 'name', title: 'Device Name', type: 'STRING', 
-          desc: 'Name as it will appear in ISY'},
-        {name: 'intId', title: 'Integration ID', type: 'NUMBER', 
-          desc: 'Enter the device ID found in the Integration Report'},
-        {name: 'devType', title: 'Device Type', type: 'NUMBER',
-          desc: 'Dimmer = Y, Switch = X, Occupancy = Z'},
-      ]
-    },
-  ]
-  }
+  { name: 'repeaters', title: 'Lutron Repeaters / Bridges', isList: true,
+    params:
+    [
+      {name: 'name', title: 'Repeater Name', type: 'STRING',
+        desc: 'Name as it will appear in ISY'},
+      {name: 'ipAddress', title: 'Repeater IP Address', type: 'STRING',
+        desc: ''},
+      {name: 'username', title: 'Username', type: 'STRING',
+        desc: ''},
+      {name: 'password', title: 'Password', type: 'STRING',
+        desc: ''},
+      { name: 'devices', title: 'Lutron Devices', isList: true,
+        params:
+        [
+          {name: 'name', title: 'Device Name', type: 'STRING',
+            desc: 'Name as it will appear in ISY'},
+          {name: 'intId', title: 'Integration ID', type: 'NUMBER',
+            desc: 'Enter the device ID found in the Integration Report'},
+          {name: 'devType', title: 'Device Type', type: 'NUMBER',
+            desc: 'Dimmer = Y, Switch = X, Occupancy = Z'},
+        ],
+      },
+    ],
+  },
 ];
 
 logger.info('Starting Lutron Node Server');
 
-const poly = new Polyglot.Interface([ControllerNode, MainRepeaterNode, MaestroDimmerNode]);
+const poly = new Polyglot.Interface([ControllerNode,
+  MainRepeaterNode, MaestroDimmerNode]);
 
 poly.on('mqttConnected', function() {
   logger.info('MQTT Connection started');
@@ -62,12 +63,10 @@ poly.on('config', function(config) {
       try {
         logger.info('Auto-creating controller');
         callAsync(autoCreateController());
-      } 
-      catch(err) {
+      } catch (err) {
         logger.error('Error while auto-creating controller node:', err);
       }
-    } 
-    else { 
+    } else {
       if (Object.keys(config.typedCustomData).length > 0) {
         callAsync(CreateLutronControllers());
       }
@@ -76,7 +75,7 @@ poly.on('config', function(config) {
     if (config.newParamsDetected) {
       logger.info('New parameters detected');
     }
-  } 
+  }
 });
 
 poly.on('poll', function(longPoll) {
@@ -136,8 +135,7 @@ async function autoCreateController() {
     await poly.addNode(
       new ControllerNode(poly, 'controller', 'controller', 'Lutron')
     );
-  } 
-  catch (err) {
+  } catch (err) {
     logger.error('Error creating controller node');
   }
 
@@ -149,32 +147,32 @@ async function CreateLutronControllers() {
   const config = poly.getConfig();
 
   var configKeys = Object.keys(config.typedCustomData);
-    if (configKeys.length > 0) {
- 
-      const mrKeys = Object.values(config.typedCustomData['repeaters']);
-      if (mrKeys.length > 0) {
-        logger.info("Main Repeaters: " + mrKeys.length);
-        for (var key of mrKeys) {
-          logger.info("Repeater Name: " + key.name);
-          logger.info("Repeater IP: " + key.ipAddress);
-          logger.info("Repeater Username: " + key.username);
-          logger.info("Repeater Password: " + key.password);
+  if (configKeys.length > 0) {
 
-          var ipJoin = key.ipAddress.toString().replace(/\./g, "");
-          var repeaterUID = ipJoin.substring(ipJoin.length - 3);
-          logger.info("Repeater UID: " + repeaterUID);
-          var _address = 'lip' + repeaterUID;
+    const mrKeys = Object.values(config.typedCustomData['repeaters']);
+    if (mrKeys.length > 0) {
+      logger.info('Main Repeaters: ' + mrKeys.length);
+      for (var key of mrKeys) {
+        logger.info('Repeater Name: ' + key.name);
+        logger.info('Repeater IP: ' + key.ipAddress);
+        logger.info('Repeater Username: ' + key.username);
+        logger.info('Repeater Password: ' + key.password);
 
-          try {
-            await poly.addNode(
+        var ipJoin = key.ipAddress.toString().replace(/\./g, '');
+        var repeaterUID = ipJoin.substring(ipJoin.length - 3);
+        logger.info('Repeater UID: ' + repeaterUID);
+        var _address = 'lip' + repeaterUID;
+
+        try {
+          await poly.addNode(
               new MainRepeaterNode(poly, _address, _address, key.name)
-            );
-          } catch (err) {
-            logger.errorStack(err, 'Error creating controller node');
-          }
+          );
+        } catch (err) {
+          logger.errorStack(err, 'Error creating controller node');
         }
       }
     }
+  }
 }
 
 // Call Async function from a non-asynch function without waiting for result,
@@ -189,7 +187,7 @@ function callAsync(promise) {
   })();
 }
 
-function trapUncaughExceptions() {
+function trapUncaughtExceptions() {
   // If we get an uncaugthException...
   process.on('uncaughtException', function(err) {
     logger.error(`uncaughtException REPORT THIS!: ${err.stack}`);
