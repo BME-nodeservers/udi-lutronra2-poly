@@ -104,3 +104,7 @@ dist
 .tern-port
 
 _gsdata_/
+
+.idea/
+
+package-lock.json
