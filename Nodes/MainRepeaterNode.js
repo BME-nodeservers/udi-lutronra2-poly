@@ -20,6 +20,7 @@ const nodeDefId = 'CONTROLLER';
 module.exports = function(Polyglot) {
   const logger = Polyglot.logger;
   const MaestroDimmerNode = require('./MaestroDimmerNode.js')(Polyglot);
+  const MaestroSwitchNode = require('./MaestroSwitchNode.js')(Polyglot);
 
   class Controller extends Polyglot.Node {
     constructor(polyInterface, primary, address, name) {
@@ -102,20 +103,44 @@ module.exports = function(Polyglot) {
     async createDevice(intId, devType, devName) {
       const prefix = 'id_';
       var _address = this.address + prefix + intId;
+      var lutronId = _address.split('_')[1];
       var _devName = devName;
       var _devType = devType;
 
-      try {
-        const result = await this.polyInterface.addNode(
-          new MaestroDimmerNode(this.polyInterface, this.address,
-            _address, _devName)
-        );
+      if (_devType === 8) {
+        try {
+          const result = await this.polyInterface.addNode(
+            new MaestroSwitchNode(this.polyInterface, this.address,
+              _address, _devName)
+          );
+          logger.info('Add node worked: %s', result);
+          if (result) {
+            // let node = this.polyInterface.getNode(_address);
+            radiora2.queryOutputState(lutronId);
+            // node.query();
+          }
+        } catch (err) {
+          logger.errorStack(err, 'Add node failed:');
+        }
+      } else if (_devType === 6) {
+        try {
+          const result = await this.polyInterface.addNode(
+            new MaestroDimmerNode(this.polyInterface, this.address,
+              _address, _devName)
+          );
 
-        logger.info('Add node worked: %s', result);
-        let node = this.polyInterface.getNode(_address);
-        node.query();
-      } catch (err) {
-        logger.errorStack(err, 'Add node failed:');
+          logger.info('Add node worked: %s', result);
+          if (result) {
+            radiora2.queryOutputState(lutronId);
+
+            // let node = this.polyInterface.getNode(_address);
+            // node.query();
+          }
+        } catch (err) {
+          logger.errorStack(err, 'Add node failed:');
+        }
+      } else {
+        logger.debug('No Device Type');
       }
     }
 
@@ -246,23 +271,16 @@ module.exports = function(Polyglot) {
       lutronEmitter.on('on', function(id) {
         logger.info('Node On Message: ' + id);
         radiora2.setSwitch(id, 100);
-        // radiora2.setSwitchOn(id);
       });
 
       lutronEmitter.on('off', function(id) {
         logger.info('Node Off Message: ' + id);
         radiora2.setSwitch(id, 0);
-        // radiora2.setSwitchOff(id);
       });
 
       lutronEmitter.on('level', function(id, level, fade, delay) {
         logger.info('Node Level Message: ' + id + ' Level:' + level);
-        if (fade) {
-          radiora2.setDimmer(id, level, fade);
-        } else {
-          radiora2.setDimmer(id, level);
-        }
-        // radiora2.setDimmer(id, level);
+        radiora2.setDimmer(id, level, fade, delay);
       });
 
       lutronEmitter.on('fdup', function(id) {

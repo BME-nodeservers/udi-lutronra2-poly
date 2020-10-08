@@ -12,6 +12,7 @@ const lock = new AsyncLock({ timeout: 500 });
 const ControllerNode = require('./Nodes/ControllerNode.js')(Polyglot);
 const MainRepeaterNode = require('./Nodes/MainRepeaterNode.js')(Polyglot);
 const MaestroDimmerNode = require('./Nodes/MaestroDimmerNode.js')(Polyglot);
+const MaestroSwitchNode = require('./Nodes/MaestroSwitchNode.js')(Polyglot);
 
 const typedParams = [
   { name: 'repeaters', title: 'Lutron Repeaters / Bridges', isList: true,
@@ -33,7 +34,9 @@ const typedParams = [
           {name: 'intId', title: 'Integration ID', type: 'NUMBER',
             desc: 'Enter the device ID found in the Integration Report'},
           {name: 'devType', title: 'Device Type', type: 'NUMBER',
-            desc: 'Dimmer = Y, Switch = X, Occupancy = Z'},
+            desc: 'Switch = X, Dimmer = Y, Fan = X, KeyPad = X, ' +
+              'Occupancy = Z, 2B Pico = X, 3B Pico = X, 4B Pico = X, ' +
+              'Audio Pico = X'},
         ],
       },
     ],
@@ -43,7 +46,7 @@ const typedParams = [
 logger.info('Starting Lutron Node Server');
 
 const poly = new Polyglot.Interface([ControllerNode,
-  MainRepeaterNode, MaestroDimmerNode]);
+  MainRepeaterNode, MaestroDimmerNode, MaestroSwitchNode]);
 
 poly.on('mqttConnected', function() {
   logger.info('MQTT Connection started');
@@ -108,7 +111,7 @@ poly.on('mqttEnd', function() {
 poly.on('messageReceived', function(message) {
   // Only display messages other than config
   if (!message['config']) {
-    // logger.debug('Message Received: %o', message);
+    logger.debug('Message Received: %o', message);
   }
 });
 
