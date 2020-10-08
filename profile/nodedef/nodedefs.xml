@@ -42,6 +42,8 @@
   <nodedef id="MAESTRO_DIMMER" nls="MD">
     <sts>
       <st id="ST" editor="_51_1"/>
+      <st id="RR" editor="_58_1"/>
+      <st id="DELAY" editor="_58_1"/>
     </sts>
     <cmds>
       <sends>
@@ -59,6 +61,9 @@
         </cmd>
         <cmd id="DOF"/>
         <cmd id="RR">
+          <p id="" editor="_58_1" optional="T"/>
+        </cmd>
+        <cmd id="DELAY">
           <p id="" editor="_58_1" optional="T"/>
         </cmd>
         <cmd id="BRT"/>

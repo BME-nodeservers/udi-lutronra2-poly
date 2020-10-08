@@ -29,6 +29,8 @@ module.exports = function(Polyglot) {
         FDUP: this.onFDUP,
         FDDOWN: this.onFDDOWN,
         FDSTOP: this.onFDSTOP,
+        RR: this.onRampRate,
+        DELAY: this.onDelay,
         QUERY: this.query,
         // You can use the query function from the base class directly
         // QUERY: this.query,
@@ -36,14 +38,14 @@ module.exports = function(Polyglot) {
 
       this.drivers = {
         ST: {value: '0', uom: 51},
+        RR: {value: '0', uom: 58},
+        DELAY: {value: '0', uom: 58},
       };
 
       lutronId = this.address.split('_')[1];
-
     }
 
     query() {
-      logger.info('Sending Query=========');
       lutronEmitter.emit('query', lutronId);
     }
 
@@ -51,10 +53,16 @@ module.exports = function(Polyglot) {
       // setDrivers accepts string or number (message.value is a string)
       this.setDriver('ST', message.value ? message.value : '100');
 
+      let rrST = this.getDriver('RR');
+      let delayST = this.getDriver('DELAY');
+      let rampRate = parseFloat(rrST['value']);
+      let delayRate = parseFloat(delayST['value']);
+
       if (!message.value) {
         lutronEmitter.emit('on', lutronId);
       } else {
-        lutronEmitter.emit('level', lutronId, message.value);
+        lutronEmitter.emit('level', lutronId, message.value,
+            rampRate, delayRate);
       }
     }
 
@@ -96,6 +104,14 @@ module.exports = function(Polyglot) {
 
     onFDSTOP() {
       lutronEmitter.emit('fdstop', lutronId);
+    }
+
+    onRampRate(message) {
+      this.setDriver('RR', message.value);
+    }
+
+    onDelay(message) {
+      this.setDriver('DELAY', message.value);
     }
   }
 

@@ -47,7 +47,7 @@ module.exports = function(Polyglot) {
       var host = null;
       var username = null;
       var password = null;
-      var type = null;
+      // var type = null;
 
       const config = this.polyInterface.getConfig();
       const myConfig = Object(config.typedCustomData);
@@ -63,9 +63,9 @@ module.exports = function(Polyglot) {
           host = key.ipAddress;
           username = key.username;
           password = key.password;
-          type = 'RadioRa2';
+          // type = 'RadioRa2';
           try {
-            this.LutronConnect(host, username, password);
+            this.lutronConnect(host, username, password);
           } catch (err) {
             logger.errorStack(err, 'Connection to Main Repeater Failed');
           }
@@ -112,6 +112,8 @@ module.exports = function(Polyglot) {
         );
 
         logger.info('Add node worked: %s', result);
+        let node = this.polyInterface.getNode(_address);
+        node.query();
       } catch (err) {
         logger.errorStack(err, 'Add node failed:');
       }
@@ -132,7 +134,7 @@ module.exports = function(Polyglot) {
       this.polyInterface.removeNoticesAll();
     }
 
-    LutronConnect(host, username, password) {
+    lutronConnect(host, username, password) {
       // const prefix = "id";
       // const nodes = this.polyInterface.getNodes();
 
@@ -253,9 +255,14 @@ module.exports = function(Polyglot) {
         // radiora2.setSwitchOff(id);
       });
 
-      lutronEmitter.on('level', function(id, level) {
+      lutronEmitter.on('level', function(id, level, fade, delay) {
         logger.info('Node Level Message: ' + id + ' Level:' + level);
-        radiora2.setDimmer(id, level);
+        if (fade) {
+          radiora2.setDimmer(id, level, fade);
+        } else {
+          radiora2.setDimmer(id, level);
+        }
+        // radiora2.setDimmer(id, level);
       });
 
       lutronEmitter.on('fdup', function(id) {
@@ -275,6 +282,14 @@ module.exports = function(Polyglot) {
       // return;
     }
 
+    // queryLutron() {
+    //   const nodes = this.polyInterface.getNodes();
+    //   Object.keys(nodes).forEach(function(address) {
+    //     if ('query' in nodes[address]) {
+    //       nodes[address].query();
+    //     }
+    //   });
+    // }
   };
 
   // lutronEmitter.on('on', function(message) {
@@ -282,9 +297,9 @@ module.exports = function(Polyglot) {
   //   // radiora2.setSwitch(id, on)
   // });
 
-  lutronEmitter.on('level', function(message) {
-    logger.info('Node Level Message: ' + message);
-  });
+  // lutronEmitter.on('level', function(message) {
+  //   logger.info('Node Level Message: ' + message);
+  // });
 
   // Required so that the interface can find this Node class using the nodeDefId
   Controller.nodeDefId = nodeDefId;
