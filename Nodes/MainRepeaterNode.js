@@ -77,22 +77,22 @@ module.exports = function(Polyglot) {
       const config = this.polyInterface.getConfig();
       const myConfig = Object(config.typedCustomData);
       const repeaters = Object(myConfig.repeaters);
-      const confKeys = Object.values(repeaters);
+      const configKeys = Object.values(repeaters);
 
-      for (var key of confKeys) {
-        var _ipJoin = key.ipAddress.toString().replace(/\./g, '');
+      for (var confKey of configKeys) {
+        var _ipJoin = confKey.ipAddress.toString().replace(/\./g, '');
         var _repeaterUID = _ipJoin.substring(_ipJoin.length - 3);
         var _address = 'lip' + _repeaterUID;
 
         if (this.address === _address) {
-          if (Object.values(key.devices).length > 0) {
-            const devKeys = Object.values(key.devices);
-            logger.info('devs: ' + devKeys);
-            for (var key of devKeys) {
-              logger.info('Dev Key name: ' + key.name);
-              logger.info('Dev Key integrationID: ' + key.intId);
-              logger.info('Dev Key deviceType: ' + key.devType);
-              this.createDevice(key.intId, key.devType, key.name);
+          if (Object.values(confKey.devices).length > 0) {
+            const deviceKeys = Object.values(confKey.devices);
+            logger.info('devs: ' + deviceKeys);
+            for (var devKey of deviceKeys) {
+              logger.info('Dev Key name: ' + devKey.name);
+              logger.info('Dev Key integrationID: ' + devKey.intId);
+              logger.info('Dev Key deviceType: ' + devKey.devType);
+              this.createDevice(devKey.intId, devKey.devType, devKey.name);
             }
           }
         }
