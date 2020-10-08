@@ -8,7 +8,7 @@ var lutronEmitter = eventEmitter.lutronEmitter;
 
 // nodeDefId must match the nodedef id in your nodedef
 const nodeDefId = 'MAESTRO_DIMMER';
-var lutronId = '';
+let lutronId = '';
 
 module.exports = function(Polyglot) {
 // Utility function provided to facilitate logging.
@@ -39,6 +39,7 @@ module.exports = function(Polyglot) {
       };
 
       lutronId = this.address.split('_')[1];
+
     }
 
     query() {
@@ -65,7 +66,7 @@ module.exports = function(Polyglot) {
 
     onBRT() {
       let driverST = this.getDriver('ST');
-      let currentValue = parseInt(driverST['value'],10);
+      let currentValue = parseInt(driverST['value'], 10);
       let brightIncrease = currentValue + 10;
       if (brightIncrease >= 100) {
         lutronEmitter.emit('level', lutronId, 100);
@@ -76,7 +77,7 @@ module.exports = function(Polyglot) {
 
     onDIM() {
       let driverST = this.getDriver('ST');
-      let currentValue = parseInt(driverST['value'],10);
+      let currentValue = parseInt(driverST['value'], 10);
       let dimValue = currentValue - 10;
       if (dimValue <= 0) {
         lutronEmitter.emit('level', lutronId, 0);
