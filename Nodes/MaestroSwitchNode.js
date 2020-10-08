@@ -1,7 +1,7 @@
 'use strict';
 
-var eventEmitter = require('../lib/lutronEvents.js');
-var lutronEmitter = eventEmitter.lutronEmitter;
+let eventEmitter = require('../lib/lutronEvents.js');
+let lutronEmitter = eventEmitter.lutronEmitter;
 let lutronId = '';
 
 const nodeDefId = 'MAESTRO_SWITCH';
