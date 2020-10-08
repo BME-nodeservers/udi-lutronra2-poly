@@ -132,10 +132,6 @@ module.exports = function(Polyglot) {
       this.polyInterface.removeNoticesAll();
     }
 
-    lutronPrint(data) {
-      logger.info('TESt ========== ' + data);
-    }
-
     LutronConnect(host, username, password) {
       // const prefix = "id";
       // const nodes = this.polyInterface.getNodes();
@@ -241,6 +237,10 @@ module.exports = function(Polyglot) {
 
 
       // Receive Events from ISY Admin Console
+      lutronEmitter.on('query', function(id){
+        radiora2.queryOutputState(id);
+      });
+
       lutronEmitter.on('on', function(id) {
         logger.info('Node On Message: ' + id);
         radiora2.setSwitch(id, 100);
@@ -256,6 +256,18 @@ module.exports = function(Polyglot) {
       lutronEmitter.on('level', function(id, level) {
         logger.info('Node Level Message: ' + id + ' Level:' + level);
         radiora2.setDimmer(id, level);
+      });
+
+      lutronEmitter.on('fdup', function(id) {
+        radiora2.startRaising(id);
+      });
+
+      lutronEmitter.on('fddown', function(id) {
+        radiora2.startLowering(id);
+      });
+
+      lutronEmitter.on('fdstop', function(id) {
+        radiora2.stopRaiseLower(id);
       });
 
       // Connect to Main Repeater

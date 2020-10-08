@@ -24,18 +24,26 @@ module.exports = function(Polyglot) {
       this.commands = {
         DON: this.onDON,
         DOF: this.onDOF,
-
-        // You can use the query function from the base class directly
+        BRT: this.onBRT,
+        DIM: this.onDIM,
+        FDUP: this.onFDUP,
+        FDDOWN: this.onFDDOWN,
+        FDSTOP: this.onFDSTOP,
         QUERY: this.query,
+        // You can use the query function from the base class directly
+        // QUERY: this.query,
       };
 
       this.drivers = {
         ST: {value: '0', uom: 51},
       };
 
-      var id = this.address.split('_');
-      logger.info('Split ID: ' + id);
-      lutronId = id[1];
+      lutronId = this.address.split('_')[1];
+    }
+
+    query() {
+      logger.info('Sending Query=========');
+      lutronEmitter.emit('query', lutronId);
     }
 
     onDON(message) {
@@ -55,7 +63,40 @@ module.exports = function(Polyglot) {
       lutronEmitter.emit('off', lutronId);
     }
 
-  };
+    onBRT() {
+      let driverST = this.getDriver('ST');
+      let currentValue = parseInt(driverST['value'],10);
+      let brightIncrease = currentValue + 10;
+      if (brightIncrease >= 100) {
+        lutronEmitter.emit('level', lutronId, 100);
+      } else {
+        lutronEmitter.emit('level', lutronId, brightIncrease);
+      }
+    }
+
+    onDIM() {
+      let driverST = this.getDriver('ST');
+      let currentValue = parseInt(driverST['value'],10);
+      let dimValue = currentValue - 10;
+      if (dimValue <= 0) {
+        lutronEmitter.emit('level', lutronId, 0);
+      } else {
+        lutronEmitter.emit('level', lutronId, dimValue);
+      }
+    }
+
+    onFDUP() {
+      lutronEmitter.emit('fdup', lutronId);
+    }
+
+    onFDDOWN() {
+      lutronEmitter.emit('fddown', lutronId);
+    }
+
+    onFDSTOP() {
+      lutronEmitter.emit('fdstop', lutronId);
+    }
+  }
 
   // Required so that the interface can find this Node class using the nodeDefId
   MaestroDimmerNode.nodeDefId = nodeDefId;
