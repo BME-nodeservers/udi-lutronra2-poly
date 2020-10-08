@@ -1,20 +1,11 @@
 'use strict';
 
-let RadioRa2 = require('../lib/radiora2');
-// const EventEmitter = require('events').EventEmitter;
-// const util = require('util');
+const RadioRa2 = require('../lib/radiora2');
+let radiora2 = new RadioRa2();
 
 let lutronEvents = require('../lib/lutronEvents.js');
 let lutronEmitter = lutronEvents.lutronEmitter;
-let radiora2 = new RadioRa2();
 
-// The controller node is a regular ISY node. It must be the first node created
-// by the node server. It has an ST status showing the nodeserver status, and
-// optionally node statuses. It usually has a few commands on the node to
-// facilitate interaction with the nodeserver from the admin console or
-// ISY programs.
-
-// nodeDefId must match the nodedef id in your nodedef
 const nodeDefId = 'CONTROLLER';
 
 module.exports = function(Polyglot) {
@@ -45,20 +36,20 @@ module.exports = function(Polyglot) {
     }
 
     repeaterSetup() {
-      var host = null;
-      var username = null;
-      var password = null;
-      // var type = null;
+      let host = null;
+      let username = null;
+      let password = null;
+      // let type = null;
 
       const config = this.polyInterface.getConfig();
       const myConfig = Object(config.typedCustomData);
       const repeaters = Object(myConfig.repeaters);
       const confKeys = Object.values(repeaters);
 
-      for (var key of confKeys) {
-        var _ipJoin = key.ipAddress.toString().replace(/\./g, '');
-        var _repeaterUID = _ipJoin.substring(_ipJoin.length - 3);
-        var _address = 'lip' + _repeaterUID;
+      for (let key of confKeys) {
+        let _ipJoin = key.ipAddress.toString().replace(/\./g, '');
+        let _repeaterUID = _ipJoin.substring(_ipJoin.length - 3);
+        let _address = 'lip' + _repeaterUID;
 
         if (this.address === _address) {
           host = key.ipAddress;
@@ -80,16 +71,16 @@ module.exports = function(Polyglot) {
       const repeaters = Object(myConfig.repeaters);
       const configKeys = Object.values(repeaters);
 
-      for (var confKey of configKeys) {
-        var _ipJoin = confKey.ipAddress.toString().replace(/\./g, '');
-        var _repeaterUID = _ipJoin.substring(_ipJoin.length - 3);
-        var _address = 'lip' + _repeaterUID;
+      for (let confKey of configKeys) {
+        let _ipJoin = confKey.ipAddress.toString().replace(/\./g, '');
+        let _repeaterUID = _ipJoin.substring(_ipJoin.length - 3);
+        let _address = 'lip' + _repeaterUID;
 
         if (this.address === _address) {
           if (Object.values(confKey.devices).length > 0) {
             const deviceKeys = Object.values(confKey.devices);
             logger.info('devs: ' + deviceKeys);
-            for (var devKey of deviceKeys) {
+            for (let devKey of deviceKeys) {
               logger.info('Dev Key name: ' + devKey.name);
               logger.info('Dev Key integrationID: ' + devKey.intId);
               logger.info('Dev Key deviceType: ' + devKey.devType);
@@ -102,10 +93,10 @@ module.exports = function(Polyglot) {
 
     async createDevice(intId, devType, devName) {
       const prefix = 'id_';
-      var _address = this.address + prefix + intId;
-      var lutronId = _address.split('_')[1];
-      var _devName = devName;
-      var _devType = devType;
+      let _address = this.address + prefix + intId;
+      let lutronId = _address.split('_')[1];
+      let _devName = devName;
+      let _devType = devType;
 
       if (_devType === 8) {
         try {
@@ -115,9 +106,7 @@ module.exports = function(Polyglot) {
           );
           logger.info('Add node worked: %s', result);
           if (result) {
-            // let node = this.polyInterface.getNode(_address);
             radiora2.queryOutputState(lutronId);
-            // node.query();
           }
         } catch (err) {
           logger.errorStack(err, 'Add node failed:');
@@ -128,13 +117,9 @@ module.exports = function(Polyglot) {
             new MaestroDimmerNode(this.polyInterface, this.address,
               _address, _devName)
           );
-
           logger.info('Add node worked: %s', result);
           if (result) {
             radiora2.queryOutputState(lutronId);
-
-            // let node = this.polyInterface.getNode(_address);
-            // node.query();
           }
         } catch (err) {
           logger.errorStack(err, 'Add node failed:');
@@ -164,7 +149,7 @@ module.exports = function(Polyglot) {
       // const nodes = this.polyInterface.getNodes();
 
 
-      // var radiora2 = new RadioRa2();
+      // let radiora2 = new RadioRa2();
 
       logger.info('Attempting Lutron Connection');
 
@@ -199,8 +184,8 @@ module.exports = function(Polyglot) {
 
       radiora2.on('on', function(id) {
         // logger.info(id);
-        var nodeAddr = this.address + 'id_' + id;
-        var node = this.polyInterface.getNode(nodeAddr);
+        let nodeAddr = this.address + 'id_' + id;
+        let node = this.polyInterface.getNode(nodeAddr);
         if (node) {
           logger.info('Received for Node: ' + nodeAddr);
           node.setDriver('ST', '100');
@@ -210,8 +195,8 @@ module.exports = function(Polyglot) {
 
       radiora2.on('off', function(id) {
         // logger.info(id);
-        var nodeAddr = this.address + 'id_' + id;
-        var node = this.polyInterface.getNode(nodeAddr);
+        let nodeAddr = this.address + 'id_' + id;
+        let node = this.polyInterface.getNode(nodeAddr);
         if (node) {
           logger.info('Received for Node: ' + nodeAddr);
           node.setDriver('ST', '0');
@@ -221,8 +206,8 @@ module.exports = function(Polyglot) {
 
       radiora2.on('level', function(id, level) {
         // logger.info("ID: " + id + " Level: " + level);
-        var nodeAddr = this.address + 'id_' + id;
-        var node = this.polyInterface.getNode(nodeAddr);
+        let nodeAddr = this.address + 'id_' + id;
+        let node = this.polyInterface.getNode(nodeAddr);
         if (node) {
           logger.info('Received for Node: ' + nodeAddr);
           node.setDriver('ST', Math.round(level));
@@ -297,9 +282,9 @@ module.exports = function(Polyglot) {
       // Connect to Main Repeater
       radiora2.connect(host, username, password);
       // return;
-    }
+    };
 
-  };
+  }
 
   // Required so that the interface can find this Node class using the nodeDefId
   Controller.nodeDefId = nodeDefId;
