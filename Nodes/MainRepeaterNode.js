@@ -1,12 +1,12 @@
 'use strict';
 
 let RadioRa2 = require('../lib/radiora2');
-const EventEmitter = require('events').EventEmitter;
-const util = require('util');
+// const EventEmitter = require('events').EventEmitter;
+// const util = require('util');
 
-var lutronEvents = require('../lib/lutronEvents.js');
-var lutronEmitter = lutronEvents.lutronEmitter;
-var radiora2 = new RadioRa2();
+let lutronEvents = require('../lib/lutronEvents.js');
+let lutronEmitter = lutronEvents.lutronEmitter;
+let radiora2 = new RadioRa2();
 
 // The controller node is a regular ISY node. It must be the first node created
 // by the node server. It has an ST status showing the nodeserver status, and
@@ -167,7 +167,6 @@ module.exports = function(Polyglot) {
       // var radiora2 = new RadioRa2();
 
       logger.info('Attempting Lutron Connection');
-      // radiora2.connect(host, username, password);
 
       // Begin Listeners
       radiora2.on('messageReceived', function(data) {
@@ -300,24 +299,7 @@ module.exports = function(Polyglot) {
       // return;
     }
 
-    // queryLutron() {
-    //   const nodes = this.polyInterface.getNodes();
-    //   Object.keys(nodes).forEach(function(address) {
-    //     if ('query' in nodes[address]) {
-    //       nodes[address].query();
-    //     }
-    //   });
-    // }
   };
-
-  // lutronEmitter.on('on', function(message) {
-  //   logger.info('Node Message: ' + message);
-  //   // radiora2.setSwitch(id, on)
-  // });
-
-  // lutronEmitter.on('level', function(message) {
-  //   logger.info('Node Level Message: ' + message);
-  // });
 
   // Required so that the interface can find this Node class using the nodeDefId
   Controller.nodeDefId = nodeDefId;
