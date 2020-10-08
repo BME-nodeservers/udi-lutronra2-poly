@@ -53,10 +53,13 @@ module.exports = function(Polyglot) {
       // setDrivers accepts string or number (message.value is a string)
       this.setDriver('ST', message.value ? message.value : '100');
 
-      let rrST = this.getDriver('RR');
+      let rampRateST = this.getDriver('RR');
       let delayST = this.getDriver('DELAY');
-      let rampRate = parseFloat(rrST['value']);
+      let rampRate = parseFloat(rampRateST['value']);
       let delayRate = parseFloat(delayST['value']);
+
+      // logger.debug('========== Ramp Rate: ' + rampRate);
+      // logger.debug('========== Delay Rate: ' + delayRate);
 
       if (!message.value) {
         lutronEmitter.emit('on', lutronId);
