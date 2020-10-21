@@ -30,12 +30,10 @@ ND-MAESTRO_FAN-NAME = Maestro Fan Controller
 ND-MAESTRO_FAN-ICON = Output
 ST-MFC-ST-NAME = Status
 ST-MFC-GV0-NAME = Speed
-CMD-MFC-GV0-NAME = Speed
 CMD-MFC-GV1-NAME = Low
 CMD-MFC-GV2-NAME = Medium
 CMD-MFC-GV3-NAME = Med High
 CMD-MFC-GV4-NAME = High
-
 
 
 FANSPEED-0 = Off

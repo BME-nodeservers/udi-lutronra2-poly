@@ -9,34 +9,14 @@
     <cmds>
       <sends/>
       <accepts>
-        <cmd id="DISCOVER"/>
-        <cmd id="CREATE_NEW"/>
+<!--        <cmd id="DISCOVER"/>-->
+<!--        <cmd id="CREATE_NEW"/>-->
         <cmd id="UPDATE_PROFILE"/>
         <cmd id="REMOVE_NOTICES"/>
         <cmd id="QUERY"/>
       </accepts>
     </cmds>
   </nodedef>
-
-  <!-- Virtual node - dimmer -->
-<!--  <nodedef id="VNODE_DIMMER" nls="VN">-->
-<!--    <sts>-->
-<!--      <st id="ST" editor="PERCENT"/>-->
-<!--    </sts>-->
-<!--    <cmds>-->
-<!--      <sends>-->
-<!--        <cmd id="DON"/>-->
-<!--        <cmd id="DOF"/>-->
-<!--      </sends>-->
-<!--      <accepts>-->
-<!--        <cmd id="DON">-->
-<!--          <p id="" editor="PERCENT" optional="T"/>-->
-<!--        </cmd>-->
-<!--        <cmd id="DOF"/>-->
-<!--        <cmd id="QUERY"/>-->
-<!--      </accepts>-->
-<!--    </cmds>-->
-<!--  </nodedef>-->
 
   <!-- Maestro Switch node -->
   <nodedef id="MAESTRO_SWITCH" nls="MS">
