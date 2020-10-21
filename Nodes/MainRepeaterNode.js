@@ -30,6 +30,7 @@ module.exports = function(Polyglot) {
       };
 
       this.isController = true;
+      this.lutronConnect();
       this.repeaterSetup();
       this.getDevices();
     }
@@ -173,279 +174,147 @@ module.exports = function(Polyglot) {
 
     // lutronConnect(host, username, password) {
       // const prefix = "id";
-    // lutronConnect() {
+    lutronConnect() {
 
-    //   // const nodes = this.polyInterface.getNodes();
-
-
-    //   // let radiora2 = new RadioRa2();
-
-    //   logger.info('Attempting Lutron Connection');
-
-    //   // Begin Listeners
-    //   // radiora2.on('messageReceived', function(data) {
-    //   //   logger.info('LUTRON ' + data);
-    //   // });
-
-    //   // radiora2.on('loggedIn', function() {
-    //   //   logger.info('Connected to Lutron');
-    //   // });
-
-    //   // radiora2.on('sent', function(data) {
-    //   //   logger.info('Message Sent' + data);
-    //   // });
-
-    //   // radiora2.on('debug', function(data) {
-    //   //   logger.info(data);
-    //   // });
-
-    //   // radiora2.on('info', function(data) {
-    //   //   logger.info(data);
-    //   // });
-
-    //   // radiora2.on('warn', function(data) {
-    //   //   logger.info(data);
-    //   // });
-
-    //   // radiora2.on('error', function(data) {
-    //   //   logger.info(data);
-    //   // });
-
-    //   // radiora2.on('on', function(id) {
-    //   //   // logger.info(id);
-    //   //   let nodeAddr = this.address + 'id_' + id;
-    //   //   let node = this.polyInterface.getNode(nodeAddr);
-    //   //   if (node) {
-    //   //     logger.info('Received for Node: ' + nodeAddr);
-    //   //     node.setDriver('ST', '100');
-    //   //   }
-
-    //   // }.bind(this));
-
-    //   // radiora2.on('off', function(id) {
-    //   //   // logger.info(id);
-    //   //   let nodeAddr = this.address + 'id_' + id;
-    //   //   let node = this.polyInterface.getNode(nodeAddr);
-    //   //   if (node) {
-    //   //     logger.info('Received for Node: ' + nodeAddr);
-    //   //     node.setDriver('ST', '0');
-    //   //   }
-
-    //   // }.bind(this));
-
-    //   // radiora2.on('level', function(id, level) {
-    //   //   // logger.info("ID: " + id + " Level: " + level);
-    //   //   let nodeAddr = this.address + 'id_' + id;
-    //   //   let node = this.polyInterface.getNode(nodeAddr);
-    //   //   if (node) {
-    //   //     logger.info('Received for Node: ' + nodeAddr);
-    //   //     node.setDriver('ST', Math.round(level));
-    //   //   }
-    //   // }.bind(this));
-
-    //   // radiora2.on('buttonPress', function(data) {
-    //   //   logger.info(data);
-    //   // });
-
-    //   // radiora2.on('buttonReleased', function(data) {
-    //   //   logger.info(data);
-    //   // });
-
-    //   // radiora2.on('buttonHold', function(data) {
-    //   //   logger.info(data);
-    //   // });
-
-    //   // radiora2.on('keypadbuttonLEDOn', function(data) {
-    //   //   logger.info(data);
-    //   // });
-
-    //   // radiora2.on('keypadbuttonLEDOff', function(data) {
-    //   //   logger.info(data);
-    //   // });
-
-    //   // radiora2.on('groupOccupied', function(data) {
-    //   //   logger.info(data);
-    //   // });
-
-    //   // radiora2.on('groupUnoccupied', function(data) {
-    //   //   logger.info(data);
-    //   // });
-
-    //   // radiora2.on('groupUnknown', function(data) {
-    //   //   logger.info(data);
-    //   // });
+      // const nodes = this.polyInterface.getNodes();
 
 
-    //   // // Receive Events from ISY Admin Console
-    //   // lutronEmitter.on('query', function(id){
-    //   //   radiora2.queryOutputState(id);
-    //   // });
+      // let radiora2 = new RadioRa2();
 
-    //   // lutronEmitter.on('on', function(id) {
-    //   //   logger.info('Node On Message: ' + id);
-    //   //   radiora2.setSwitch(id, 100);
-    //   // });
+      // logger.info('Attempting Lutron Connection');
 
-    //   // lutronEmitter.on('off', function(id) {
-    //   //   logger.info('Node Off Message: ' + id);
-    //   //   radiora2.setSwitch(id, 0);
-    //   // });
+      // Begin Listeners
+      radiora2.on('messageReceived', function(data) {
+        logger.info('LUTRON ' + data);
+      });
 
-    //   // lutronEmitter.on('level', function(id, level, fade, delay) {
-    //   //   logger.info('Node Level Message: ' + id + ' Level:' + level);
-    //   //   radiora2.setDimmer(id, level, fade, delay);
-    //   // });
+      radiora2.on('loggedIn', function() {
+        logger.info('Connected to Lutron');
+      });
 
-    //   // lutronEmitter.on('fdup', function(id) {
-    //   //   radiora2.startRaising(id);
-    //   // });
+      radiora2.on('sent', function(data) {
+        logger.info('Message Sent' + data);
+      });
 
-    //   // lutronEmitter.on('fddown', function(id) {
-    //   //   radiora2.startLowering(id);
-    //   // });
+      radiora2.on('debug', function(data) {
+        logger.info(data);
+      });
 
-    //   // lutronEmitter.on('fdstop', function(id) {
-    //   //   radiora2.stopRaiseLower(id);
-    //   // });
+      radiora2.on('info', function(data) {
+        logger.info(data);
+      });
 
-    //   // Connect to Main Repeater
-    //   // radiora2.connect(host, username, password);
-    //   // return;
-    // };
+      radiora2.on('warn', function(data) {
+        logger.info(data);
+      });
 
-   
+      radiora2.on('error', function(data) {
+        logger.info(data);
+      });
+
+      radiora2.on('on', function(id) {
+        // logger.info(id);
+        let nodeAddr = this.address + 'id_' + id;
+        let node = this.polyInterface.getNode(nodeAddr);
+        if (node) {
+          logger.info('Received for Node: ' + nodeAddr);
+          node.setDriver('ST', '100');
+        }
+
+      }.bind(this));
+
+      radiora2.on('off', function(id) {
+        // logger.info(id);
+        let nodeAddr = this.address + 'id_' + id;
+        let node = this.polyInterface.getNode(nodeAddr);
+        if (node) {
+          logger.info('Received for Node: ' + nodeAddr);
+          node.setDriver('ST', '0');
+        }
+
+      }.bind(this));
+
+      radiora2.on('level', function(id, level) {
+        // logger.info("ID: " + id + " Level: " + level);
+        let nodeAddr = this.address + 'id_' + id;
+        let node = this.polyInterface.getNode(nodeAddr);
+        if (node) {
+          logger.info('Received for Node: ' + nodeAddr);
+          node.setDriver('ST', Math.round(level));
+        }
+      }.bind(this));
+
+      radiora2.on('buttonPress', function(data) {
+        logger.info(data);
+      });
+
+      radiora2.on('buttonReleased', function(data) {
+        logger.info(data);
+      });
+
+      radiora2.on('buttonHold', function(data) {
+        logger.info(data);
+      });
+
+      radiora2.on('keypadbuttonLEDOn', function(data) {
+        logger.info(data);
+      });
+
+      radiora2.on('keypadbuttonLEDOff', function(data) {
+        logger.info(data);
+      });
+
+      radiora2.on('groupOccupied', function(data) {
+        logger.info(data);
+      });
+
+      radiora2.on('groupUnoccupied', function(data) {
+        logger.info(data);
+      });
+
+      radiora2.on('groupUnknown', function(data) {
+        logger.info(data);
+      });
+
+
+      // Receive Events from ISY Admin Console
+      lutronEmitter.on('query', function(id){
+        radiora2.queryOutputState(id);
+      });
+
+      lutronEmitter.on('on', function(id) {
+        logger.info('Node On Message: ' + id);
+        radiora2.setSwitch(id, 100);
+      });
+
+      lutronEmitter.on('off', function(id) {
+        logger.info('Node Off Message: ' + id);
+        radiora2.setSwitch(id, 0);
+      });
+
+      lutronEmitter.on('level', function(id, level, fade, delay) {
+        logger.info('Node Level Message: ' + id + ' Level:' + level);
+        radiora2.setDimmer(id, level, fade, delay);
+      });
+
+      lutronEmitter.on('fdup', function(id) {
+        radiora2.startRaising(id);
+      });
+
+      lutronEmitter.on('fddown', function(id) {
+        radiora2.startLowering(id);
+      });
+
+      lutronEmitter.on('fdstop', function(id) {
+        radiora2.stopRaiseLower(id);
+      });
+
+      // Connect to Main Repeater
+      // radiora2.connect(host, username, password);
+      return;
+    };
+
   }
-
-  radiora2.on('messageReceived', function(data) {
-    logger.info('LUTRON ' + data);
-  });
-
-  radiora2.on('loggedIn', function() {
-    logger.info('Connected to Lutron');
-  });
-
-  radiora2.on('sent', function(data) {
-    logger.info('Message Sent' + data);
-  });
-
-  radiora2.on('debug', function(data) {
-    logger.info(data);
-  });
-
-  radiora2.on('info', function(data) {
-    logger.info(data);
-  });
-
-  radiora2.on('warn', function(data) {
-    logger.info(data);
-  });
-
-  radiora2.on('error', function(data) {
-    logger.info(data);
-  });
-
-  // radiora2.on('on', function(id) {
-  //   // logger.info(id);
-  //   let nodeAddr = this.address + 'id_' + id;
-  //   let node = this.polyInterface.getNode(nodeAddr);
-  //   if (node) {
-  //     logger.info('Received for Node: ' + nodeAddr);
-  //     node.setDriver('ST', '100');
-  //   }
-  radiora2.on('on', function(id) {
-    logger.info('ID Turned On: ' + id);
-    logger.info(this.polyInterface.address);
-  })
-
-  // }.bind(this));
-
-  // radiora2.on('off', function(id) {
-  //   // logger.info(id);
-  //   let nodeAddr = this.address + 'id_' + id;
-  //   let node = this.polyInterface.getNode(nodeAddr);
-  //   if (node) {
-  //     logger.info('Received for Node: ' + nodeAddr);
-  //     node.setDriver('ST', '0');
-  //   }
-
-  // }.bind(this));
-
-  // radiora2.on('level', function(id, level) {
-  //   // logger.info("ID: " + id + " Level: " + level);
-  //   let nodeAddr = this.address + 'id_' + id;
-  //   let node = this.polyInterface.getNode(nodeAddr);
-  //   if (node) {
-  //     logger.info('Received for Node: ' + nodeAddr);
-  //     node.setDriver('ST', Math.round(level));
-  //   }
-  // }.bind(this));
-
-  radiora2.on('buttonPress', function(data) {
-    logger.info(data);
-  });
-
-  radiora2.on('buttonReleased', function(data) {
-    logger.info(data);
-  });
-
-  radiora2.on('buttonHold', function(data) {
-    logger.info(data);
-  });
-
-  radiora2.on('keypadbuttonLEDOn', function(data) {
-    logger.info(data);
-  });
-
-  radiora2.on('keypadbuttonLEDOff', function(data) {
-    logger.info(data);
-  });
-
-  radiora2.on('groupOccupied', function(data) {
-    logger.info(data);
-  });
-
-  radiora2.on('groupUnoccupied', function(data) {
-    logger.info(data);
-  });
-
-  radiora2.on('groupUnknown', function(data) {
-    logger.info(data);
-  });
-
-
-
-   // Receive Events from ISY Admin Console
-   lutronEmitter.on('query', function(id){
-    radiora2.queryOutputState(id);
-  });
-
-  lutronEmitter.on('on', function(id) {
-    logger.info('Node On Message: ' + id);
-    radiora2.setSwitch(id, 100);
-  });
-
-  lutronEmitter.on('off', function(id) {
-    logger.info('Node Off Message: ' + id);
-    radiora2.setSwitch(id, 0);
-  });
-
-  lutronEmitter.on('level', function(id, level, fade, delay) {
-    logger.info('Node Level Message: ' + id + ' Level:' + level);
-    radiora2.setDimmer(id, level, fade, delay);
-  });
-
-  lutronEmitter.on('fdup', function(id) {
-    radiora2.startRaising(id);
-  });
-
-  lutronEmitter.on('fddown', function(id) {
-    radiora2.startLowering(id);
-  });
-
-  lutronEmitter.on('fdstop', function(id) {
-    radiora2.stopRaiseLower(id);
-  });
-
 
   // Required so that the interface can find this Node class using the nodeDefId
   Controller.nodeDefId = nodeDefId;
