@@ -32,8 +32,6 @@ module.exports = function(Polyglot) {
         RR: this.onRampRate,
         DELAY: this.onDelay,
         QUERY: this.query,
-        // You can use the query function from the base class directly
-        // QUERY: this.query,
       };
 
       this.drivers = {
@@ -57,9 +55,6 @@ module.exports = function(Polyglot) {
       let delayST = this.getDriver('DELAY');
       let rampRate = parseFloat(rampRateST['value']);
       let delayRate = parseFloat(delayST['value']);
-
-      // logger.debug('========== Ramp Rate: ' + rampRate);
-      // logger.debug('========== Delay Rate: ' + delayRate);
 
       if (!message.value) {
         lutronEmitter.emit('on', lutronId);

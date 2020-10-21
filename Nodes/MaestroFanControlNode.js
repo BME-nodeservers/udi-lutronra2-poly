@@ -24,20 +24,11 @@ module.exports = function(Polyglot) {
       this.commands = {
         DON: this.onDON,
         DOF: this.onDOF,
-        // BRT: this.onBRT,
-        // DIM: this.onDIM,
-        // FDUP: this.onFDUP,
-        // FDDOWN: this.onFDDOWN,
-        // FDSTOP: this.onFDSTOP,
-        // RR: this.onRampRate,
-        // DELAY: this.onDelay,
         GV1: this.onLow,
         GV2: this.onMed,
         GV3: this.onMedHigh,
         GV4: this.onHigh,
         QUERY: this.query,
-        // You can use the query function from the base class directly
-        // QUERY: this.query,
       };
 
       this.drivers = {

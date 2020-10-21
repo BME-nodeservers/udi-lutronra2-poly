@@ -207,7 +207,6 @@ module.exports = function(Polyglot) {
           let newLevel = Math.round(level);
           logger.info('Rounded Level: ' + newLevel);
           logger.info('Received for Node: ' + nodeAddr);
-          // node.setDriver('ST', Math.round(level));
           node.setDriver('ST', newLevel);
 
           let fanIndex = node.getDriver('GV0');
