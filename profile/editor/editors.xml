@@ -1,9 +1,13 @@
 <!-- Version 0.0.1 -->
 <editors>
 
-  <editor id="PERCENT">
-    <!-- 51 is percentage -->
-    <range uom="51" subset="0-100" />
+<!--  <editor id="PERCENT">-->
+<!--    &lt;!&ndash; 51 is percentage &ndash;&gt;-->
+<!--    <range uom="51" subset="0-100" />-->
+<!--  </editor>-->
+
+  <editor id="FANSPEED">
+    <range uom="25" subset="0-4" nls="FANSPEED" />
   </editor>
 
 

@@ -19,24 +19,24 @@
   </nodedef>
 
   <!-- Virtual node - dimmer -->
-  <nodedef id="VNODE_DIMMER" nls="VN">
-    <sts>
-      <st id="ST" editor="PERCENT"/>
-    </sts>
-    <cmds>
-      <sends>
-        <cmd id="DON"/>
-        <cmd id="DOF"/>
-      </sends>
-      <accepts>
-        <cmd id="DON">
-          <p id="" editor="PERCENT" optional="T"/>
-        </cmd>
-        <cmd id="DOF"/>
-        <cmd id="QUERY"/>
-      </accepts>
-    </cmds>
-  </nodedef>
+<!--  <nodedef id="VNODE_DIMMER" nls="VN">-->
+<!--    <sts>-->
+<!--      <st id="ST" editor="PERCENT"/>-->
+<!--    </sts>-->
+<!--    <cmds>-->
+<!--      <sends>-->
+<!--        <cmd id="DON"/>-->
+<!--        <cmd id="DOF"/>-->
+<!--      </sends>-->
+<!--      <accepts>-->
+<!--        <cmd id="DON">-->
+<!--          <p id="" editor="PERCENT" optional="T"/>-->
+<!--        </cmd>-->
+<!--        <cmd id="DOF"/>-->
+<!--        <cmd id="QUERY"/>-->
+<!--      </accepts>-->
+<!--    </cmds>-->
+<!--  </nodedef>-->
 
   <!-- Maestro Switch node -->
   <nodedef id="MAESTRO_SWITCH" nls="MS">
@@ -75,7 +75,7 @@
       </sends>
       <accepts>
         <cmd id="DON">
-          <p id="" editor="PERCENT" optional="T"/>
+          <p id="" editor="_51_1" optional="T"/>
         </cmd>
         <cmd id="DOF"/>
         <cmd id="RR">
@@ -89,6 +89,29 @@
         <cmd id="FDUP"/>
         <cmd id="FDDOWN"/>
         <cmd id="FDSTOP"/>
+        <cmd id="QUERY"/>
+      </accepts>
+    </cmds>
+  </nodedef>
+
+  <!-- Maestro Fan Controller node -->
+  <nodedef id="MAESTRO_FAN" nls="MFC">
+    <sts>
+      <st id="ST" editor="_51_1"/>
+      <st id="GV0" editor="FANSPEED"/>
+    </sts>
+    <cmds>
+      <sends>
+        <cmd id="DON"/>
+        <cmd id="DOF"/>
+      </sends>
+      <accepts>
+        <cmd id="DON"/>
+        <cmd id="DOF"/>
+        <cmd id="GV1" editor="_2_1" optional="T"/> <!-- Low -->
+        <cmd id="GV2" editor="_2_1" optional="T"/> <!-- Medium -->
+        <cmd id="GV3" editor="_2_1" optional="T"/> <!-- Medium High -->
+        <cmd id="GV4" editor="_2_1" optional="T"/> <!-- High -->
         <cmd id="QUERY"/>
       </accepts>
     </cmds>

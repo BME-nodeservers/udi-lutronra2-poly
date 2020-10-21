@@ -12,6 +12,7 @@ module.exports = function(Polyglot) {
   const logger = Polyglot.logger;
   const MaestroDimmerNode = require('./MaestroDimmerNode.js')(Polyglot);
   const MaestroSwitchNode = require('./MaestroSwitchNode.js')(Polyglot);
+  const MaestroFanControlNode = require('./MaestroFanControlNode.js')(Polyglot);
 
   class Controller extends Polyglot.Node {
     constructor(polyInterface, primary, address, name) {
@@ -108,6 +109,19 @@ module.exports = function(Polyglot) {
         } catch (err) {
           logger.errorStack(err, 'Add node failed:');
         }
+      } else if (_devType === 9) {
+        try {
+          const result = await this.polyInterface.addNode(
+            new MaestroFanControlNode(this.polyInterface, this.address,
+              _address, _devName)
+          );
+          logger.info('Add node worked: %s', result);
+          if (result) {
+            radiora2.queryOutputState(lutronId);
+          }
+        } catch (err) {
+          logger.errorStack(err, 'Add node failed:');
+        }
       } else {
         logger.debug('No Device Type');
       }
@@ -160,7 +174,11 @@ module.exports = function(Polyglot) {
       radiora2.on('on', function(id) {
         // logger.info(id);
         let nodeAddr = this.address + 'id_' + id;
+        logger.info('Address: ' + nodeAddr);
+
         let node = this.polyInterface.getNode(nodeAddr);
+        logger.info(node);
+
         if (node) {
           logger.info('Received for Node: ' + nodeAddr);
           node.setDriver('ST', '100');
@@ -180,12 +198,40 @@ module.exports = function(Polyglot) {
       }.bind(this));
 
       radiora2.on('level', function(id, level) {
-        // logger.info("ID: " + id + " Level: " + level);
+        logger.info('ID: ' + id + ' Level: ' + level);
         let nodeAddr = this.address + 'id_' + id;
+        logger.info('Address: ' + nodeAddr);
         let node = this.polyInterface.getNode(nodeAddr);
+        logger.info(node);
         if (node) {
+          let newLevel = Math.round(level);
+          logger.info('Rounded Level: ' + newLevel);
           logger.info('Received for Node: ' + nodeAddr);
-          node.setDriver('ST', Math.round(level));
+          // node.setDriver('ST', Math.round(level));
+          node.setDriver('ST', newLevel);
+
+          let fanIndex = node.getDriver('GV0');
+          if (fanIndex) {
+            let fanSpeed = node.getDriver('ST');
+            let currentValue = parseInt(fanSpeed['value'], 10);
+            logger.info('Fan Speed %: ' + currentValue);
+
+            if (currentValue > 0 && currentValue <= 25) {
+              node.setDriver('GV0', '1');
+              logger.info('Fan Speed: Low');
+            } else if (currentValue >= 26 && currentValue <= 51) {
+              node.setDriver('GV0', '2');
+              logger.info('Fan Speed: Medium');
+            } else if (currentValue >= 56 && currentValue <= 76) {
+              node.setDriver('GV0', '3');
+              logger.info('Fan Speed: Med High');
+            } else if (currentValue > 76) {
+              node.setDriver('GV0', '4');
+              logger.info('Fan Speed: High');
+            }
+          } else {
+            logger.info(id + ': Not a fan controller');
+          }
         }
       }.bind(this));
 
