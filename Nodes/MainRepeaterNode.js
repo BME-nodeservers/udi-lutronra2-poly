@@ -36,7 +36,6 @@ module.exports = function(Polyglot) {
     }
 
     repeaterSetup() {
-      logger.info('repeaterSetup ===================================')
       logger.info('Begin Main Repeater Setup...');
 
       const _config = this.polyInterface.getConfig();
@@ -46,59 +45,16 @@ module.exports = function(Polyglot) {
       let _username = config.username;
       let _password = config.password;
 
-      // let _ipJoin = _host.toString().replace(/\./g, '');
-      // let _repeaterUID = _ipJoin.substring(_ipJoin.length - 3);
-      // let _address = 'lip' + _repeaterUID;
-
       logger.info('Host: ' + _host);
       logger.info('Username: ' + _username);
       logger.info('Password: ' + _password);
-      
-      // if (this.address === _address) {
-      //   try {
-      //     this.lutronConnect(_host, _username, _password);
-      //   } catch (err) {
-      //     logger.errorStack(err, 'Connection to Main Repeater Failed');
-      //   }
-      // }
+
       try {
-        // this.lutronConnect(_host, _username, _password);
         radiora2.connect(_host, _username, _password);
 
       } catch (err) {
         logger.errorStack(err, 'Connection to Main Repeater Failed');
       }
-      
-    
-      logger.info('repeaterSetup ===================================')
-
-      // let host = null;
-      // let username = null;
-      // let password = null;
-      // // let type = null;
-
-      // const config = this.polyInterface.getConfig();
-      // const myConfig = Object(config.typedCustomData);
-      // const repeaters = Object(myConfig.repeaters);
-      // const confKeys = Object.values(repeaters);
-
-      // for (let key of confKeys) {
-      //   let _ipJoin = key.ipAddress.toString().replace(/\./g, '');
-      //   let _repeaterUID = _ipJoin.substring(_ipJoin.length - 3);
-      //   let _address = 'lip' + _repeaterUID;
-
-      //   if (this.address === _address) {
-      //     host = key.ipAddress;
-      //     username = key.username;
-      //     password = key.password;
-      //     // type = 'RadioRa2';
-      //     try {
-      //       this.lutronConnect(host, username, password);
-      //     } catch (err) {
-      //       logger.errorStack(err, 'Connection to Main Repeater Failed');
-      //     }
-      //   }
-      // }
     }
 
     getDevices() {
@@ -176,14 +132,6 @@ module.exports = function(Polyglot) {
       // const prefix = "id";
     lutronConnect() {
 
-      // const nodes = this.polyInterface.getNodes();
-
-
-      // let radiora2 = new RadioRa2();
-
-      // logger.info('Attempting Lutron Connection');
-
-      // Begin Listeners
       radiora2.on('messageReceived', function(data) {
         logger.info('LUTRON ' + data);
       });
