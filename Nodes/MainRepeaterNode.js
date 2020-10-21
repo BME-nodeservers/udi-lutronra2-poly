@@ -30,7 +30,7 @@ module.exports = function(Polyglot) {
       };
 
       this.isController = true;
-      this.lutronConnect();
+      this.listenerSetup();
       this.repeaterSetup();
       this.getDevices();
     }
@@ -128,10 +128,7 @@ module.exports = function(Polyglot) {
       this.polyInterface.removeNoticesAll();
     }
 
-    // lutronConnect(host, username, password) {
-      // const prefix = "id";
-    lutronConnect() {
-
+    listenerSetup() {
       radiora2.on('messageReceived', function(data) {
         logger.info('LUTRON ' + data);
       });
@@ -224,7 +221,6 @@ module.exports = function(Polyglot) {
         logger.info(data);
       });
 
-
       // Receive Events from ISY Admin Console
       lutronEmitter.on('query', function(id){
         radiora2.queryOutputState(id);
@@ -257,8 +253,6 @@ module.exports = function(Polyglot) {
         radiora2.stopRaiseLower(id);
       });
 
-      // Connect to Main Repeater
-      // radiora2.connect(host, username, password);
       return;
     };
 
