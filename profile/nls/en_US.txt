@@ -23,21 +23,32 @@ CMD-MD-DOF-NAME = Off
 CMD-MD-QUERY-NAME = Query
 
 ND-MAESTRO_SWITCH-NAME = Maestro Switch
-ND-MAESTRO_SWITCH-ICON = Lamp
+ND-MAESTRO_SWITCH-ICON = Switch
 ST-MS-ST-NAME = Status
 
 ND-MAESTRO_FAN-NAME = Maestro Fan Controller
-ND-MAESTRO_FAN-ICON = Output
+ND-MAESTRO_FAN-ICON = GenericCtl
 ST-MFC-ST-NAME = Status
-ST-MFC-GV0-NAME = Speed
+ST-MFC-CLIFRS-NAME = Speed
 CMD-MFC-GV1-NAME = Low
 CMD-MFC-GV2-NAME = Medium
 CMD-MFC-GV3-NAME = Med High
 CMD-MFC-GV4-NAME = High
-
 
 FANSPEED-0 = Off
 FANSPEED-1 = Low
 FANSPEED-2 = Medium
 FANSPEED-3 = Medium High
 FANSPEED-4 = High
+
+ND-PICO-NAME = Pico Remote
+ND-PICO-ICON = Output
+ST-PICO-ST-NAME = Status
+ST-PICO-GV0-NAME = Pressed
+ST-PICO-GV1-NAME = Released
+
+PICO-1 = Button 1
+PICO-2 = Button 2
+PICO-3 = Button 3
+PICO-4 = Button 4
+PICO-5 = Button 5

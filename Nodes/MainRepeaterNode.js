@@ -13,6 +13,7 @@ module.exports = function(Polyglot) {
   const MaestroDimmerNode = require('./MaestroDimmerNode.js')(Polyglot);
   const MaestroSwitchNode = require('./MaestroSwitchNode.js')(Polyglot);
   const MaestroFanControlNode = require('./MaestroFanControlNode.js')(Polyglot);
+  const PicoNode = require('./PicoNode.js')(Polyglot);
 
   class Controller extends Polyglot.Node {
     constructor(polyInterface, primary, address, name) {
@@ -122,6 +123,19 @@ module.exports = function(Polyglot) {
         } catch (err) {
           logger.errorStack(err, 'Add node failed:');
         }
+      } else if (_devType === 2) {
+        try {
+          const result = await this.polyInterface.addNode(
+            new PicoNode(this.polyInterface, this.address,
+              _address, _devName)
+          );
+          logger.info('Add node worked: %s', result);
+          if (result) {
+            radiora2.queryOutputState(lutronId);
+          }
+        } catch (err) {
+          logger.errorStack(err, 'Add node failed:');
+        }
       } else {
         logger.debug('No Device Type');
       }
@@ -178,7 +192,6 @@ module.exports = function(Polyglot) {
           logger.info('Received for Node: ' + nodeAddr);
           node.setDriver('ST', '100');
         }
-
       }.bind(this));
 
       radiora2.on('off', function(id) {
@@ -210,7 +223,7 @@ module.exports = function(Polyglot) {
             let currentValue = parseInt(fanSpeed['value'], 10);
             logger.info('Fan Speed %: ' + currentValue);
 
-            if (currentValue > 0 && currentValue <= 25) {
+            if (currentValue > 1 && currentValue <= 25) {
               node.setDriver('CLIFRS', '1');
               logger.info('Fan Speed: Low');
             } else if (currentValue >= 26 && currentValue <= 51) {
@@ -222,6 +235,9 @@ module.exports = function(Polyglot) {
             } else if (currentValue > 76) {
               node.setDriver('CLIFRS', '4');
               logger.info('Fan Speed: High');
+            } else {
+              node.setDriver('CLIFRS', '0');
+              logger.info('Fan Speed: Off');
             }
           } else {
             logger.info(id + ': Not a fan controller');
@@ -229,37 +245,53 @@ module.exports = function(Polyglot) {
         }
       }.bind(this));
 
-      radiora2.on('buttonPress', function(id) {
-        logger.info(id + ': Button Pressed');
-      });
+      radiora2.on('buttonPress', function(id, buttonId) {
+        logger.info(id + ': Button ' + buttonId + ' Pressed');
 
-      radiora2.on('buttonReleased', function(id) {
+        let nodeAddr = this.address + 'id_' + id;
+        logger.info('Address: ' + nodeAddr);
+        let node = this.polyInterface.getNode(nodeAddr);
+        logger.info(node);
+        if (node) {
+          node.setDriver('GV0', buttonId);
+        }
+      }.bind(this));
+
+      radiora2.on('buttonReleased', function(id, buttonId) {
         logger.info(id + ': Button Released');
-      });
+
+        let nodeAddr = this.address + 'id_' + id;
+        logger.info('Address: ' + nodeAddr);
+        let node = this.polyInterface.getNode(nodeAddr);
+        logger.info(node);
+        if (node) {
+          node.setDriver('GV1', buttonId);
+        }
+      }.bind(this));
 
       radiora2.on('buttonHold', function(data) {
         logger.info(data);
-      });
+      }.bind(this));
 
       radiora2.on('keypadbuttonLEDOn', function(data) {
         logger.info(data);
-      });
+      }.bind(this));
 
       radiora2.on('keypadbuttonLEDOff', function(data) {
         logger.info(data);
-      });
+      }.bind(this));
 
       radiora2.on('groupOccupied', function(data) {
         logger.info(data);
-      });
+      }.bind(this));
 
       radiora2.on('groupUnoccupied', function(data) {
         logger.info(data);
-      });
+      }.bind(this));
 
       radiora2.on('groupUnknown', function(data) {
         logger.info(data);
-      });
+      }.bind(this));
 
       // Receive Events from ISY Admin Console
       lutronEmitter.on('query', function(id){

@@ -21,7 +21,7 @@
   <!-- Maestro Switch node -->
   <nodedef id="MAESTRO_SWITCH" nls="MS">
     <sts>
-      <st id="ST" editor="_78_1"/>
+      <st id="ST" editor="POWER"/>
     </sts>
     <cmds>
       <sends>
@@ -39,7 +39,7 @@
   <!-- Maestro Dimmer node - dimmer -->
   <nodedef id="MAESTRO_DIMMER" nls="MD">
     <sts>
-      <st id="ST" editor="_51_1"/>
+      <st id="ST" editor="PERCENT"/>
       <st id="RR" editor="_58_1"/>
       <st id="DELAY" editor="_58_1"/>
     </sts>
@@ -78,7 +78,7 @@
   <nodedef id="MAESTRO_FAN" nls="MFC">
     <sts>
       <st id="ST" editor="_51_1"/>
-      <st id="GV0" editor="FANSPEED"/>
+      <st id="CLIFRS" editor="FANSPEED"/>
     </sts>
     <cmds>
       <sends>
@@ -97,4 +97,22 @@
     </cmds>
   </nodedef>
 
+  <nodedef id="PICO" nls="PICO">
+    <sts>
+      <st id="ST" editor="BOOL"/>
+      <st id="GV0" editor="PICO"/>
+      <st id="GV1" editor="PICO"/>
+    </sts>
+    <cmds>
+      <sends>
+<!--        <cmd id="DON"/>-->
+<!--        <cmd id="DOF"/>-->
+      </sends>
+      <accepts>
+<!--        <cmd id="DON"/>-->
+<!--        <cmd id="DOF"/>-->
+<!--        <cmd id="QUERY"/>-->
+      </accepts>
+    </cmds>
+  </nodedef>
 </nodeDefs>

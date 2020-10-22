@@ -1,14 +1,28 @@
 <!-- Version 0.0.1 -->
 <editors>
 
-<!--  <editor id="PERCENT">-->
-<!--    &lt;!&ndash; 51 is percentage &ndash;&gt;-->
-<!--    <range uom="51" subset="0-100" />-->
-<!--  </editor>-->
+  <editor id="BOOL">
+    <range uom="2" subset="0,1" />
+  </editor>
+
+  <editor id="PERCENT">
+    <!-- 51 is percentage -->
+    <range uom="51" subset="0-100" />
+  </editor>
+
+  <editor id="POWER">
+    <!-- 78 is Power 0 = Off, 100 = On -->
+    <range uom="78" subset="0,100" />
+  </editor>
 
   <editor id="FANSPEED">
     <range uom="25" subset="0-4" nls="FANSPEED" />
   </editor>
+
+  <editor id="PICO">
+    <range uom="25" subset="1-5" nls="PICO" />
+  </editor>
+
 
 
 </editors>

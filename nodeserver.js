@@ -14,6 +14,7 @@ const MainRepeaterNode = require('./Nodes/MainRepeaterNode.js')(Polyglot);
 const MaestroDimmerNode = require('./Nodes/MaestroDimmerNode.js')(Polyglot);
 const MaestroSwitchNode = require('./Nodes/MaestroSwitchNode.js')(Polyglot);
 const MaestroFanControlNode = require('./Nodes/MaestroFanControlNode')(Polyglot);
+const PicoNode = require('./Nodes/PicoNode.js')(Polyglot);
 
 const typedParams = [
   {name: 'name', title: 'Repeater Name', type: 'STRING',
@@ -42,7 +43,7 @@ const typedParams = [
 logger.info('Starting Lutron Node Server');
 
 const poly = new Polyglot.Interface([ControllerNode,
-  MaestroDimmerNode, MaestroSwitchNode, MaestroFanControlNode]);
+  MaestroDimmerNode, MaestroSwitchNode, MaestroFanControlNode, PicoNode]);
   // MainRepeaterNode, MaestroDimmerNode, MaestroSwitchNode]);
 
 poly.on('mqttConnected', function() {
