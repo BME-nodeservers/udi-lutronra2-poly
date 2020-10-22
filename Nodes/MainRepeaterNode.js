@@ -172,13 +172,8 @@ module.exports = function(Polyglot) {
       });
 
       radiora2.on('on', function(id) {
-        // logger.info(id);
         let nodeAddr = this.address + 'id_' + id;
-        logger.info('Address: ' + nodeAddr);
-
         let node = this.polyInterface.getNode(nodeAddr);
-        logger.info(node);
-
         if (node) {
           logger.info('Received for Node: ' + nodeAddr);
           node.setDriver('ST', '100');
@@ -209,23 +204,23 @@ module.exports = function(Polyglot) {
           logger.info('Received for Node: ' + nodeAddr);
           node.setDriver('ST', newLevel);
 
-          let fanIndex = node.getDriver('GV0');
+          let fanIndex = node.getDriver('CLIFRS');
           if (fanIndex) {
             let fanSpeed = node.getDriver('ST');
             let currentValue = parseInt(fanSpeed['value'], 10);
             logger.info('Fan Speed %: ' + currentValue);
 
             if (currentValue > 0 && currentValue <= 25) {
-              node.setDriver('GV0', '1');
+              node.setDriver('CLIFRS', '1');
               logger.info('Fan Speed: Low');
             } else if (currentValue >= 26 && currentValue <= 51) {
-              node.setDriver('GV0', '2');
+              node.setDriver('CLIFRS', '2');
               logger.info('Fan Speed: Medium');
             } else if (currentValue >= 56 && currentValue <= 76) {
-              node.setDriver('GV0', '3');
+              node.setDriver('CLIFRS', '3');
               logger.info('Fan Speed: Med High');
             } else if (currentValue > 76) {
-              node.setDriver('GV0', '4');
+              node.setDriver('CLIFRS', '4');
               logger.info('Fan Speed: High');
             }
           } else {
@@ -234,12 +229,12 @@ module.exports = function(Polyglot) {
         }
       }.bind(this));
 
-      radiora2.on('buttonPress', function(data) {
-        logger.info(data);
+      radiora2.on('buttonPress', function(id) {
+        logger.info(id + ': Button Pressed');
       });
 
-      radiora2.on('buttonReleased', function(data) {
-        logger.info(data);
+      radiora2.on('buttonReleased', function(id) {
+        logger.info(id + ': Button Released');
       });
 
       radiora2.on('buttonHold', function(data) {
