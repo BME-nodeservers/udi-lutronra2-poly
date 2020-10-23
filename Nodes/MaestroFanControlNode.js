@@ -7,7 +7,7 @@ var lutronEmitter = eventEmitter.lutronEmitter;
 // You need one per nodedefs.
 
 // nodeDefId must match the nodedef id in your nodedef
-const nodeDefId = 'MAESTRO_DIMMER';
+const nodeDefId = 'MAESTRO_FAN';
 let lutronId = '';
 
 module.exports = function(Polyglot) {
@@ -15,7 +15,7 @@ module.exports = function(Polyglot) {
   const logger = Polyglot.logger;
 
   // This is your custom Node class
-  class MaestroDimmerNode extends Polyglot.Node {
+  class MaestroFanControlNode extends Polyglot.Node {
     constructor(polyInterface, primary, address, name) {
       super(nodeDefId, polyInterface, primary, address, name);
 
@@ -24,20 +24,20 @@ module.exports = function(Polyglot) {
       this.commands = {
         DON: this.onDON,
         DOF: this.onDOF,
-        BRT: this.onBRT,
-        DIM: this.onDIM,
-        FDUP: this.onFDUP,
-        FDDOWN: this.onFDDOWN,
-        FDSTOP: this.onFDSTOP,
-        RR: this.onRampRate,
-        DELAY: this.onDelay,
+        GV1: this.onLow,
+        GV2: this.onMed,
+        GV3: this.onMedHigh,
+        GV4: this.onHigh,
         QUERY: this.query,
       };
 
       this.drivers = {
         ST: {value: '0', uom: 51},
-        RR: {value: '0', uom: 58},
-        DELAY: {value: '0', uom: 58},
+        CLIFRS: {value: '0', uom: 25},
+        GV1: {value: '0', uom: 2},
+        GV2: {value: '0', uom: 2},
+        GV3: {value: '0', uom: 2},
+        GV4: {value: '0', uom: 2},
       };
 
       lutronId = this.address.split('_')[1];
@@ -51,16 +51,10 @@ module.exports = function(Polyglot) {
       // setDrivers accepts string or number (message.value is a string)
       this.setDriver('ST', message.value ? message.value : '100');
 
-      let rampRateST = this.getDriver('RR');
-      let delayST = this.getDriver('DELAY');
-      let rampRate = parseFloat(rampRateST['value']);
-      let delayRate = parseFloat(delayST['value']);
-
       if (!message.value) {
         lutronEmitter.emit('on', lutronId);
       } else {
-        lutronEmitter.emit('level', lutronId, message.value,
-            rampRate, delayRate);
+        lutronEmitter.emit('level', lutronId, message.value);
       }
     }
 
@@ -70,53 +64,47 @@ module.exports = function(Polyglot) {
       lutronEmitter.emit('off', lutronId);
     }
 
-    onBRT() {
-      let driverST = this.getDriver('ST');
-      let currentValue = parseInt(driverST['value'], 10);
-      let brightIncrease = currentValue + 10;
-      if (brightIncrease >= 100) {
-        lutronEmitter.emit('level', lutronId, 100);
-      } else {
-        lutronEmitter.emit('level', lutronId, brightIncrease);
-      }
+    onLow(message) {
+      this.setDriver('GV0', '1');
+      this.setDriver('GV1', '1');
+      this.setDriver('GV2', '0');
+      this.setDriver('GV3', '0');
+      this.setDriver('GV4', '0');
+      lutronEmitter.emit('level', lutronId, 25);
     }
 
-    onDIM() {
-      let driverST = this.getDriver('ST');
-      let currentValue = parseInt(driverST['value'], 10);
-      let dimValue = currentValue - 10;
-      if (dimValue <= 0) {
-        lutronEmitter.emit('level', lutronId, 0);
-      } else {
-        lutronEmitter.emit('level', lutronId, dimValue);
-      }
+    onMed(message) {
+      this.setDriver('GV0', '2');
+      this.setDriver('GV1', '0');
+      this.setDriver('GV2', '1');
+      this.setDriver('GV3', '0');
+      this.setDriver('GV4', '0');
+      lutronEmitter.emit('level', lutronId, 50);
     }
 
-    onFDUP() {
-      lutronEmitter.emit('fdup', lutronId);
+    onMedHigh(message) {
+      this.setDriver('GV0', '3');
+      this.setDriver('GV1', '0');
+      this.setDriver('GV2', '0');
+      this.setDriver('GV3', '1');
+      this.setDriver('GV4', '0');
+      lutronEmitter.emit('level', lutronId, 75);
     }
 
-    onFDDOWN() {
-      lutronEmitter.emit('fddown', lutronId);
-    }
-
-    onFDSTOP() {
-      lutronEmitter.emit('fdstop', lutronId);
-    }
-
-    onRampRate(message) {
-      this.setDriver('RR', message.value);
-    }
-
-    onDelay(message) {
-      this.setDriver('DELAY', message.value);
+    onHigh(message) {
+      this.setDriver('GV0', '4');
+      this.setDriver('GV1', '0');
+      this.setDriver('GV2', '0');
+      this.setDriver('GV3', '0');
+      this.setDriver('GV4', '1');
+      lutronEmitter.emit('level', lutronId, 100);
     }
   }
 
   // Required so that the interface can find this Node class using the nodeDefId
-  MaestroDimmerNode.nodeDefId = nodeDefId;
+  MaestroFanControlNode.nodeDefId = nodeDefId;
 
-  return MaestroDimmerNode;
+  return MaestroFanControlNode;
 };
 
 

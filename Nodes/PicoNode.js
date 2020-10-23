@@ -4,25 +4,27 @@ let eventEmitter = require('../lib/lutronEvents.js');
 let lutronEmitter = eventEmitter.lutronEmitter;
 let lutronId = '';
 
-const nodeDefId = 'MAESTRO_SWITCH';
+const nodeDefId = 'PICO';
 
 module.exports = function(Polyglot) {
   const logger = Polyglot.logger;
 
-  class MaestroSwitchNode extends Polyglot.Node {
+  class PicoNode extends Polyglot.Node {
     constructor(polyInterface, primary, address, name) {
       super(nodeDefId, polyInterface, primary, address, name);
 
       this.hint = '0x01020900'; // Example for a Dimmer switch
 
       this.commands = {
-        DON: this.onDON,
-        DOF: this.onDOF,
-        QUERY: this.query,
+        // DON: this.onDON,
+        // DOF: this.onDOF,
+        // QUERY: this.query,
       };
 
       this.drivers = {
         ST: {value: '0', uom: 78},
+        GV0: {value: '0', uom: 25},
+        GV1: {value: '0', uom: 25},
       };
 
       lutronId = this.address.split('_')[1];
@@ -48,7 +50,7 @@ module.exports = function(Polyglot) {
   }
 
   // Required so that the interface can find this Node class using the nodeDefId
-  MaestroSwitchNode.nodeDefId = nodeDefId;
+  PicoNode.nodeDefId = nodeDefId;
 
-  return MaestroSwitchNode;
+  return PicoNode;
 };

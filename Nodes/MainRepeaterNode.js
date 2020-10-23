@@ -12,6 +12,8 @@ module.exports = function(Polyglot) {
   const logger = Polyglot.logger;
   const MaestroDimmerNode = require('./MaestroDimmerNode.js')(Polyglot);
   const MaestroSwitchNode = require('./MaestroSwitchNode.js')(Polyglot);
+  const MaestroFanControlNode = require('./MaestroFanControlNode.js')(Polyglot);
+  const PicoNode = require('./PicoNode.js')(Polyglot);
 
   class Controller extends Polyglot.Node {
     constructor(polyInterface, primary, address, name) {
@@ -30,63 +32,47 @@ module.exports = function(Polyglot) {
       };
 
       this.isController = true;
-      this.getDevices();
+      this.listenerSetup();
       this.repeaterSetup();
-
+      this.getDevices();
     }
 
     repeaterSetup() {
-      let host = null;
-      let username = null;
-      let password = null;
-      // let type = null;
+      logger.info('Begin Main Repeater Setup...');
 
-      const config = this.polyInterface.getConfig();
-      const myConfig = Object(config.typedCustomData);
-      const repeaters = Object(myConfig.repeaters);
-      const confKeys = Object.values(repeaters);
+      const _config = this.polyInterface.getConfig();
+      const config = Object(_config.typedCustomData);
 
-      for (let key of confKeys) {
-        let _ipJoin = key.ipAddress.toString().replace(/\./g, '');
-        let _repeaterUID = _ipJoin.substring(_ipJoin.length - 3);
-        let _address = 'lip' + _repeaterUID;
+      let _host = config.ipAddress;
+      let _username = config.username;
+      let _password = config.password;
 
-        if (this.address === _address) {
-          host = key.ipAddress;
-          username = key.username;
-          password = key.password;
-          // type = 'RadioRa2';
-          try {
-            this.lutronConnect(host, username, password);
-          } catch (err) {
-            logger.errorStack(err, 'Connection to Main Repeater Failed');
-          }
-        }
+      logger.info('Host: ' + _host);
+      logger.info('Username: ' + _username);
+      logger.info('Password: ' + _password);
+
+      try {
+        radiora2.connect(_host, _username, _password);
+
+      } catch (err) {
+        logger.errorStack(err, 'Connection to Main Repeater Failed');
       }
     }
 
     getDevices() {
-      const config = this.polyInterface.getConfig();
-      const myConfig = Object(config.typedCustomData);
-      const repeaters = Object(myConfig.repeaters);
-      const configKeys = Object.values(repeaters);
+      const _config = this.polyInterface.getConfig();
+      const config = Object(_config.typedCustomData);
+      const devices = Object(config.devices);
 
-      for (let confKey of configKeys) {
-        let _ipJoin = confKey.ipAddress.toString().replace(/\./g, '');
-        let _repeaterUID = _ipJoin.substring(_ipJoin.length - 3);
-        let _address = 'lip' + _repeaterUID;
-
-        if (this.address === _address) {
-          if (Object.values(confKey.devices).length > 0) {
-            const deviceKeys = Object.values(confKey.devices);
-            logger.info('devs: ' + deviceKeys);
-            for (let devKey of deviceKeys) {
-              logger.info('Dev Key name: ' + devKey.name);
-              logger.info('Dev Key integrationID: ' + devKey.intId);
-              logger.info('Dev Key deviceType: ' + devKey.devType);
-              this.createDevice(devKey.intId, devKey.devType, devKey.name);
-            }
-          }
+      let devKeys = Object.values(devices);
+      for (let key of devKeys) {
+        logger.info('Name: ' + key.name);
+        logger.info('Integration ID: ' + key.intId);
+        logger.info('Device Type: ' + key.devType);
+        try {
+          this.createDevice(key.intId, key.devType, key.name);
+        } catch (err) {
+          logger.errorStack(err, 'Device Create Failed: ' + key.name);
         }
       }
     }
@@ -124,6 +110,32 @@ module.exports = function(Polyglot) {
         } catch (err) {
           logger.errorStack(err, 'Add node failed:');
         }
+      } else if (_devType === 9) {
+        try {
+          const result = await this.polyInterface.addNode(
+            new MaestroFanControlNode(this.polyInterface, this.address,
+              _address, _devName)
+          );
+          logger.info('Add node worked: %s', result);
+          if (result) {
+            radiora2.queryOutputState(lutronId);
+          }
+        } catch (err) {
+          logger.errorStack(err, 'Add node failed:');
+        }
+      } else if (_devType === 2) {
+        try {
+          const result = await this.polyInterface.addNode(
+            new PicoNode(this.polyInterface, this.address,
+              _address, _devName)
+          );
+          logger.info('Add node worked: %s', result);
+          if (result) {
+            radiora2.queryOutputState(lutronId);
+          }
+        } catch (err) {
+          logger.errorStack(err, 'Add node failed:');
+        }
       } else {
         logger.debug('No Device Type');
       }
@@ -144,16 +156,7 @@ module.exports = function(Polyglot) {
       this.polyInterface.removeNoticesAll();
     }
 
-    lutronConnect(host, username, password) {
-      // const prefix = "id";
-      // const nodes = this.polyInterface.getNodes();
-
-
-      // let radiora2 = new RadioRa2();
-
-      logger.info('Attempting Lutron Connection');
-
-      // Begin Listeners
+    listenerSetup() {
       radiora2.on('messageReceived', function(data) {
         logger.info('LUTRON ' + data);
       });
@@ -183,14 +186,12 @@ module.exports = function(Polyglot) {
       });
 
       radiora2.on('on', function(id) {
-        // logger.info(id);
         let nodeAddr = this.address + 'id_' + id;
         let node = this.polyInterface.getNode(nodeAddr);
         if (node) {
           logger.info('Received for Node: ' + nodeAddr);
           node.setDriver('ST', '100');
         }
-
       }.bind(this));
 
       radiora2.on('off', function(id) {
@@ -205,47 +206,92 @@ module.exports = function(Polyglot) {
       }.bind(this));
 
       radiora2.on('level', function(id, level) {
-        // logger.info("ID: " + id + " Level: " + level);
+        logger.info('ID: ' + id + ' Level: ' + level);
         let nodeAddr = this.address + 'id_' + id;
+        logger.info('Address: ' + nodeAddr);
         let node = this.polyInterface.getNode(nodeAddr);
+        logger.info(node);
         if (node) {
+          let newLevel = Math.round(level);
+          logger.info('Rounded Level: ' + newLevel);
           logger.info('Received for Node: ' + nodeAddr);
-          node.setDriver('ST', Math.round(level));
+          node.setDriver('ST', newLevel);
+
+          let fanIndex = node.getDriver('CLIFRS');
+          if (fanIndex) {
+            let fanSpeed = node.getDriver('ST');
+            let currentValue = parseInt(fanSpeed['value'], 10);
+            logger.info('Fan Speed %: ' + currentValue);
+
+            if (currentValue > 1 && currentValue <= 25) {
+              node.setDriver('CLIFRS', '1');
+              logger.info('Fan Speed: Low');
+            } else if (currentValue >= 26 && currentValue <= 51) {
+              node.setDriver('CLIFRS', '2');
+              logger.info('Fan Speed: Medium');
+            } else if (currentValue >= 56 && currentValue <= 76) {
+              node.setDriver('CLIFRS', '3');
+              logger.info('Fan Speed: Med High');
+            } else if (currentValue > 76) {
+              node.setDriver('CLIFRS', '4');
+              logger.info('Fan Speed: High');
+            } else {
+              node.setDriver('CLIFRS', '0');
+              logger.info('Fan Speed: Off');
+            }
+          } else {
+            logger.info(id + ': Not a fan controller');
+          }
         }
       }.bind(this));
 
-      radiora2.on('buttonPress', function(data) {
-        logger.info(data);
-      });
+      radiora2.on('buttonPress', function(id, buttonId) {
+        logger.info(id + ': Button ' + buttonId + ' Pressed');
 
-      radiora2.on('buttonReleased', function(data) {
-        logger.info(data);
-      });
+        let nodeAddr = this.address + 'id_' + id;
+        logger.info('Address: ' + nodeAddr);
+        let node = this.polyInterface.getNode(nodeAddr);
+        logger.info(node);
+        if (node) {
+          node.setDriver('GV0', buttonId);
+        }
+      }.bind(this));
+
+      radiora2.on('buttonReleased', function(id, buttonId) {
+        logger.info(id + ': Button Released');
+
+        let nodeAddr = this.address + 'id_' + id;
+        logger.info('Address: ' + nodeAddr);
+        let node = this.polyInterface.getNode(nodeAddr);
+        logger.info(node);
+        if (node) {
+          node.setDriver('GV1', buttonId);
+        }
+      }.bind(this));
 
       radiora2.on('buttonHold', function(data) {
         logger.info(data);
-      });
+      }.bind(this));
 
       radiora2.on('keypadbuttonLEDOn', function(data) {
         logger.info(data);
-      });
+      }.bind(this));
 
       radiora2.on('keypadbuttonLEDOff', function(data) {
         logger.info(data);
-      });
+      }.bind(this));
 
       radiora2.on('groupOccupied', function(data) {
         logger.info(data);
-      });
+      }.bind(this));
 
       radiora2.on('groupUnoccupied', function(data) {
         logger.info(data);
-      });
+      }.bind(this));
 
       radiora2.on('groupUnknown', function(data) {
         logger.info(data);
-      });
-
+      }.bind(this));
 
       // Receive Events from ISY Admin Console
       lutronEmitter.on('query', function(id){
@@ -279,9 +325,7 @@ module.exports = function(Polyglot) {
         radiora2.stopRaiseLower(id);
       });
 
-      // Connect to Main Repeater
-      radiora2.connect(host, username, password);
-      // return;
+      return;
     };
 
   }

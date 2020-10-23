@@ -9,30 +9,10 @@
     <cmds>
       <sends/>
       <accepts>
-        <cmd id="DISCOVER"/>
-        <cmd id="CREATE_NEW"/>
+<!--        <cmd id="DISCOVER"/>-->
+<!--        <cmd id="CREATE_NEW"/>-->
         <cmd id="UPDATE_PROFILE"/>
         <cmd id="REMOVE_NOTICES"/>
-        <cmd id="QUERY"/>
-      </accepts>
-    </cmds>
-  </nodedef>
-
-  <!-- Virtual node - dimmer -->
-  <nodedef id="VNODE_DIMMER" nls="VN">
-    <sts>
-      <st id="ST" editor="PERCENT"/>
-    </sts>
-    <cmds>
-      <sends>
-        <cmd id="DON"/>
-        <cmd id="DOF"/>
-      </sends>
-      <accepts>
-        <cmd id="DON">
-          <p id="" editor="PERCENT" optional="T"/>
-        </cmd>
-        <cmd id="DOF"/>
         <cmd id="QUERY"/>
       </accepts>
     </cmds>
@@ -41,7 +21,7 @@
   <!-- Maestro Switch node -->
   <nodedef id="MAESTRO_SWITCH" nls="MS">
     <sts>
-      <st id="ST" editor="_78_1"/>
+      <st id="ST" editor="POWER"/>
     </sts>
     <cmds>
       <sends>
@@ -59,7 +39,7 @@
   <!-- Maestro Dimmer node - dimmer -->
   <nodedef id="MAESTRO_DIMMER" nls="MD">
     <sts>
-      <st id="ST" editor="_51_1"/>
+      <st id="ST" editor="PERCENT"/>
       <st id="RR" editor="_58_1"/>
       <st id="DELAY" editor="_58_1"/>
     </sts>
@@ -75,7 +55,7 @@
       </sends>
       <accepts>
         <cmd id="DON">
-          <p id="" editor="PERCENT" optional="T"/>
+          <p id="" editor="_51_1" optional="T"/>
         </cmd>
         <cmd id="DOF"/>
         <cmd id="RR">
@@ -94,4 +74,45 @@
     </cmds>
   </nodedef>
 
+  <!-- Maestro Fan Controller node -->
+  <nodedef id="MAESTRO_FAN" nls="MFC">
+    <sts>
+      <st id="ST" editor="_51_1"/>
+      <st id="CLIFRS" editor="FANSPEED"/>
+    </sts>
+    <cmds>
+      <sends>
+        <cmd id="DON"/>
+        <cmd id="DOF"/>
+      </sends>
+      <accepts>
+        <cmd id="DON"/>
+        <cmd id="DOF"/>
+        <cmd id="GV1" editor="_2_1" optional="T"/> <!-- Low -->
+        <cmd id="GV2" editor="_2_1" optional="T"/> <!-- Medium -->
+        <cmd id="GV3" editor="_2_1" optional="T"/> <!-- Medium High -->
+        <cmd id="GV4" editor="_2_1" optional="T"/> <!-- High -->
+        <cmd id="QUERY"/>
+      </accepts>
+    </cmds>
+  </nodedef>
+
+  <nodedef id="PICO" nls="PICO">
+    <sts>
+      <st id="ST" editor="BOOL" hide="T"/>
+      <st id="GV0" editor="PICO"/>
+      <st id="GV1" editor="PICO"/>
+    </sts>
+    <cmds>
+      <sends>
+<!--        <cmd id="DON"/>-->
+<!--        <cmd id="DOF"/>-->
+      </sends>
+      <accepts>
+<!--        <cmd id="DON"/>-->
+<!--        <cmd id="DOF"/>-->
+<!--        <cmd id="QUERY"/>-->
+      </accepts>
+    </cmds>
+  </nodedef>
 </nodeDefs>
