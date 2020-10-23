@@ -99,7 +99,7 @@
 
   <nodedef id="PICO" nls="PICO">
     <sts>
-      <st id="ST" editor="BOOL"/>
+      <st id="ST" editor="BOOL" hide="T"/>
       <st id="GV0" editor="PICO"/>
       <st id="GV1" editor="PICO"/>
     </sts>
