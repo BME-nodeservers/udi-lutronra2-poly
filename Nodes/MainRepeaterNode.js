@@ -13,7 +13,6 @@ module.exports = function(Polyglot) {
   const MaestroDimmerNode = require('./MaestroDimmerNode.js')(Polyglot);
   const MaestroSwitchNode = require('./MaestroSwitchNode.js')(Polyglot);
   const MaestroFanControlNode = require('./MaestroFanControlNode.js')(Polyglot);
-  // const PicoNode = require('./PicoNode.js')(Polyglot);
   const Pico3BRLNode = require('./Pico3BRLNode.js')(Polyglot);
   const OccupancyNode = require('./OccupancyNode.js')(Polyglot);
 
@@ -82,14 +81,12 @@ module.exports = function(Polyglot) {
     async createDevice(intId, devType, devName) {
       const prefix = 'id_';
       let _address = this.address + prefix + intId;
-      let lutronId = _address.split('_')[1];
+      let _lutronId = intId;
       let _devName = devName;
       let _devType = devType;
 
-      logger.info('========== Device Info: ' + intId + ' ' + devType)
-
       switch(_devType) {
-        case 1:
+        case 1: // Occupancy
           try {
             const result = await this.polyInterface.addNode(
               new OccupancyNode(this.polyInterface, this.address,
@@ -97,7 +94,7 @@ module.exports = function(Polyglot) {
             );
             logger.info('Add node worked: %s', result);
             // if (result) {
-            //   radiora2.queryOutputState(lutronId);
+            //   radiora2.queryOutputState(_lutronId);
             // }
           } catch (err) {
             logger.errorStack(err, 'Add node failed:');
@@ -112,7 +109,7 @@ module.exports = function(Polyglot) {
         case 4:
           //code
           break;
-        case 5:
+        case 5: // Pico 3BRL
           try {
             const result = await this.polyInterface.addNode(
               new Pico3BRLNode(this.polyInterface, this.address,
@@ -120,7 +117,7 @@ module.exports = function(Polyglot) {
             );
             logger.info('Add node worked: %s', result);
             // if (result) {
-            //   radiora2.queryOutputState(lutronId);
+            //   radiora2.queryOutputState(_lutronId);
             // }
           } catch (err) {
             logger.errorStack(err, 'Add node failed:');
@@ -132,7 +129,7 @@ module.exports = function(Polyglot) {
         case 7:
           //code
           break;
-        case 8:
+        case 8: // Switch
             try {
               const result = await this.polyInterface.addNode(
                 new MaestroSwitchNode(this.polyInterface, this.address,
@@ -140,13 +137,13 @@ module.exports = function(Polyglot) {
               );
               logger.info('Add node worked: %s', result);
               if (result) {
-                radiora2.queryOutputState(lutronId);
+                radiora2.queryOutputState(_lutronId);
               }
             } catch (err) {
               logger.errorStack(err, 'Add node failed:');
             }
           break;
-        case 9:
+        case 9: // Dimmer
           try {
             const result = await this.polyInterface.addNode(
               new MaestroDimmerNode(this.polyInterface, this.address,
@@ -154,88 +151,29 @@ module.exports = function(Polyglot) {
             );
             logger.info('Add node worked: %s', result);
             if (result) {
-              radiora2.queryOutputState(lutronId);
+              radiora2.queryOutputState(_lutronId);
             }
           } catch (err) {
             logger.errorStack(err, 'Add node failed:');
           }
           break;
-        case 10:
-          //code
+        case 10: // Fan Controller
+          try {
+            const result = await this.polyInterface.addNode(
+              new MaestroFanControlNode(this.polyInterface, this.address,
+                _address, _devName)
+            );
+            logger.info('Add node worked: %s', result);
+            if (result) {
+              radiora2.queryOutputState(_lutronId);
+            }
+          } catch (err) {
+            logger.errorStack(err, 'Add node failed:');
+          }
           break;
         default:
-          //code
+          logger.info('No Device Type Defined');
       }
-
-      // if (_devType === 8) { // Switch
-      //   try {
-      //     const result = await this.polyInterface.addNode(
-      //       new MaestroSwitchNode(this.polyInterface, this.address,
-      //         _address, _devName)
-      //     );
-      //     logger.info('Add node worked: %s', result);
-      //     if (result) {
-      //       radiora2.queryOutputState(lutronId);
-      //     }
-      //   } catch (err) {
-      //     logger.errorStack(err, 'Add node failed:');
-      //   }
-      // } else if (_devType === 9) { // Dimmer
-      //   try {
-      //     const result = await this.polyInterface.addNode(
-      //       new MaestroDimmerNode(this.polyInterface, this.address,
-      //         _address, _devName)
-      //     );
-      //     logger.info('Add node worked: %s', result);
-      //     if (result) {
-      //       radiora2.queryOutputState(lutronId);
-      //     }
-      //   } catch (err) {
-      //     logger.errorStack(err, 'Add node failed:');
-      //   }
-      // } else if (_devType === 10) { // Fan
-      //   try {
-      //     const result = await this.polyInterface.addNode(
-      //       new MaestroFanControlNode(this.polyInterface, this.address,
-      //         _address, _devName)
-      //     );
-      //     logger.info('Add node worked: %s', result);
-      //     if (result) {
-      //       radiora2.queryOutputState(lutronId);
-      //     }
-      //   } catch (err) {
-      //     logger.errorStack(err, 'Add node failed:');
-      //   }
-      // } else if (_devType === 2) { // Pico
-      //   try {
-      //     const result = await this.polyInterface.addNode(
-      //       new PicoNode(this.polyInterface, this.address,
-      //         _address, _devName)
-      //     );
-      //     logger.info('Add node worked: %s', result);
-      //     if (result) {
-      //       radiora2.queryOutputState(lutronId);
-      //     }
-      //   } catch (err) {
-      //     logger.errorStack(err, 'Add node failed:');
-      //   }
-      // } else if (_devType === 1) { // Occupancy
-      //   try {
-      //     const result = await this.polyInterface.addNode(
-      //       new OccupancyNode(this.polyInterface, this.address,
-      //         _address, _devName)
-      //     );
-      //     logger.info('Add node worked: %s', result);
-      //     if (result) {
-      //       radiora2.queryOutputState(lutronId);
-      //     }
-      //   } catch (err) {
-      //     logger.errorStack(err, 'Add node failed:');
-      //   }
-      // }
-      // else {
-      //   logger.debug('No Device Type');
-      // }
     }
 
     // Here you could discover devices from a 3rd party API
