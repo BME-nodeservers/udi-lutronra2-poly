@@ -14,6 +14,7 @@ module.exports = function(Polyglot) {
   const MaestroSwitchNode = require('./MaestroSwitchNode.js')(Polyglot);
   const MaestroFanControlNode = require('./MaestroFanControlNode.js')(Polyglot);
   const PicoNode = require('./PicoNode.js')(Polyglot);
+  const OccupancyNode = require('./OccupancyNode.js')(Polyglot);
 
   class Controller extends Polyglot.Node {
     constructor(polyInterface, primary, address, name) {
@@ -84,7 +85,7 @@ module.exports = function(Polyglot) {
       let _devName = devName;
       let _devType = devType;
 
-      if (_devType === 8) {
+      if (_devType === 8) { // Switch
         try {
           const result = await this.polyInterface.addNode(
             new MaestroSwitchNode(this.polyInterface, this.address,
@@ -97,7 +98,7 @@ module.exports = function(Polyglot) {
         } catch (err) {
           logger.errorStack(err, 'Add node failed:');
         }
-      } else if (_devType === 6) {
+      } else if (_devType === 6) { // Dimmer
         try {
           const result = await this.polyInterface.addNode(
             new MaestroDimmerNode(this.polyInterface, this.address,
@@ -110,7 +111,7 @@ module.exports = function(Polyglot) {
         } catch (err) {
           logger.errorStack(err, 'Add node failed:');
         }
-      } else if (_devType === 9) {
+      } else if (_devType === 9) { // Fan
         try {
           const result = await this.polyInterface.addNode(
             new MaestroFanControlNode(this.polyInterface, this.address,
@@ -123,7 +124,7 @@ module.exports = function(Polyglot) {
         } catch (err) {
           logger.errorStack(err, 'Add node failed:');
         }
-      } else if (_devType === 2) {
+      } else if (_devType === 2) { // Pico
         try {
           const result = await this.polyInterface.addNode(
             new PicoNode(this.polyInterface, this.address,
@@ -136,7 +137,21 @@ module.exports = function(Polyglot) {
         } catch (err) {
           logger.errorStack(err, 'Add node failed:');
         }
-      } else {
+      } else if (_devType === 7) { // Occupancy
+        try {
+          const result = await this.polyInterface.addNode(
+            new OccupancyNode(this.polyInterface, this.address,
+              _address, _devName)
+          );
+          logger.info('Add node worked: %s', result);
+          if (result) {
+            radiora2.queryOutputState(lutronId);
+          }
+        } catch (err) {
+          logger.errorStack(err, 'Add node failed:');
+        }
+      }
+      else {
         logger.debug('No Device Type');
       }
     }
