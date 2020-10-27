@@ -37,7 +37,7 @@ module.exports = function(Polyglot) {
     onDON(message) {
       // setDrivers accepts string or number (message.value is a string)
       logger.info('DON (%s)', this.address);
-      this.setDriver('ST', message.value ? message.value : '100');
+      this.setDriver('ST', message.value ? message.value : '1');
       lutronEmitter.emit('on', lutronId);
     }
 
