@@ -4,11 +4,11 @@
   "type": "node",
   "executable": "nodeserver.js",
   "install": "install.sh",
-  "description": "Integrate Lutron RadioRA2, RA2 Select and Caseta Pro",
+  "description": "Integrate Lutron RadioRA2",
   "notice": "",
   "shortPoll": "600",
   "longPoll": "900",
-  "profile_version": "0.0.1",
+  "profile_version": "0.1.1",
   "credits": [
     {
       "title": "Lutron RadioRA 2",
