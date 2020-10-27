@@ -1,30 +1,28 @@
-# poly-template-nodejs
+# udi-poly-RadioRa2
 
-This is a Poly template using Node.js.
+Lutron RadioRa 2 NodeServer for Polyglot
 
-It works with both Polyglot V2 (On-premises installation) and Polyglot cloud.
-
-To start developing your Nodeserver, it is easier to set up and test 
-with Polyglot V2. If you don't need such things as oAuth authentication 
-to cloud services, you can fully develop your node server on-premises. 
+- Polyglot V2 (On-premises installation).
+- Testing done with Polisy
 
 To get started with an on-premise installation: 
-1. Install Polyglot-V2. [Instructions here](https://github.com/UniversalDevicesInc/polyglot-v2)
-2. Make sure you have Node.js & NPM installed
+- NodeServer is availble in the Polyglot Store
 
-```
-sudo apt install nodejs
-sudo apt install npm
-```
+[Lutron RadioRa 2 Information](https://www.lutron.com/en-US/Products/Pages/WholeHomeSystems/RadioRA2/Overview.aspx)
 
-3. Install this node server
+[Lutron RadioRa 2 Components](https://www.lutron.com/en-US/Products/Pages/WholeHomeSystems/RadioRA2/Components.aspx)
 
-```
-cd ~/.polyglot/nodeservers
-git clone https://github.com/UniversalDevicesInc/poly-template-nodejs
-npm install
-```
+### Currently Supported Components
+- Sensors
+- Dimmers & Switches
+- Keypads
+    - Pico Remotes (2B, 2BRL, 3B, 3BRL, 4B)
 
-For help developing your node server, refer to the [node.js polyinterface documentation here](https://github.com/UniversalDevicesInc/polyglot-v2-nodejs-interface)
-
-To get instructions for the cloud version, refer to the [node.js PGC documentation here](https://github.com/UniversalDevicesInc/pgc-nodejs-interface)
+### In-Development Components
+- Keypads
+    - SeeTouch
+    - SeeTouch Hybrid
+    - GRAFIK T C.L. Hybrid
+    - GRAFIK Eye QS
+- Temperature Control
+- Shades
