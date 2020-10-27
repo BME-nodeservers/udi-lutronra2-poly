@@ -13,8 +13,10 @@ module.exports = function(Polyglot) {
   const MaestroDimmerNode = require('./MaestroDimmerNode.js')(Polyglot);
   const MaestroSwitchNode = require('./MaestroSwitchNode.js')(Polyglot);
   const MaestroFanControlNode = require('./MaestroFanControlNode.js')(Polyglot);
-  const Pico3BRLNode = require('./Pico3BRLNode.js')(Polyglot);
   const OccupancyNode = require('./OccupancyNode.js')(Polyglot);
+  const Pico2BNode = require('./Pico2BNode.js')(Polyglot);
+  const Pico3BRLNode = require('./Pico3BRLNode.js')(Polyglot);
+  
 
   class Controller extends Polyglot.Node {
     constructor(polyInterface, primary, address, name) {
@@ -101,7 +103,15 @@ module.exports = function(Polyglot) {
           }
           break;
         case 2:
-          //code
+          try {
+            const result = await this.polyInterface.addNode(
+              new Pico2BNode(this.polyInterface, this.address,
+                _address, _devName)
+            );
+            logger.info('Add node worked: %s', result);
+          } catch (err) {
+            logger.errorStack(err, 'Add node failed:');
+          }
           break;
         case 3:
           //code

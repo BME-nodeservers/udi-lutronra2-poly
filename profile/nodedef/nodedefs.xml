@@ -94,6 +94,22 @@
     </cmds>
   </nodedef>
 
+<nodedef id="PICO2B" nls="2B">
+    <sts>
+      <st id="ST" editor="BOOL"/>
+      <st id="GPV" editor="DEVTYPE"/>
+      <st id="GV2" editor="BOOL"/>
+      <st id="GV4" editor="BOOL"/>
+    </sts>
+    <cmds>
+      <sends>
+       <cmd id="DON"/>
+       <cmd id="DOF"/>
+      </sends>
+      <accepts>
+      </accepts>
+    </cmds>
+  </nodedef>
  
   <nodedef id="PICO3BRL" nls="3BRL">
     <sts>

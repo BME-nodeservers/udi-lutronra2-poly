@@ -34,6 +34,12 @@ FANSPEED-2 = Medium
 FANSPEED-3 = Medium High
 FANSPEED-4 = High
 
+ND-PICO2B-NAME = 2 Button Pico
+ND-PICO2B-ICON = Output
+ST-2B-ST-NAME = Status
+ST-2B-GV2-NAME = Button 1
+ST-2B-GV4-NAME = Button 3
+
 ND-PICO3BRL-NAME = 3 Button Raise Lower Pico
 ND-PICO3BRL-ICON = Output
 ST-3BRL-ST-NAME = Status
