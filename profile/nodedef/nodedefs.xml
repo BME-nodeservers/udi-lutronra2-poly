@@ -115,4 +115,21 @@
       </accepts>
     </cmds>
   </nodedef>
+
+  <nodedef id="OCCUPANCY" nls="OCC">
+    <sts>
+      <st id="ST" editor="POWER"/>
+    </sts>
+    <cmds>
+      <sends>
+       <cmd id="DON"/>
+       <cmd id="DOF"/>
+      </sends>
+      <accepts>
+       <cmd id="DON"/>
+       <cmd id="DOF"/>
+       <cmd id="QUERY"/>
+      </accepts>
+    </cmds>
+  </nodedef>
 </nodeDefs>

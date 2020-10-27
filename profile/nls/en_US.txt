@@ -52,3 +52,7 @@ PICO-2 = Button 2
 PICO-3 = Button 3
 PICO-4 = Button 4
 PICO-5 = Button 5
+
+ND-OCCUPANCY-NAME = Occupancy Sensor
+ND-OCCUPANCY-ICON = MotionSensor
+ST-OCC-ST-NAME = Status
