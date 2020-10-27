@@ -281,12 +281,14 @@ module.exports = function(Polyglot) {
         logger.info(data);
       }.bind(this));
 
-      radiora2.on('groupOccupied', function(data) {
-        logger.info(data);
+      radiora2.on('groupOccupied', function(groupId) {
+        logger.info(groupId);
+        logger.info('Group Id: ' + groupId + ' Occupied')
       }.bind(this));
 
-      radiora2.on('groupUnoccupied', function(data) {
-        logger.info(data);
+      radiora2.on('groupUnoccupied', function(groupId) {
+        logger.info(groupId);
+        logger.info('Group Id: ' + groupId + ' Unoccupied')
       }.bind(this));
 
       radiora2.on('groupUnknown', function(data) {
