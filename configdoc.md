@@ -5,17 +5,19 @@ Enter your instructions in configdoc.md
 #### Device Types:
 
 ##### Occupancy Sensors
-- All Occupancy = 7
+- All Occupancy = 1
 
 ##### Pico Remotes
-- 2 Button Pico = 2
-- 3 Button Pico = 3
-- 4 Button Pico = 4
-- Audio Pico = 5
+- 2 Button = 2
+- 2 Button Raise Lower = 3
+- 3 Button = 4
+- 3 Button Raise Lower = 5
+- 4 Button Pico = 6
+<!-- - Audio Pico = 7 -->
 
 ##### Switch / Dimmer
 - Switch = 8
-- Dimmer = 6
-- Fan = 9
+- Dimmer = 9
+- Fan = 10
 
 ##### Key Pads

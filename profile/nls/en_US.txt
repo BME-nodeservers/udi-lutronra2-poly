@@ -7,13 +7,6 @@ CMD-CONTROLLER-UPDATE_PROFILE-NAME = Update node server profile
 CMD-CONTROLLER-REMOVE_NOTICES-NAME = Remove node server notices
 CMD-CONTROLLER-QUERY-NAME = Query
 
-ND-VNODE_DIMMER-NAME = Virtual node
-ND-VNODE_DIMMER-ICON = Lamp
-ST-VN-ST-NAME = Status
-CMD-VN-DON-NAME = On
-CMD-VN-DOF-NAME = Off
-CMD-VN-QUERY-NAME = Query
-
 ND-MAESTRO_DIMMER-NAME = Maestro Dimmer
 ND-MAESTRO_DIMMER-ICON = Lamp
 ST-MD-ST-NAME = Status
@@ -41,18 +34,28 @@ FANSPEED-2 = Medium
 FANSPEED-3 = Medium High
 FANSPEED-4 = High
 
-ND-PICO-NAME = Pico Remote
-ND-PICO-ICON = Output
-ST-PICO-ST-NAME = Status
-ST-PICO-GV0-NAME = Pressed
-ST-PICO-GV1-NAME = Released
-
-PICO-1 = Button 1
-PICO-2 = Button 2
-PICO-3 = Button 3
-PICO-4 = Button 4
-PICO-5 = Button 5
+ND-PICO3BRL-NAME = 3 Button Raise Lower Pico
+ND-PICO3BRL-ICON = Output
+ST-3BRL-ST-NAME = Status
+ST-3BRL-GV2-NAME = Button 1
+ST-3BRL-GV3-NAME = Button 2
+ST-3BRL-GV4-NAME = Button 3
+ST-3BRL-GV5-NAME = Button 4
+ST-3BRL-GV6-NAME = Button 5
 
 ND-OCCUPANCY-NAME = Occupancy Sensor
 ND-OCCUPANCY-ICON = MotionSensor
 ST-OCC-ST-NAME = Status
+
+# Device Type Mapping
+DEVTYPE-1 = Occupancy Sensor
+DEVTYPE-2 = 2B Pico
+DEVTYPE-3 = 2BRL Pico
+DEVTYPE-4 = 3B Pico
+DEVTYPE-5 = 3BRL Pico
+DEVTYPE-6 = 4B Pico
+DEVTYPE-7 = Audio Pico
+DEVTYPE-8 = Switch
+DEVTYPE-9 = Dimmer
+DEVTYPE-10 = Fan Controller
+

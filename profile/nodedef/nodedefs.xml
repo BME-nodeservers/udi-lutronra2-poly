@@ -9,8 +9,6 @@
     <cmds>
       <sends/>
       <accepts>
-<!--        <cmd id="DISCOVER"/>-->
-<!--        <cmd id="CREATE_NEW"/>-->
         <cmd id="UPDATE_PROFILE"/>
         <cmd id="REMOVE_NOTICES"/>
         <cmd id="QUERY"/>
@@ -18,10 +16,10 @@
     </cmds>
   </nodedef>
 
-  <!-- Maestro Switch node -->
   <nodedef id="MAESTRO_SWITCH" nls="MS">
     <sts>
       <st id="ST" editor="POWER"/>
+      <st id="GPV" editor="DEVTYPE"/>
     </sts>
     <cmds>
       <sends>
@@ -36,10 +34,10 @@
     </cmds>
   </nodedef>
 
-  <!-- Maestro Dimmer node - dimmer -->
   <nodedef id="MAESTRO_DIMMER" nls="MD">
     <sts>
       <st id="ST" editor="PERCENT"/>
+      <st id="GPV" editor="DEVTYPE"/>
       <st id="RR" editor="_58_1"/>
       <st id="DELAY" editor="_58_1"/>
     </sts>
@@ -74,7 +72,6 @@
     </cmds>
   </nodedef>
 
-  <!-- Maestro Fan Controller node -->
   <nodedef id="MAESTRO_FAN" nls="MFC">
     <sts>
       <st id="ST" editor="_51_1"/>
@@ -97,28 +94,31 @@
     </cmds>
   </nodedef>
 
-  <nodedef id="PICO" nls="PICO">
+ 
+  <nodedef id="PICO3BRL" nls="3BRL">
     <sts>
-      <st id="ST" editor="BOOL" hide="T"/>
-      <st id="GV0" editor="PICO"/>
-      <st id="GV1" editor="PICO"/>
+      <st id="ST" editor="BOOL"/>
+      <st id="GPV" editor="DEVTYPE"/>
+      <st id="GV2" editor="BOOL"/>
+      <st id="GV3" editor="BOOL"/>
+      <st id="GV4" editor="BOOL"/>
+      <st id="GV5" editor="BOOL"/>
+      <st id="GV6" editor="BOOL"/>
     </sts>
     <cmds>
       <sends>
-<!--        <cmd id="DON"/>-->
-<!--        <cmd id="DOF"/>-->
+       <cmd id="DON"/>
+       <cmd id="DOF"/>
       </sends>
       <accepts>
-<!--        <cmd id="DON"/>-->
-<!--        <cmd id="DOF"/>-->
-<!--        <cmd id="QUERY"/>-->
       </accepts>
     </cmds>
   </nodedef>
 
   <nodedef id="OCCUPANCY" nls="OCC">
     <sts>
-      <st id="ST" editor="POWER"/>
+      <st id="ST" editor="BOOL"/>
+      <st id="GPV" editor="DEVTYPE"/>
     </sts>
     <cmds>
       <sends>
@@ -126,9 +126,6 @@
        <cmd id="DOF"/>
       </sends>
       <accepts>
-       <cmd id="DON"/>
-       <cmd id="DOF"/>
-       <cmd id="QUERY"/>
       </accepts>
     </cmds>
   </nodedef>
