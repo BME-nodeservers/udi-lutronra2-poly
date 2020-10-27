@@ -40,6 +40,10 @@ module.exports = function(Polyglot) {
       this.getDevices();
     }
 
+    sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
     repeaterSetup() {
       logger.info('Begin Main Repeater Setup...');
 
@@ -102,7 +106,7 @@ module.exports = function(Polyglot) {
             logger.errorStack(err, 'Add node failed:');
           }
           break;
-        case 2:
+        case 2: // 2B Pico
           try {
             const result = await this.polyInterface.addNode(
               new Pico2BNode(this.polyInterface, this.address,
@@ -119,16 +123,13 @@ module.exports = function(Polyglot) {
         case 4:
           //code
           break;
-        case 5: // Pico 3BRL
+        case 5: // 3BRL Pico
           try {
             const result = await this.polyInterface.addNode(
               new Pico3BRLNode(this.polyInterface, this.address,
                 _address, _devName)
             );
             logger.info('Add node worked: %s', result);
-            // if (result) {
-            //   radiora2.queryOutputState(_lutronId);
-            // }
           } catch (err) {
             logger.errorStack(err, 'Add node failed:');
           }
@@ -147,6 +148,7 @@ module.exports = function(Polyglot) {
               );
               logger.info('Add node worked: %s', result);
               if (result) {
+                await this.sleep(1000);
                 radiora2.queryOutputState(_lutronId);
               }
             } catch (err) {
@@ -161,6 +163,7 @@ module.exports = function(Polyglot) {
             );
             logger.info('Add node worked: %s', result);
             if (result) {
+              await this.sleep(1000);
               radiora2.queryOutputState(_lutronId);
             }
           } catch (err) {
@@ -175,6 +178,7 @@ module.exports = function(Polyglot) {
             );
             logger.info('Add node worked: %s', result);
             if (result) {
+              await this.sleep(1000);
               radiora2.queryOutputState(_lutronId);
             }
           } catch (err) {
