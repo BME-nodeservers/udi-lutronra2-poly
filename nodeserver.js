@@ -15,6 +15,7 @@ const MaestroDimmerNode = require('./Nodes/MaestroDimmerNode.js')(Polyglot);
 const MaestroSwitchNode = require('./Nodes/MaestroSwitchNode.js')(Polyglot);
 const MaestroFanControlNode = require('./Nodes/MaestroFanControlNode')(Polyglot);
 const Pico2BNode = require('./Nodes/Pico2BNode.js')(Polyglot);
+const Pico2BRLNode = require('./Nodes/Pico2BRLNode.js')(Polyglot);
 const Pico3BRLNode = require('./Nodes/Pico3BRLNode.js')(Polyglot);
 const OccupancyNode = require('./Nodes/OccupancyNode.js')(Polyglot);
 
@@ -47,7 +48,7 @@ logger.info('Starting Lutron Node Server');
 
 const poly = new Polyglot.Interface([ControllerNode,
   MaestroDimmerNode, MaestroSwitchNode, MaestroFanControlNode, OccupancyNode,
-  Pico2BNode, Pico3BRLNode,
+  Pico2BNode, Pico2BRLNode, Pico3BRLNode,
   ]);
   // MainRepeaterNode, MaestroDimmerNode, MaestroSwitchNode]);
 

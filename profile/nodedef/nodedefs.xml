@@ -110,6 +110,25 @@
       </accepts>
     </cmds>
   </nodedef>
+
+  <nodedef id="PICO2BRL" nls="2BRL">
+    <sts>
+      <st id="ST" editor="BOOL"/>
+      <st id="GPV" editor="DEVTYPE"/>
+      <st id="GV2" editor="BOOL"/>
+      <st id="GV4" editor="BOOL"/>
+      <st id="GV5" editor="BOOL"/>
+      <st id="GV6" editor="BOOL"/>
+    </sts>
+    <cmds>
+      <sends>
+       <cmd id="DON"/>
+       <cmd id="DOF"/>
+      </sends>
+      <accepts>
+      </accepts>
+    </cmds>
+  </nodedef>
  
   <nodedef id="PICO3BRL" nls="3BRL">
     <sts>

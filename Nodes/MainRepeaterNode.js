@@ -15,6 +15,7 @@ module.exports = function(Polyglot) {
   const MaestroFanControlNode = require('./MaestroFanControlNode.js')(Polyglot);
   const OccupancyNode = require('./OccupancyNode.js')(Polyglot);
   const Pico2BNode = require('./Pico2BNode.js')(Polyglot);
+  const Pico2BRLNode = require('./Pico2BRLNode.js')(Polyglot);
   const Pico3BRLNode = require('./Pico3BRLNode.js')(Polyglot);
   
 
@@ -117,8 +118,16 @@ module.exports = function(Polyglot) {
             logger.errorStack(err, 'Add node failed:');
           }
           break;
-        case 3:
-          //code
+        case 3: // 2BRL Pico
+        try {
+          const result = await this.polyInterface.addNode(
+            new Pico2BRLNode(this.polyInterface, this.address,
+              _address, _devName)
+          );
+          logger.info('Add node worked: %s', result);
+        } catch (err) {
+          logger.errorStack(err, 'Add node failed:');
+        }
           break;
         case 4:
           //code
