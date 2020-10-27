@@ -23,8 +23,8 @@ module.exports = function(Polyglot) {
 
       this.drivers = {
         ST: {value: '0', uom: 2},
-        GV0: {value: '0', uom: 25},
-        GV1: {value: '0', uom: 25},
+        // GV0: {value: '0', uom: 25},
+        // GV1: {value: '0', uom: 25},
       };
 
       lutronId = this.address.split('_')[1];
