@@ -48,6 +48,13 @@ ST-2BRL-GV4-NAME = Button 3
 ST-2BRL-GV5-NAME = Button 4
 ST-2BRL-GV6-NAME = Button 5
 
+ND-PICO3B-NAME = 3 Button Pico
+ND-PICO3B-ICON = Output
+ST-3B-ST-NAME = Status
+ST-3B-GV2-NAME = Button 1
+ST-3B-GV3-NAME = Button 2
+ST-3B-GV4-NAME = Button 3
+
 ND-PICO3BRL-NAME = 3 Button Raise Lower Pico
 ND-PICO3BRL-ICON = Output
 ST-3BRL-ST-NAME = Status
@@ -56,6 +63,14 @@ ST-3BRL-GV3-NAME = Button 2
 ST-3BRL-GV4-NAME = Button 3
 ST-3BRL-GV5-NAME = Button 4
 ST-3BRL-GV6-NAME = Button 5
+
+ND-PICO4B-NAME = 4 Button Pico
+ND-PICO4B-ICON = Output
+ST-4B-ST-NAME = Status
+ST-4B-GV8-NAME = Button 1
+ST-4B-GV9-NAME = Button 2
+ST-4B-GV10-NAME = Button 3
+ST-4B-GV11-NAME = Button 4
 
 ND-OCCUPANCY-NAME = Occupancy Sensor
 ND-OCCUPANCY-ICON = MotionSensor

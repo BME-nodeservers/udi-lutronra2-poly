@@ -17,7 +17,7 @@ module.exports = function(Polyglot) {
   const Pico2BNode = require('./Pico2BNode.js')(Polyglot);
   const Pico2BRLNode = require('./Pico2BRLNode.js')(Polyglot);
   const Pico3BRLNode = require('./Pico3BRLNode.js')(Polyglot);
-  
+  const Pico4BNode = require('./Pico4BNode.js')(Polyglot);
 
   class Controller extends Polyglot.Node {
     constructor(polyInterface, primary, address, name) {
@@ -129,8 +129,16 @@ module.exports = function(Polyglot) {
           logger.errorStack(err, 'Add node failed:');
         }
           break;
-        case 4:
-          //code
+        case 4: // 3B Pico
+        try {
+          const result = await this.polyInterface.addNode(
+            new Pico3BNode(this.polyInterface, this.address,
+              _address, _devName)
+          );
+          logger.info('Add node worked: %s', result);
+        } catch (err) {
+          logger.errorStack(err, 'Add node failed:');
+        }
           break;
         case 5: // 3BRL Pico
           try {
@@ -143,8 +151,16 @@ module.exports = function(Polyglot) {
             logger.errorStack(err, 'Add node failed:');
           }
           break;
-        case 6:
-          //code
+        case 6: // 4B Pico
+          try {
+            const result = await this.polyInterface.addNode(
+              new Pico4BNode(this.polyInterface, this.address,
+                _address, _devName)
+            );
+            logger.info('Add node worked: %s', result);
+          } catch (err) {
+            logger.errorStack(err, 'Add node failed:');
+          }
           break;
         case 7:
           //code

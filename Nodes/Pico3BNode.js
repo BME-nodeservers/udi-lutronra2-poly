@@ -4,12 +4,12 @@ let eventEmitter = require('../lib/lutronEvents.js');
 let lutronEmitter = eventEmitter.lutronEmitter;
 let lutronId = '';
 
-const nodeDefId = 'PICO3BRL';
+const nodeDefId = 'PICO3B';
 
 module.exports = function(Polyglot) {
   const logger = Polyglot.logger;
 
-  class Pico3BRLNode extends Polyglot.Node {
+  class Pico3BNode extends Polyglot.Node {
     constructor(polyInterface, primary, address, name) {
       super(nodeDefId, polyInterface, primary, address, name);
 
@@ -23,12 +23,10 @@ module.exports = function(Polyglot) {
 
       this.drivers = {
         ST: {value: '1', uom: 2},
-        GPV: {value: '5', uom: 25},
+        GPV: {value: '4', uom: 25},
         GV2: {value: '0', uom: 2},
         GV3: {value: '0', uom: 2},
         GV4: {value: '0', uom: 2},
-        GV5: {value: '0', uom: 2},
-        GV6: {value: '0', uom: 2},
       };
 
       lutronId = this.address.split('_')[1];
@@ -54,7 +52,7 @@ module.exports = function(Polyglot) {
   }
 
   // Required so that the interface can find this Node class using the nodeDefId
-  Pico3BRLNode.nodeDefId = nodeDefId;
+  Pico3BNode.nodeDefId = nodeDefId;
 
-  return Pico3BRLNode;
+  return Pico3BNode;
 };
