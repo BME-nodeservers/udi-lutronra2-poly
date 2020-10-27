@@ -18,11 +18,11 @@ module.exports = function(Polyglot) {
       this.commands = {
         // DON: this.onDON,
         // DOF: this.onDOF,
-        // QUERY: this.query,
+        QUERY: this.query,
       };
 
       this.drivers = {
-        ST: {value: '0', uom: 78},
+        ST: {value: '0', uom: 2},
         GV0: {value: '0', uom: 25},
         GV1: {value: '0', uom: 25},
       };
