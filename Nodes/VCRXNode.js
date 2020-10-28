@@ -16,8 +16,12 @@ module.exports = function(Polyglot) {
       this.hint = '0x01020900'; // Example for a Dimmer switch
 
       this.commands = {
-        // DON: this.onDON,
-        // DOF: this.onDOF,
+        GV1: this.onScene1,
+        GV2: this.onScene2,
+        GV3: this.onScene3,
+        GV4: this.onScene4,
+        GV5: this.onScene5,
+        GV6: this.onScene6,
         QUERY: this.query,
       };
 
@@ -43,17 +47,34 @@ module.exports = function(Polyglot) {
       lutronEmitter.emit('query', lutronId);
     }
 
-    onDON(message) {
-      // setDrivers accepts string or number (message.value is a string)
-      logger.info('DON (%s)', this.address);
-      this.setDriver('ST', message.value ? message.value : '1');
-      lutronEmitter.emit('on', lutronId);
+    onScene1() {
+      this.setDriver('GV1', 100);
+      lutronEmitter.emit('buttonPress', lutronId, 1);
     }
 
-    onDOF() {
-      logger.info('DOF (%s)', this.address);
-      this.setDriver('ST', '0');
-      lutronEmitter.emit('off', lutronId);
+    onScene2() {
+      this.setDriver('GV2', 100);
+      lutronEmitter.emit('buttonPress', lutronId, 2);
+    }
+
+    onScene3() {
+      this.setDriver('GV3', 100);
+      lutronEmitter.emit('buttonPress', lutronId, 3);
+    }
+
+    onScene4() {
+      this.setDriver('GV4', 100);
+      lutronEmitter.emit('buttonPress', lutronId, 4);
+    }
+
+    onScene5() {
+      this.setDriver('GV5', 100);
+      lutronEmitter.emit('buttonPress', lutronId, 5);
+    }
+
+    onScene6() {
+      this.setDriver('GV6', 100);
+      lutronEmitter.emit('buttonPress', lutronId, 6);
     }
 
   }

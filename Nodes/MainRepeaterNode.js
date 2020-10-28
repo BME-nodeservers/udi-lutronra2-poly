@@ -578,6 +578,10 @@ module.exports = function(Polyglot) {
         radiora2.stopRaiseLower(id);
       });
 
+      lutronEmitter.on('buttonPress', function(deviceId, buttonId) {
+        radiora2.pressButton(deviceId, buttonId);
+      })
+
       return;
     };
 
