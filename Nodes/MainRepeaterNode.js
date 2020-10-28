@@ -18,6 +18,7 @@ module.exports = function(Polyglot) {
   const Pico2BRLNode = require('./Pico2BRLNode.js')(Polyglot);
   const Pico3BRLNode = require('./Pico3BRLNode.js')(Polyglot);
   const Pico4BNode = require('./Pico4BNode.js')(Polyglot);
+  const VCRXNode = require('./VCRXNode.js')(Polyglot);
 
   class Controller extends Polyglot.Node {
     constructor(polyInterface, primary, address, name) {
@@ -210,6 +211,31 @@ module.exports = function(Polyglot) {
             logger.errorStack(err, 'Add node failed:');
           }
           break;
+        case 11: // VCRX
+          try {
+            const result = await this.polyInterface.addNode(
+              new VCRXNode(this.polyInterface, this.address,
+                _address, _devName)
+            );
+            logger.info('Add node worked: %s', result);
+            if (result) {
+              await this.sleep(1000);
+              radiora2.queryDeviceButtonState(_lutronId, '81');
+              await this.sleep(1000);
+              radiora2.queryDeviceButtonState(_lutronId, '82');
+              await this.sleep(1000);
+              radiora2.queryDeviceButtonState(_lutronId, '83');
+              await this.sleep(1000);
+              radiora2.queryDeviceButtonState(_lutronId, '84');
+              await this.sleep(1000);
+              radiora2.queryDeviceButtonState(_lutronId, '85');
+              await this.sleep(1000);
+              radiora2.queryDeviceButtonState(_lutronId, '86');
+            }
+          } catch (err) {
+            logger.errorStack(err, 'Add node failed:');
+          }
+        break;
         default:
           logger.info('No Device Type Defined');
       }
@@ -325,7 +351,7 @@ module.exports = function(Polyglot) {
         let nodeAddr = this.address + 'id_' + id;
         logger.info('Address: ' + nodeAddr);
         let node = this.polyInterface.getNode(nodeAddr);
-        logger.info(node);
+        // logger.info(node);
         if (node) {
           let _gpv = node.getDriver('GPV');
           let devType = _gpv['value'];
@@ -333,16 +359,33 @@ module.exports = function(Polyglot) {
           let _gv = 'GV' + buttonId;
 
           switch(devType) {
-            case '1':
+            case '1': // Occupancy
               node.setDriver('ST', 1);
               break;
-            case '2':
+            case '2': // 2B Pico
               break;
-            case '3':
+            case '3': // 2BRL Pico
               break;
-            case '4':
-            case '5':
+            case '4': // 3B Pico
+            case '5': // 3BRL Pico
               node.setDriver(_gv, 1);
+            case '11': // VCRX
+              switch(buttonId) {
+                case '30':
+                  node.setDriver('GV10', 100);
+                  break;
+                case '31':
+                  node.setDriver('GV11', 100);
+                  break;
+                case '32':
+                  node.setDriver('GV12', 100);
+                  break;
+                case '33':
+                  node.setDriver('GV13', 100);
+                  break;
+                default:
+                  break;
+              }
             default:
               break;
           }
@@ -364,17 +407,34 @@ module.exports = function(Polyglot) {
           let _gv = 'GV' + buttonId;
 
           switch(devType) {
-            case '1':
+            case '1': // Occupancy
               node.setDriver('ST', 0);
               break;
-            case '2':
+            case '2': // 2B Pico
               break;
-            case '3':
+            case '3': // 2BRL Pico
               break;
-            case '4':
+            case '4': // 3B Pico
               break;
-            case '5':
+            case '5': // 3BRL Pico
               node.setDriver(_gv, 0);
+            case '11': // VCRX
+              switch(buttonId) {
+                case '30':
+                  node.setDriver('GV10', 0);
+                  break;
+                case '31':
+                  node.setDriver('GV11', 0);
+                  break;
+                case '32':
+                  node.setDriver('GV12', 0);
+                  break;
+                case '33':
+                  node.setDriver('GV13', 0);
+                  break;
+                default:
+                  break;
+              }
             default:
               break;
           }
@@ -386,12 +446,90 @@ module.exports = function(Polyglot) {
         logger.info(data);
       }.bind(this));
 
-      radiora2.on('keypadbuttonLEDOn', function(data) {
-        logger.info(data);
+      radiora2.on('keypadbuttonLEDOn', function(deviceId, buttonId) {
+        logger.info(deviceId + ': KeyPad Button LED On');
+
+        let nodeAddr = this.address + 'id_' + deviceId;
+        logger.info('Address: ' + nodeAddr);
+        let node = this.polyInterface.getNode(nodeAddr);
+        logger.info(node);
+        if (node) {
+          let _gpv = node.getDriver('GPV');
+          let devType = _gpv['value'];
+          logger.info('DevType: ' + devType);
+          // let _gv = 'GV' + buttonId;
+
+          switch(devType) {
+            case '11':
+              switch(buttonId) {
+                case '81':
+                  node.setDriver('GV1', 100);
+                  break;
+                case '82':
+                  node.setDriver('GV2', 100);
+                  break;
+                case '83':
+                  node.setDriver('GV3', 100);
+                  break;
+                case '84':
+                  node.setDriver('GV4', 100);
+                  break;
+                case '85':
+                  node.setDriver('GV5', 100);
+                  break;
+                case '86':
+                  node.setDriver('GV6', 100);
+                  break;
+                default:
+                  break;
+              }
+            default:
+              break;
+          }
+        }
       }.bind(this));
 
-      radiora2.on('keypadbuttonLEDOff', function(data) {
-        logger.info(data);
+      radiora2.on('keypadbuttonLEDOff', function(deviceId, buttonId) {
+        logger.info(deviceId + ': KeyPad Button LED Off');
+
+        let nodeAddr = this.address + 'id_' + deviceId;
+        logger.info('Address: ' + nodeAddr);
+        let node = this.polyInterface.getNode(nodeAddr);
+        logger.info(node);
+        if (node) {
+          let _gpv = node.getDriver('GPV');
+          let devType = _gpv['value'];
+          logger.info('DevType: ' + devType);
+          // let _gv = 'GV' + buttonId;
+
+          switch(devType) {
+            case '11': // VCRX
+              switch(buttonId) {
+                case '81':
+                  node.setDriver('GV1', 0);
+                  break;
+                case '82':
+                  node.setDriver('GV2', 0);
+                  break;
+                case '83':
+                  node.setDriver('GV3', 0);
+                  break;
+                case '84':
+                  node.setDriver('GV4', 0);
+                  break;
+                case '85':
+                  node.setDriver('GV5', 0);
+                  break;
+                case '86':
+                  node.setDriver('GV6', 0);
+                  break;
+                default:
+                  break;
+              }
+            default:
+              break;
+          }
+        }
       }.bind(this));
 
       radiora2.on('groupOccupied', function(groupId) {

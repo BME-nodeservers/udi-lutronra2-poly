@@ -76,6 +76,26 @@ ND-OCCUPANCY-NAME = Occupancy Sensor
 ND-OCCUPANCY-ICON = MotionSensor
 ST-OCC-ST-NAME = Status
 
+ND-VCRX-NAME = Visor Control Receiver
+ND-VCRX-ICON = Output
+ST-VCRX-ST-NAME = Status
+ST-VCRX-GV1-NAME = Scene 1
+ST-VCRX-GV2-NAME = Scene 2
+ST-VCRX-GV3-NAME = Scene 3
+ST-VCRX-GV4-NAME = Scene 4
+ST-VCRX-GV5-NAME = Scene 5
+ST-VCRX-GV6-NAME = Scene 6
+ST-VCRX-GV10-NAME = Full/Security
+ST-VCRX-GV11-NAME = Security Flash
+ST-VCRX-GV12-NAME = Input 1
+ST-VCRX-GV13-NAME = Input 2
+CMD-VCRX-GV1-NAME = Scene 1
+CMD-VCRX-GV2-NAME = Scene 2
+CMD-VCRX-GV3-NAME = Scene 3
+CMD-VCRX-GV4-NAME = Scene 4
+CMD-VCRX-GV5-NAME = Scene 5
+CMD-VCRX-GV6-NAME = Scene 6
+
 # Device Type Mapping
 DEVTYPE-1 = Occupancy Sensor
 DEVTYPE-2 = 2B Pico
@@ -87,4 +107,4 @@ DEVTYPE-7 = Audio Pico
 DEVTYPE-8 = Switch
 DEVTYPE-9 = Dimmer
 DEVTYPE-10 = Fan Controller
-
+DEVTYPE-11 = Visor Control Receiver
