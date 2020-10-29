@@ -64,7 +64,6 @@ module.exports = function(Polyglot) {
         _reconnect = this._reconnect;
       }
       
-
       logger.info('Host: ' + _host);
       logger.info('Username: ' + _username);
       logger.info('Password: ' + _password);
