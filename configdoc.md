@@ -4,14 +4,16 @@ Enter the IP Address, Username, Password for your RadioRa 2 Main Repeater.  If
 you have multiple systems connecting to your main repeater you should add a new
 account to the system.  Only one(1) session is allowed per named account.
 
-Devices can be added after by clicking the button to add devices.  Each
-device has 3 parameters to configure.  
+Devices can be added by clicking the 'Add Lutron Devices' button.  
+Each device has 3 parameters to configure.
+- Display Name in Admin Console
+- Lutron Integration ID Number
+    - Retrieved from Integration Report
+- Device Type  
 
-Name as it will be shown in the Admin Console
-Lutron Integration ID.  You can get this from the Lutron Integration report
-Device Type.  See below for the device type mapping information
+See below for the device type mapping information
 
-If you do not setup the correct device type the device will be created wrong or not at all.
+If device type is not setup correctly the device will be created wrong or not at all.
 
 #### Device Types:
 
@@ -28,6 +30,13 @@ If you do not setup the correct device type the device will be created wrong or 
 ##### Switch / Dimmer
 - Switch = 8
 - Dimmer = 9
-- Fan = 10
+- Fan Controller = 10
 
 ##### Key Pads
+- Coming Soon
+
+##### Visor Control Receiver (VCRX)
+- Coming Soon
+
+###### Temperature Controls
+- Maybe Coming.  Depends on requests

@@ -13,16 +13,20 @@ To get started with an on-premise installation:
 [Lutron RadioRa 2 Components](https://www.lutron.com/en-US/Products/Pages/WholeHomeSystems/RadioRA2/Components.aspx)
 
 ### Currently Supported Components
-- Sensors
-- Dimmers & Switches
-- Keypads
-    - Pico Remotes (2B, 2BRL, 3B, 3BRL, 4B)
+- Occupancy Sensors
+- Dimmer
+- Switch
+- Pico Remotes
+    - 2 Button
+    - 2 Button Raise/Lower
+    - 3 Button
+    - 3 Button Raise/Lower
+    - 4 Button
 
 ### In-Development Components
 - Keypads
-    - SeeTouch
-    - SeeTouch Hybrid
-    - GRAFIK T C.L. Hybrid
-    - GRAFIK Eye QS
+- Visor Control Receiver (VCRX)
 - Temperature Control
+    - Pending demand
 - Shades
+    - Pending demand
