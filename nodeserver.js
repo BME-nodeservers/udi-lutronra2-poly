@@ -31,6 +31,8 @@ const typedParams = [
     desc: ''},
   {name: 'password', title: 'Password', type: 'STRING',
     desc: ''},
+  {name: 'reconnect', title: 'Recconect Wait Time', type: 'NUMBER',
+    desc: 'Time in Milliseconds to wait before attempting reconnect'},
   { name: 'devices', title: 'Lutron Devices', isList: true,
     params:
     [

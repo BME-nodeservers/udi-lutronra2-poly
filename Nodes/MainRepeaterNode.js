@@ -36,6 +36,8 @@ module.exports = function(Polyglot) {
         ST: { value: '1', uom: 2 }, // uom 2 = Boolean. '1' is True.
       };
 
+      this._reconnect = 300000;
+
       this.isController = true;
       this.listenerSetup();
       this.repeaterSetup();
@@ -52,9 +54,16 @@ module.exports = function(Polyglot) {
       const _config = this.polyInterface.getConfig();
       const config = Object(_config.typedCustomData);
 
+      let _reconnect = null;
       let _host = config.ipAddress;
       let _username = config.username;
       let _password = config.password;
+      if (config.reconnect) {
+        _reconnect = config.reconnect;
+      } else {
+        _reconnect = this._reconnect;
+      }
+      
 
       logger.info('Host: ' + _host);
       logger.info('Username: ' + _username);
@@ -62,7 +71,6 @@ module.exports = function(Polyglot) {
 
       try {
         radiora2.connect(_host, _username, _password);
-
       } catch (err) {
         logger.errorStack(err, 'Connection to Main Repeater Failed');
       }
@@ -259,31 +267,44 @@ module.exports = function(Polyglot) {
     listenerSetup() {
       radiora2.on('messageReceived', function(data) {
         logger.info('LUTRON ' + data);
-      });
+      }.bind(this));
 
       radiora2.on('loggedIn', function() {
         logger.info('Connected to Lutron');
-      });
+      }.bind(this));
 
       radiora2.on('sent', function(data) {
         logger.info('Message Sent' + data);
-      });
+      }.bind(this));
 
       radiora2.on('debug', function(data) {
         logger.info(data);
-      });
+      }.bind(this));
 
       radiora2.on('info', function(data) {
         logger.info(data);
-      });
+      }.bind(this));
 
       radiora2.on('warn', function(data) {
         logger.info(data);
-      });
+      }.bind(this));
 
       radiora2.on('error', function(data) {
         logger.info(data);
-      });
+      }.bind(this));
+
+      radiora2.on('close', function(data) {
+        logger.info(data);
+        setTimeout(function() {
+          logger.info('Attempting reconnect...');
+          try {
+            // this.repeaterSetup();
+            this.polyInterface.restart();
+          } catch (err) {
+            logger.errorStack(err, 'Connection to Main Repeater Failed');
+          }
+        }.bind(this), 60000);
+      }.bind(this));
 
       radiora2.on('on', function(id) {
         let nodeAddr = this.address + 'id_' + id;
