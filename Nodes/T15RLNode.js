@@ -34,11 +34,13 @@ module.exports = function(Polyglot) {
           new T15RLButtonNode(this.polyInterface, this.address,
             this._address, 'Scene ' + button)
         );
-      }      
+      }
     }
 
     query() {
       // lutronEmitter.emit('query', this.lutronId);
+      this.setDriver('ST', 1);
+      this.setDriver('GPV', 16);
     }
   }
 

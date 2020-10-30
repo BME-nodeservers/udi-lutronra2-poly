@@ -457,11 +457,10 @@ module.exports = function(Polyglot) {
       radiora2.on('buttonPress', function(id, buttonId) {
         logger.info(id + ': Button ' + buttonId + ' Pressed');
 
-        // let nodeAddr = this.address + '_' + id;
         let nodeAddr = this.address.split('_')[0] + '_' + id;
         logger.info('Address: ' + nodeAddr);
         let node = this.polyInterface.getNode(nodeAddr);
-        // logger.info(node);
+
         if (node) {
           let _gpv = node.getDriver('GPV');
           let devType = _gpv['value'];
@@ -560,7 +559,6 @@ module.exports = function(Polyglot) {
       radiora2.on('keypadbuttonLEDOn', function(deviceId, buttonId) {
         logger.info(deviceId + ': KeyPad Button: ' + buttonId + ' LED On');
         let nodeAddr = null;
-        let myNodeAddr = this.address.split('_')[0] + '_' + deviceId;
         let node = null;
 
         switch(buttonId) {

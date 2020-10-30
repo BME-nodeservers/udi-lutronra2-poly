@@ -18,7 +18,7 @@ If device type is not setup correctly the device will be created wrong or not at
 #### Device Types:
 
 ##### Occupancy Sensors
-- All Sensors           = 2
+- Ceiling,Wall(90/180)  = 2
 - Room Status           = 3
 
 ##### Pico Remotes
