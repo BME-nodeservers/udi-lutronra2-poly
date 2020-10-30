@@ -2,10 +2,10 @@
 
 const RadioRa2 = require('../lib/radiora2');
 let radiora2 = new RadioRa2();
-
 let lutronEvents = require('../lib/lutronEvents.js');
-const VCRXButtonNode = require('./VCRXButtonNode');
 let lutronEmitter = lutronEvents.lutronEmitter;
+
+let reconnect = 300000;
 
 const nodeDefId = 'CONTROLLER';
 
@@ -20,6 +20,7 @@ module.exports = function(Polyglot) {
   const Pico3BRLNode = require('./Pico3BRLNode.js')(Polyglot);
   const Pico4BNode = require('./Pico4BNode.js')(Polyglot);
   const VCRXNode = require('./VCRXNode.js')(Polyglot);
+  const VCRXButtonNode = require('./VCRXButtonNode');
 
   class Controller extends Polyglot.Node {
     constructor(polyInterface, primary, address, name) {
@@ -36,8 +37,6 @@ module.exports = function(Polyglot) {
       this.drivers = {
         ST: { value: '1', uom: 2 }, // uom 2 = Boolean. '1' is True.
       };
-
-      this._reconnect = 300000;
 
       this.isController = true;
       this.listenerSetup();
@@ -60,9 +59,7 @@ module.exports = function(Polyglot) {
       let _username = config.username;
       let _password = config.password;
       if (config.reconnect) {
-        _reconnect = config.reconnect;
-      } else {
-        _reconnect = this._reconnect;
+        reconnect = config.reconnect;
       }
       
       logger.info('Host: ' + _host);
@@ -297,14 +294,13 @@ module.exports = function(Polyglot) {
       radiora2.on('close', function(data) {
         logger.info(data);
         setTimeout(function() {
-          logger.info('Attempting reconnect...');
+          logger.info('Restarting NodeServer...');
           try {
-            // this.repeaterSetup();
             this.polyInterface.restart();
           } catch (err) {
-            logger.errorStack(err, 'Connection to Main Repeater Failed');
+            logger.errorStack(err, 'Connection to Polyglot Failed');
           }
-        }.bind(this), 60000);
+        }.bind(this), reconnect);
       }.bind(this));
 
       radiora2.on('on', function(id) {
@@ -470,31 +466,32 @@ module.exports = function(Polyglot) {
 
       radiora2.on('keypadbuttonLEDOn', function(deviceId, buttonId) {
         logger.info(deviceId + ': KeyPad Button: ' + buttonId + ' LED On');
+        let nodeAddr = null;
         let node = null;
 
         switch(buttonId) {
           case '81':
-            let nodeAddr = this.address + '_' + deviceId + '_1';
+            nodeAddr = this.address + '_' + deviceId + '_1';
             node = this.polyInterface.getNode(nodeAddr);
             break;
           case '82':
-            let nodeAddr = this.address + '_' + deviceId + '_2';
+            nodeAddr = this.address + '_' + deviceId + '_2';
             node = this.polyInterface.getNode(nodeAddr);            
             break;
           case '83':
-            let nodeAddr = this.address + '_' + deviceId + '_3';
+            nodeAddr = this.address + '_' + deviceId + '_3';
             node = this.polyInterface.getNode(nodeAddr);
             break;
           case '84':
-            let nodeAddr = this.address + '_' + deviceId + '_4';
+            nodeAddr = this.address + '_' + deviceId + '_4';
             node = this.polyInterface.getNode(nodeAddr);
             break;
           case '85':
-            let nodeAddr = this.address + '_' + deviceId + '_5';
+            nodeAddr = this.address + '_' + deviceId + '_5';
             node = this.polyInterface.getNode(nodeAddr);
             break;
           case '86':
-            let nodeAddr = this.address + '_' + deviceId + '_6';
+            nodeAddr = this.address + '_' + deviceId + '_6';
             node = this.polyInterface.getNode(nodeAddr);
             break;
           default:
@@ -508,31 +505,32 @@ module.exports = function(Polyglot) {
 
       radiora2.on('keypadbuttonLEDOff', function(deviceId, buttonId) {
         logger.info(deviceId + ': KeyPad Button: ' + buttonId +' LED Off');
+        let nodeAddr = null;
         let node = null;
 
         switch(buttonId) {
           case '81':
-            let nodeAddr = this.address + '_' + deviceId + '_1';
+            nodeAddr = this.address + '_' + deviceId + '_1';
             node = this.polyInterface.getNode(nodeAddr);
             break;
           case '82':
-            let nodeAddr = this.address + '_' + deviceId + '_2';
+            nodeAddr = this.address + '_' + deviceId + '_2';
             node = this.polyInterface.getNode(nodeAddr);            
             break;
           case '83':
-            let nodeAddr = this.address + '_' + deviceId + '_3';
+            nodeAddr = this.address + '_' + deviceId + '_3';
             node = this.polyInterface.getNode(nodeAddr);
             break;
           case '84':
-            let nodeAddr = this.address + '_' + deviceId + '_4';
+            nodeAddr = this.address + '_' + deviceId + '_4';
             node = this.polyInterface.getNode(nodeAddr);
             break;
           case '85':
-            let nodeAddr = this.address + '_' + deviceId + '_5';
+            nodeAddr = this.address + '_' + deviceId + '_5';
             node = this.polyInterface.getNode(nodeAddr);
             break;
           case '86':
-            let nodeAddr = this.address + '_' + deviceId + '_6';
+            nodeAddr = this.address + '_' + deviceId + '_6';
             node = this.polyInterface.getNode(nodeAddr);
             break;
           default:
