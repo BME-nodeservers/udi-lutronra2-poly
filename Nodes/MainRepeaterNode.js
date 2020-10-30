@@ -7,7 +7,7 @@ let lutronEmitter = lutronEvents.lutronEmitter;
 
 let reconnect = 300000;
 
-const nodeDefId = 'CONTROLLER';
+const nodeDefId = 'MAINREPEATER';
 
 module.exports = function(Polyglot) {
   const logger = Polyglot.logger;
@@ -22,24 +22,24 @@ module.exports = function(Polyglot) {
   const Pico4BNode = require('./Pico4BNode.js')(Polyglot);
   const VCRXNode = require('./VCRXNode.js')(Polyglot);
 
-  class Controller extends Polyglot.Node {
+  class MainRepeaterNode extends Polyglot.Node {
     constructor(polyInterface, primary, address, name) {
       super(nodeDefId, polyInterface, primary, address, name);
 
       this.commands = {
         PBUTTON: this.onPhantom,
-        DISCOVER: this.onDiscover,
-        UPDATE_PROFILE: this.onUpdateProfile,
-        REMOVE_NOTICES: this.onRemoveNotices,
+        // DISCOVER: this.onDiscover,
+        // UPDATE_PROFILE: this.onUpdateProfile,
+        // REMOVE_NOTICES: this.onRemoveNotices,
         QUERY: this.query,
       };
 
       this.drivers = {
         ST: { value: '1', uom: 2 }, // uom 2 = Boolean. '1' is True.
-        GV0: {value: '0', uom: 0 },
+        GV1: {value: '0', uom: 0 },
       };
 
-      this.isController = true;
+      // this.isController = false;
       this.listenerSetup();
       this.repeaterSetup();
       this.getDevices();
@@ -55,23 +55,25 @@ module.exports = function(Polyglot) {
       const _config = this.polyInterface.getConfig();
       const config = Object(_config.typedCustomData);
 
-      let _reconnect = null;
-      let _host = config.ipAddress;
-      let _username = config.username;
-      let _password = config.password;
-      if (config.reconnect) {
-        reconnect = config.reconnect;
+      if (config.ipAddress) {
+        let _host = config.ipAddress;
+        let _username = config.username;
+        let _password = config.password;
+        if (config.reconnect) {
+          reconnect = config.reconnect;
+        }
+        
+        logger.info('Host: ' + _host);
+        logger.info('Username: ' + _username);
+        logger.info('Password: ' + _password);
+  
+        try {
+          radiora2.connect(_host, _username, _password);
+        } catch (err) {
+          logger.errorStack(err, 'Connection to Main Repeater Failed');
+        }
       }
       
-      logger.info('Host: ' + _host);
-      logger.info('Username: ' + _username);
-      logger.info('Password: ' + _password);
-
-      try {
-        radiora2.connect(_host, _username, _password);
-      } catch (err) {
-        logger.errorStack(err, 'Connection to Main Repeater Failed');
-      }
     }
 
     getDevices() {
@@ -95,7 +97,9 @@ module.exports = function(Polyglot) {
     async createDevice(intId, devType, devName) {
       // const prefix = '_';
       // let _address = this.address + prefix + intId;
-      let _address = this.address + '_' + intId;
+      // lutronId = this.address.split('_')[1];
+      // let _address = this.address + '_' + intId;
+      let _address = this.address.split('_')[0] + '_' + intId;
       let _lutronId = intId;
       let _devName = devName;
       let _devType = devType;
@@ -250,8 +254,8 @@ module.exports = function(Polyglot) {
     }
 
     onPhantom(button) {
-      this.setDriver('GV0', button);
-      radiora2.pressButton(1, button);
+      this.setDriver('GV1', button.value);
+      radiora2.pressButton('1', button.value);
     }
 
     // Here you could discover devices from a 3rd party API
@@ -311,7 +315,8 @@ module.exports = function(Polyglot) {
       }.bind(this));
 
       radiora2.on('on', function(id) {
-        let nodeAddr = this.address + '_' + id;
+        // let nodeAddr = this.address + '_' + id;
+        let nodeAddr = this.address.split('_')[0] + '_' + id;
         let node = this.polyInterface.getNode(nodeAddr);
         if (node) {
           logger.info('Received for Node: ' + nodeAddr);
@@ -321,7 +326,8 @@ module.exports = function(Polyglot) {
 
       radiora2.on('off', function(id) {
         // logger.info(id);
-        let nodeAddr = this.address + '_' + id;
+        // let nodeAddr = this.address + '_' + id;
+        let nodeAddr = this.address.split('_')[0] + '_' + id;
         let node = this.polyInterface.getNode(nodeAddr);
         if (node) {
           logger.info('Received for Node: ' + nodeAddr);
@@ -332,7 +338,7 @@ module.exports = function(Polyglot) {
 
       radiora2.on('level', function(id, level) {
         logger.info('ID: ' + id + ' Level: ' + level);
-        let nodeAddr = this.address + '_' + id;
+        let nodeAddr = this.address.split('_')[0] + '_' + id;
         logger.info('Address: ' + nodeAddr);
         let node = this.polyInterface.getNode(nodeAddr);
         logger.info(node);
@@ -373,7 +379,8 @@ module.exports = function(Polyglot) {
       radiora2.on('buttonPress', function(id, buttonId) {
         logger.info(id + ': Button ' + buttonId + ' Pressed');
 
-        let nodeAddr = this.address + '_' + id;
+        // let nodeAddr = this.address + '_' + id;
+        let nodeAddr = this.address.split('_')[0] + '_' + id;
         logger.info('Address: ' + nodeAddr);
         let node = this.polyInterface.getNode(nodeAddr);
         // logger.info(node);
@@ -421,7 +428,8 @@ module.exports = function(Polyglot) {
       radiora2.on('buttonReleased', function(id, buttonId) {
         logger.info(id + ': Button Released');
 
-        let nodeAddr = this.address + '_' + id;
+        // let nodeAddr = this.address + '_' + id;
+        let nodeAddr = this.address.split('_')[0] + '_' + id;
         logger.info('Address: ' + nodeAddr);
         let node = this.polyInterface.getNode(nodeAddr);
         logger.info(node);
@@ -478,27 +486,32 @@ module.exports = function(Polyglot) {
 
         switch(buttonId) {
           case '81':
-            nodeAddr = this.address + '_' + deviceId + '_1';
+            nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_1';
             node = this.polyInterface.getNode(nodeAddr);
             break;
           case '82':
-            nodeAddr = this.address + '_' + deviceId + '_2';
+            // nodeAddr = this.address + '_' + deviceId + '_2';
+            nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_2';
             node = this.polyInterface.getNode(nodeAddr);            
             break;
           case '83':
-            nodeAddr = this.address + '_' + deviceId + '_3';
+            // nodeAddr = this.address + '_' + deviceId + '_3';
+            nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_3';
             node = this.polyInterface.getNode(nodeAddr);
             break;
           case '84':
-            nodeAddr = this.address + '_' + deviceId + '_4';
+            // nodeAddr = this.address + '_' + deviceId + '_4';
+            nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_4';
             node = this.polyInterface.getNode(nodeAddr);
             break;
           case '85':
-            nodeAddr = this.address + '_' + deviceId + '_5';
+            // nodeAddr = this.address + '_' + deviceId + '_5';
+            nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_5';
             node = this.polyInterface.getNode(nodeAddr);
             break;
           case '86':
-            nodeAddr = this.address + '_' + deviceId + '_6';
+            // nodeAddr = this.address + '_' + deviceId + '_6';
+            nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_6';
             node = this.polyInterface.getNode(nodeAddr);
             break;
           default:
@@ -517,27 +530,33 @@ module.exports = function(Polyglot) {
 
         switch(buttonId) {
           case '81':
-            nodeAddr = this.address + '_' + deviceId + '_1';
+            // nodeAddr = this.address + '_' + deviceId + '_1';
+            nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_1';
             node = this.polyInterface.getNode(nodeAddr);
             break;
           case '82':
-            nodeAddr = this.address + '_' + deviceId + '_2';
+            // nodeAddr = this.address + '_' + deviceId + '_2';
+            nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_2';
             node = this.polyInterface.getNode(nodeAddr);            
             break;
           case '83':
-            nodeAddr = this.address + '_' + deviceId + '_3';
+            // nodeAddr = this.address + '_' + deviceId + '_3';
+            nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_3';
             node = this.polyInterface.getNode(nodeAddr);
             break;
           case '84':
-            nodeAddr = this.address + '_' + deviceId + '_4';
+            // nodeAddr = this.address + '_' + deviceId + '_4';
+            nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_4';
             node = this.polyInterface.getNode(nodeAddr);
             break;
           case '85':
-            nodeAddr = this.address + '_' + deviceId + '_5';
+            // nodeAddr = this.address + '_' + deviceId + '_5';
+            nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_5';
             node = this.polyInterface.getNode(nodeAddr);
             break;
           case '86':
-            nodeAddr = this.address + '_' + deviceId + '_6';
+            // nodeAddr = this.address + '_' + deviceId + '_6';
+            nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_6';
             node = this.polyInterface.getNode(nodeAddr);
             break;
           default:
@@ -560,7 +579,8 @@ module.exports = function(Polyglot) {
 
       radiora2.on('groupUnoccupied', function(groupId) {
         logger.info('Group Id: ' + groupId + ' Unoccupied')
-        let nodeAddr = this.address + '_' + groupId;
+        // let nodeAddr = this.address + '_' + groupId;
+        let nodeAddr = this.address.split('_')[0] + '_' + groupId;
         let node = this.polyInterface.getNode(nodeAddr);
         if (node) {
           node.setDriver('ST', '2');
@@ -569,7 +589,8 @@ module.exports = function(Polyglot) {
 
       radiora2.on('groupUnknown', function(groupId) {
         logger.info('Group Id: ' + groupId + ' Unknown')
-        let nodeAddr = this.address + '_' + groupId;
+        // let nodeAddr = this.address + '_' + groupId;
+        let nodeAddr = this.address.split('_')[0] + '_' + groupId;
         let node = this.polyInterface.getNode(nodeAddr);
         if (node) {
           node.setDriver('ST', '0');
@@ -628,9 +649,9 @@ module.exports = function(Polyglot) {
   }
 
   // Required so that the interface can find this Node class using the nodeDefId
-  Controller.nodeDefId = nodeDefId;
+  MainRepeaterNode.nodeDefId = nodeDefId;
 
-  return Controller;
+  return MainRepeaterNode;
 };
 
 
