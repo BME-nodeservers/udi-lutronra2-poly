@@ -232,10 +232,10 @@ module.exports = function(Polyglot) {
                 new MaestroSwitchNode(this.polyInterface, _address,
                   _address, _devName)
               );
-              logger.info('Add node worked: %s', result);
               if (result) {
-                await this.sleep(1000);
-                radiora2.queryOutputState(_lutronId);
+                logger.info('Add node worked: %s', result);
+                // await this.sleep(1000);
+                // radiora2.queryOutputState(_lutronId);
               }
             } catch (err) {
               logger.errorStack(err, 'Add node failed:');
@@ -247,10 +247,10 @@ module.exports = function(Polyglot) {
               new MaestroDimmerNode(this.polyInterface, _address,
                 _address, _devName)
             );
-            logger.info('Add node worked: %s', result);
             if (result) {
-              await this.sleep(1000);
-              radiora2.queryOutputState(_lutronId);
+              logger.info('Add node worked: %s', result);
+              // await this.sleep(1000);
+              // radiora2.queryOutputState(_lutronId);
             }
           } catch (err) {
             logger.errorStack(err, 'Add node failed:');
@@ -262,10 +262,10 @@ module.exports = function(Polyglot) {
               new MaestroFanControlNode(this.polyInterface, _address,
                 _address, _devName)
             );
-            logger.info('Add node worked: %s', result);
             if (result) {
-              await this.sleep(1000);
-              radiora2.queryOutputState(_lutronId);
+              logger.info('Add node worked: %s', result);
+              // await this.sleep(1000);
+              // radiora2.queryOutputState(_lutronId);
             }
           } catch (err) {
             logger.errorStack(err, 'Add node failed:');
