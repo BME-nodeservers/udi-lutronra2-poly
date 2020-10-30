@@ -210,23 +210,26 @@
       <st id="GV11" editor="_79_1"/>     <!--Component 31-->
       <st id="GV12" editor="_79_1"/>     <!--Component 32-->
       <st id="GV13" editor="_79_1"/>     <!--Component 33-->
-      <st id="GV1" editor="POWER"/>
-      <st id="GV2" editor="POWER"/>
-      <st id="GV3" editor="POWER"/>
-      <st id="GV4" editor="POWER"/>
-      <st id="GV5" editor="POWER"/>
-      <st id="GV6" editor="POWER"/>
     </sts>
     <cmds>
       <sends>
       </sends>
       <accepts>
-        <cmd id="GV1"/>
-        <cmd id="GV2"/>
-        <cmd id="GV3"/>
-        <cmd id="GV4"/>
-        <cmd id="GV5"/>
-        <cmd id="GV6"/>
+      </accepts>
+    </cmds>
+  </nodedef>
+
+  <nodedef id="VCRXBUTTON" nls="VCRXBTN">
+    <sts>
+      <st id="ST" editor="BOOL"/>
+      <st id="GPV" editor="DEVTYPE"/>
+    </sts>
+    <cmds>
+      <sends>
+      </sends>
+      <accepts>
+        <cmd id="DON"/>
+        <cmd id="QUERY"/>
       </accepts>
     </cmds>
   </nodedef>

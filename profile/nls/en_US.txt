@@ -96,6 +96,11 @@ CMD-VCRX-GV4-NAME = Scene 4
 CMD-VCRX-GV5-NAME = Scene 5
 CMD-VCRX-GV6-NAME = Scene 6
 
+ND-VCRXBUTTON-NAME = Visor Control Receiver
+ND-VCRXBUTTON-ICON = Output
+ST-VCRXBTN-ST-NAME = Status
+
+
 # Device Type Mapping
 DEVTYPE-1 = Occupancy Sensor
 DEVTYPE-2 = 2B Pico

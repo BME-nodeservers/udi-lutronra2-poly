@@ -21,6 +21,8 @@ const Pico3BRLNode = require('./Nodes/Pico3BRLNode.js')(Polyglot);
 const Pico4BNode = require('./Nodes/Pico4BNode.js')(Polyglot);
 const OccupancyNode = require('./Nodes/OccupancyNode.js')(Polyglot);
 const VCRXNode = require('./Nodes/VCRXNode.js')(Polyglot);
+const VCRXButtonNode = require('./Nodes/VCRXButtonNode.js')(Polyglot);
+
 
 const typedParams = [
   {name: 'name', title: 'Repeater Name', type: 'STRING',
@@ -53,6 +55,7 @@ logger.info('Starting Lutron Node Server');
 const poly = new Polyglot.Interface([ControllerNode,
   MaestroDimmerNode, MaestroSwitchNode, MaestroFanControlNode, OccupancyNode,
   Pico2BNode, Pico2BRLNode, Pico3BNode, Pico3BRLNode, Pico4BNode, VCRXNode,
+  VCRXButtonNode,
   ]);
   // MainRepeaterNode, MaestroDimmerNode, MaestroSwitchNode]);
 
@@ -69,23 +72,27 @@ poly.on('config', function(config) {
     poly.saveTypedParams(typedParams);
     const md = fs.readFileSync('./configdoc.md');
     poly.setCustomParamsDoc(markdown.toHTML(md.toString()));
-
-    if (!nodesCount) {
-      try {
-        logger.info('Auto-creating controller');
-        callAsync(autoCreateController());
-      } catch (err) {
-        logger.error('Error while auto-creating controller node:', err);
-      }
-    } else {
-      if (Object.keys(config.typedCustomData).length > 0) {
-        callAsync(CreateLutronControllers());
-      }
+    
+    if (Object.keys(config.typedCustomData).length > 0) {
+      callAsync(CreateLutronControllers());
     }
 
-    if (config.newParamsDetected) {
-      logger.info('New parameters detected');
-    }
+    // if (!nodesCount) {
+    //   try {
+    //     logger.info('Auto-creating controller');
+    //     callAsync(autoCreateController());
+    //   } catch (err) {
+    //     logger.error('Error while auto-creating controller node:', err);
+    //   }
+    // } else {
+    //   if (Object.keys(config.typedCustomData).length > 0) {
+    //     callAsync(CreateLutronControllers());
+    //   }
+    // }
+
+    // if (config.newParamsDetected) {
+    //   logger.info('New parameters detected');
+    // }
   }
 });
 
@@ -165,11 +172,11 @@ async function CreateLutronControllers() {
 
   let _ipJoin = config.ipAddress.toString().replace(/\./g, '');
   let _repeaterUID = _ipJoin.substring(_ipJoin.length - 3);
-  let address = 'lip' + _repeaterUID;
+  // let address = 'lip' + _repeaterUID;
 
   try {
     await poly.addNode(
-      new MainRepeaterNode(poly, address, address, config.name)
+      new MainRepeaterNode(poly, _repeaterUID, _repeaterUID, config.name)
     );
   } catch (err) {
     logger.errorStack(err, 'Error Creating Main Repeater Node');

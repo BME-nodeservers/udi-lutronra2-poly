@@ -1,5 +1,5 @@
 {
-  "name": "Lutron RadioRA 2",
+  "name": "RadioRA2",
   "docs": "https://github.com/simplextech/udi-poly-lutron-radiora2",
   "type": "node",
   "executable": "nodeserver.js",

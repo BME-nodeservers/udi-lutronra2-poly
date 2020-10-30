@@ -4,6 +4,7 @@ const RadioRa2 = require('../lib/radiora2');
 let radiora2 = new RadioRa2();
 
 let lutronEvents = require('../lib/lutronEvents.js');
+const VCRXButtonNode = require('./VCRXButtonNode');
 let lutronEmitter = lutronEvents.lutronEmitter;
 
 const nodeDefId = 'CONTROLLER';
@@ -94,8 +95,9 @@ module.exports = function(Polyglot) {
     }
 
     async createDevice(intId, devType, devName) {
-      const prefix = 'id_';
-      let _address = this.address + prefix + intId;
+      // const prefix = '_';
+      // let _address = this.address + prefix + intId;
+      let _address = this.address + '_' + intId;
       let _lutronId = intId;
       let _devName = devName;
       let _devType = devType;
@@ -104,7 +106,7 @@ module.exports = function(Polyglot) {
         case 1: // Occupancy
           try {
             const result = await this.polyInterface.addNode(
-              new OccupancyNode(this.polyInterface, this.address,
+              new OccupancyNode(this.polyInterface, _address,
                 _address, _devName)
             );
             logger.info('Add node worked: %s', result);
@@ -118,7 +120,7 @@ module.exports = function(Polyglot) {
         case 2: // 2B Pico
           try {
             const result = await this.polyInterface.addNode(
-              new Pico2BNode(this.polyInterface, this.address,
+              new Pico2BNode(this.polyInterface, _address,
                 _address, _devName)
             );
             logger.info('Add node worked: %s', result);
@@ -129,7 +131,7 @@ module.exports = function(Polyglot) {
         case 3: // 2BRL Pico
         try {
           const result = await this.polyInterface.addNode(
-            new Pico2BRLNode(this.polyInterface, this.address,
+            new Pico2BRLNode(this.polyInterface, _address,
               _address, _devName)
           );
           logger.info('Add node worked: %s', result);
@@ -140,7 +142,7 @@ module.exports = function(Polyglot) {
         case 4: // 3B Pico
         try {
           const result = await this.polyInterface.addNode(
-            new Pico3BNode(this.polyInterface, this.address,
+            new Pico3BNode(this.polyInterface, _address,
               _address, _devName)
           );
           logger.info('Add node worked: %s', result);
@@ -151,7 +153,7 @@ module.exports = function(Polyglot) {
         case 5: // 3BRL Pico
           try {
             const result = await this.polyInterface.addNode(
-              new Pico3BRLNode(this.polyInterface, this.address,
+              new Pico3BRLNode(this.polyInterface, _address,
                 _address, _devName)
             );
             logger.info('Add node worked: %s', result);
@@ -162,7 +164,7 @@ module.exports = function(Polyglot) {
         case 6: // 4B Pico
           try {
             const result = await this.polyInterface.addNode(
-              new Pico4BNode(this.polyInterface, this.address,
+              new Pico4BNode(this.polyInterface, _address,
                 _address, _devName)
             );
             logger.info('Add node worked: %s', result);
@@ -176,7 +178,7 @@ module.exports = function(Polyglot) {
         case 8: // Switch
             try {
               const result = await this.polyInterface.addNode(
-                new MaestroSwitchNode(this.polyInterface, this.address,
+                new MaestroSwitchNode(this.polyInterface, _address,
                   _address, _devName)
               );
               logger.info('Add node worked: %s', result);
@@ -191,7 +193,7 @@ module.exports = function(Polyglot) {
         case 9: // Dimmer
           try {
             const result = await this.polyInterface.addNode(
-              new MaestroDimmerNode(this.polyInterface, this.address,
+              new MaestroDimmerNode(this.polyInterface, _address,
                 _address, _devName)
             );
             logger.info('Add node worked: %s', result);
@@ -206,7 +208,7 @@ module.exports = function(Polyglot) {
         case 10: // Fan Controller
           try {
             const result = await this.polyInterface.addNode(
-              new MaestroFanControlNode(this.polyInterface, this.address,
+              new MaestroFanControlNode(this.polyInterface, _address,
                 _address, _devName)
             );
             logger.info('Add node worked: %s', result);
@@ -221,23 +223,23 @@ module.exports = function(Polyglot) {
         case 11: // VCRX
           try {
             const result = await this.polyInterface.addNode(
-              new VCRXNode(this.polyInterface, this.address,
+              new VCRXNode(this.polyInterface, _address,
                 _address, _devName)
             );
             logger.info('Add node worked: %s', result);
             if (result) {
-              await this.sleep(1000);
-              radiora2.queryDeviceButtonState(_lutronId, '81');
-              await this.sleep(1000);
-              radiora2.queryDeviceButtonState(_lutronId, '82');
-              await this.sleep(1000);
-              radiora2.queryDeviceButtonState(_lutronId, '83');
-              await this.sleep(1000);
-              radiora2.queryDeviceButtonState(_lutronId, '84');
-              await this.sleep(1000);
-              radiora2.queryDeviceButtonState(_lutronId, '85');
-              await this.sleep(1000);
-              radiora2.queryDeviceButtonState(_lutronId, '86');
+              // await this.sleep(1000);
+              // radiora2.queryDeviceButtonState(_lutronId, '81');
+              // await this.sleep(1000);
+              // radiora2.queryDeviceButtonState(_lutronId, '82');
+              // await this.sleep(1000);
+              // radiora2.queryDeviceButtonState(_lutronId, '83');
+              // await this.sleep(1000);
+              // radiora2.queryDeviceButtonState(_lutronId, '84');
+              // await this.sleep(1000);
+              // radiora2.queryDeviceButtonState(_lutronId, '85');
+              // await this.sleep(1000);
+              // radiora2.queryDeviceButtonState(_lutronId, '86');
             }
           } catch (err) {
             logger.errorStack(err, 'Add node failed:');
@@ -306,7 +308,7 @@ module.exports = function(Polyglot) {
       }.bind(this));
 
       radiora2.on('on', function(id) {
-        let nodeAddr = this.address + 'id_' + id;
+        let nodeAddr = this.address + '_' + id;
         let node = this.polyInterface.getNode(nodeAddr);
         if (node) {
           logger.info('Received for Node: ' + nodeAddr);
@@ -316,7 +318,7 @@ module.exports = function(Polyglot) {
 
       radiora2.on('off', function(id) {
         // logger.info(id);
-        let nodeAddr = this.address + 'id_' + id;
+        let nodeAddr = this.address + '_' + id;
         let node = this.polyInterface.getNode(nodeAddr);
         if (node) {
           logger.info('Received for Node: ' + nodeAddr);
@@ -327,7 +329,7 @@ module.exports = function(Polyglot) {
 
       radiora2.on('level', function(id, level) {
         logger.info('ID: ' + id + ' Level: ' + level);
-        let nodeAddr = this.address + 'id_' + id;
+        let nodeAddr = this.address + '_' + id;
         logger.info('Address: ' + nodeAddr);
         let node = this.polyInterface.getNode(nodeAddr);
         logger.info(node);
@@ -368,7 +370,7 @@ module.exports = function(Polyglot) {
       radiora2.on('buttonPress', function(id, buttonId) {
         logger.info(id + ': Button ' + buttonId + ' Pressed');
 
-        let nodeAddr = this.address + 'id_' + id;
+        let nodeAddr = this.address + '_' + id;
         logger.info('Address: ' + nodeAddr);
         let node = this.polyInterface.getNode(nodeAddr);
         // logger.info(node);
@@ -416,7 +418,7 @@ module.exports = function(Polyglot) {
       radiora2.on('buttonReleased', function(id, buttonId) {
         logger.info(id + ': Button Released');
 
-        let nodeAddr = this.address + 'id_' + id;
+        let nodeAddr = this.address + '_' + id;
         logger.info('Address: ' + nodeAddr);
         let node = this.polyInterface.getNode(nodeAddr);
         logger.info(node);
@@ -467,89 +469,148 @@ module.exports = function(Polyglot) {
       }.bind(this));
 
       radiora2.on('keypadbuttonLEDOn', function(deviceId, buttonId) {
-        logger.info(deviceId + ': KeyPad Button LED On');
+        logger.info(deviceId + ': KeyPad Button: ' + buttonId + ' LED On');
 
-        let nodeAddr = this.address + 'id_' + deviceId;
-        logger.info('Address: ' + nodeAddr);
-        let node = this.polyInterface.getNode(nodeAddr);
-        logger.info(node);
+        switch(buttonId) {
+          case '81':
+            let nodeAddr = this.address + '_' + deviceId + '_1';
+            logger.info('Address: ' + nodeAddr);
+            let node = this.polyInterface.getNode(nodeAddr);
+            break;
+          case '82':
+            node.setDriver('GV2', 100);
+            break;
+          case '83':
+            node.setDriver('GV3', 100);
+            break;
+          case '84':
+            node.setDriver('GV4', 100);
+            break;
+          case '85':
+            node.setDriver('GV5', 100);
+            break;
+          case '86':
+            node.setDriver('GV6', 100);
+            break;
+          default:
+            break;
+        }
+
+        // let nodeAddr = this.address + '_' + deviceId;
+        // logger.info('Address: ' + nodeAddr);
+        // let node = this.polyInterface.getNode(nodeAddr);
+        // logger.info(node);
         if (node) {
-          let _gpv = node.getDriver('GPV');
-          let devType = _gpv['value'];
-          logger.info('DevType: ' + devType);
-          // let _gv = 'GV' + buttonId;
+          // let _gpv = node.getDriver('GPV');
+          // let devType = _gpv['value'];
+          // logger.info('DevType: ' + devType);
+          node.setDriver('ST', 1);
 
-          switch(devType) {
-            case '11':
-              switch(buttonId) {
-                case '81':
-                  node.setDriver('GV1', 100);
-                  break;
-                case '82':
-                  node.setDriver('GV2', 100);
-                  break;
-                case '83':
-                  node.setDriver('GV3', 100);
-                  break;
-                case '84':
-                  node.setDriver('GV4', 100);
-                  break;
-                case '85':
-                  node.setDriver('GV5', 100);
-                  break;
-                case '86':
-                  node.setDriver('GV6', 100);
-                  break;
-                default:
-                  break;
-              }
-            default:
-              break;
-          }
+          // switch(devType) {
+          //   case '11':
+          //     switch(buttonId) {
+          //       case '81':
+          //         node.setDriver('GV1', 100);
+          //         break;
+          //       case '82':
+          //         node.setDriver('GV2', 100);
+          //         break;
+          //       case '83':
+          //         node.setDriver('GV3', 100);
+          //         break;
+          //       case '84':
+          //         node.setDriver('GV4', 100);
+          //         break;
+          //       case '85':
+          //         node.setDriver('GV5', 100);
+          //         break;
+          //       case '86':
+          //         node.setDriver('GV6', 100);
+          //         break;
+          //       default:
+          //         break;
+          //     }
+          //   default:
+          //     break;
+          // }
         }
       }.bind(this));
 
       radiora2.on('keypadbuttonLEDOff', function(deviceId, buttonId) {
-        logger.info(deviceId + ': KeyPad Button LED Off');
+        logger.info(deviceId + ': KeyPad Button: ' + buttonId +' LED Off');
+        let node = null;
 
-        let nodeAddr = this.address + 'id_' + deviceId;
-        logger.info('Address: ' + nodeAddr);
-        let node = this.polyInterface.getNode(nodeAddr);
-        logger.info(node);
-        if (node) {
-          let _gpv = node.getDriver('GPV');
-          let devType = _gpv['value'];
-          logger.info('DevType: ' + devType);
-          // let _gv = 'GV' + buttonId;
-
-          switch(devType) {
-            case '11': // VCRX
-              switch(buttonId) {
-                case '81':
-                  node.setDriver('GV1', 0);
-                  break;
-                case '82':
-                  node.setDriver('GV2', 0);
-                  break;
-                case '83':
-                  node.setDriver('GV3', 0);
-                  break;
-                case '84':
-                  node.setDriver('GV4', 0);
-                  break;
-                case '85':
-                  node.setDriver('GV5', 0);
-                  break;
-                case '86':
-                  node.setDriver('GV6', 0);
-                  break;
-                default:
-                  break;
-              }
-            default:
-              break;
-          }
+        switch(buttonId) {
+          case '81':
+            let nodeAddr = this.address + '_' + deviceId + '_1';
+            node = this.polyInterface.getNode(nodeAddr);
+            break;
+          case '82':
+            let nodeAddr = this.address + '_' + deviceId + '_2';
+            node = this.polyInterface.getNode(nodeAddr);            
+            break;
+          case '83':
+            let nodeAddr = this.address + '_' + deviceId + '_3';
+            node = this.polyInterface.getNode(nodeAddr);
+            break;
+          case '84':
+            let nodeAddr = this.address + '_' + deviceId + '_4';
+            node = this.polyInterface.getNode(nodeAddr);
+            break;
+          case '85':
+            let nodeAddr = this.address + '_' + deviceId + '_5';
+            node = this.polyInterface.getNode(nodeAddr);
+            break;
+          case '86':
+            let nodeAddr = this.address + '_' + deviceId + '_6';
+            node = this.polyInterface.getNode(nodeAddr);
+            break;
+          default:
+            break;
         }
+
+        if (node) {
+          node.setDriver('ST', 0);
+        }
+
+        // let nodeAddr = this.address + '_' + deviceId;
+        // logger.info('Address: ' + nodeAddr);
+        // let node = this.polyInterface.getNode(nodeAddr);
+        // logger.info(node);
+        // if (node) {
+        //   let _gpv = node.getDriver('GPV');
+        //   let devType = _gpv['value'];
+        //   logger.info('DevType: ' + devType);
+        //   // let _gv = 'GV' + buttonId;
+
+        //   switch(devType) {
+        //     case '11': // VCRX
+        //       switch(buttonId) {
+        //         case '81':
+        //           node.setDriver('GV1', 0);
+        //           break;
+        //         case '82':
+        //           node.setDriver('GV2', 0);
+        //           break;
+        //         case '83':
+        //           node.setDriver('GV3', 0);
+        //           break;
+        //         case '84':
+        //           node.setDriver('GV4', 0);
+        //           break;
+        //         case '85':
+        //           node.setDriver('GV5', 0);
+        //           break;
+        //         case '86':
+        //           node.setDriver('GV6', 0);
+        //           break;
+        //         default:
+        //           break;
+        //       }
+        //     default:
+        //       break;
+        //   }
+        // }
       }.bind(this));
 
       radiora2.on('groupOccupied', function(groupId) {
@@ -601,6 +662,11 @@ module.exports = function(Polyglot) {
       lutronEmitter.on('buttonPress', function(deviceId, buttonId) {
         radiora2.pressButton(deviceId, buttonId);
       })
+
+      lutronEmitter.on('queryDeviceButton', function(deviceId, buttonId) {
+        radiora2.queryDeviceButtonState(deviceId, buttonId);
+      })
+
 
       return;
     };
