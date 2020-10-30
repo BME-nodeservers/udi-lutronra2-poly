@@ -223,20 +223,8 @@ module.exports = function(Polyglot) {
               new VCRXNode(this.polyInterface, _address,
                 _address, _devName)
             );
-            logger.info('Add node worked: %s', result);
             if (result) {
-              // await this.sleep(1000);
-              // radiora2.queryDeviceButtonState(_lutronId, '81');
-              // await this.sleep(1000);
-              // radiora2.queryDeviceButtonState(_lutronId, '82');
-              // await this.sleep(1000);
-              // radiora2.queryDeviceButtonState(_lutronId, '83');
-              // await this.sleep(1000);
-              // radiora2.queryDeviceButtonState(_lutronId, '84');
-              // await this.sleep(1000);
-              // radiora2.queryDeviceButtonState(_lutronId, '85');
-              // await this.sleep(1000);
-              // radiora2.queryDeviceButtonState(_lutronId, '86');
+              logger.info('Add node worked: %s', result);
             }
           } catch (err) {
             logger.errorStack(err, 'Add node failed:');
@@ -244,6 +232,7 @@ module.exports = function(Polyglot) {
         break;
         default:
           logger.info('No Device Type Defined');
+          break;
       }
     }
 
