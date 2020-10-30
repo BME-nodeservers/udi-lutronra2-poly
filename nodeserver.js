@@ -9,7 +9,7 @@ const Polyglot = require('polyinterface');
 const logger = Polyglot.logger;
 const lock = new AsyncLock({ timeout: 500 });
 
-const ControllerNode = require('./Nodes/ControllerNode.js')(Polyglot);
+// const ControllerNode = require('./Nodes/ControllerNode.js')(Polyglot);
 const MainRepeaterNode = require('./Nodes/MainRepeaterNode.js')(Polyglot);
 const MaestroDimmerNode = require('./Nodes/MaestroDimmerNode.js')(Polyglot);
 const MaestroSwitchNode = require('./Nodes/MaestroSwitchNode.js')(Polyglot);
@@ -34,8 +34,8 @@ const typedParams = [
     desc: ''},
   {name: 'password', title: 'Password', type: 'STRING',
     desc: ''},
-  {name: 'reconnect', title: 'Recconect Wait Time', type: 'NUMBER',
-    desc: 'Time in Milliseconds to wait before attempting reconnect'},
+  {name: 'reconnect', title: 'Restart Wait Time', type: 'NUMBER',
+    desc: 'Time in Milliseconds to wait before restarting', defaultValue: '300000' },
   { name: 'devices', title: 'Lutron Devices', isList: true,
     params:
     [
@@ -53,12 +53,12 @@ const typedParams = [
 
 logger.info('Starting Lutron Node Server');
 
-const poly = new Polyglot.Interface([ControllerNode,
+const poly = new Polyglot.Interface([
   MaestroDimmerNode, MaestroSwitchNode, MaestroFanControlNode, OccupancyNode,
   RoomStatusNode, Pico2BNode, Pico2BRLNode, Pico3BNode, Pico3BRLNode, Pico4BNode,
   VCRXNode, VCRXButtonNode,
   ]);
-  // MainRepeaterNode, MaestroDimmerNode, MaestroSwitchNode]);
+  // ControllerNode, MainRepeaterNode, MaestroDimmerNode, MaestroSwitchNode]);
 
 poly.on('mqttConnected', function() {
   logger.info('MQTT Connection started');

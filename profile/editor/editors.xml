@@ -31,4 +31,8 @@
     <range uom="25" subset="0-2" nls="ROOMSTATUS" />
   </editor>
 
+  <editor id="PHANTOM">
+    <range uom="0" subset="1-100"/>
+  </editor>
+
 </editors>

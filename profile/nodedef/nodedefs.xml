@@ -5,10 +5,14 @@
   <nodedef id="CONTROLLER" nls="CONTROLLER">
     <sts>
       <st id="ST" editor="CONTROLLER"/>
+      <st id="GV0" editor="PHANTOM"/>
     </sts>
     <cmds>
       <sends/>
       <accepts>
+        <cmd id="PBUTTON">
+          <p id="" editor="PHANTOM" optional="T"/>
+        </cmd>
         <cmd id="UPDATE_PROFILE"/>
         <cmd id="REMOVE_NOTICES"/>
         <cmd id="QUERY"/>

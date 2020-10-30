@@ -21,14 +21,13 @@ module.exports = function(Polyglot) {
   const Pico3BRLNode = require('./Pico3BRLNode.js')(Polyglot);
   const Pico4BNode = require('./Pico4BNode.js')(Polyglot);
   const VCRXNode = require('./VCRXNode.js')(Polyglot);
-  const VCRXButtonNode = require('./VCRXButtonNode');
 
   class Controller extends Polyglot.Node {
     constructor(polyInterface, primary, address, name) {
       super(nodeDefId, polyInterface, primary, address, name);
 
       this.commands = {
-        CREATE_NEW: this.onCreateNew,
+        PBUTTON: this.onPhantom,
         DISCOVER: this.onDiscover,
         UPDATE_PROFILE: this.onUpdateProfile,
         REMOVE_NOTICES: this.onRemoveNotices,
@@ -37,6 +36,7 @@ module.exports = function(Polyglot) {
 
       this.drivers = {
         ST: { value: '1', uom: 2 }, // uom 2 = Boolean. '1' is True.
+        GV0: {value: '0', uom: 0 },
       };
 
       this.isController = true;
@@ -247,6 +247,11 @@ module.exports = function(Polyglot) {
           logger.info('No Device Type Defined');
           break;
       }
+    }
+
+    onPhantom(button) {
+      this.setDriver('GV0', button);
+      radiora2.pressButton(1, button);
     }
 
     // Here you could discover devices from a 3rd party API

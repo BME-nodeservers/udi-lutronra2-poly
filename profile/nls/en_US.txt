@@ -1,8 +1,8 @@
 ND-CONTROLLER-NAME = Node server status
 ND-CONTROLLER-ICON = GenericCtl
 ST-CONTROLLER-ST-NAME = Status
-CMD-CONTROLLER-DISCOVER-NAME = Discover new devices
-CMD-CONTROLLER-CREATE_NEW-NAME = Create a new device
+ST-CONTROLLER-GV0-NAME = Phantom Button Pressed
+CMD-CONTROLLER-PBUTTON-NAME = Press Phantom button
 CMD-CONTROLLER-UPDATE_PROFILE-NAME = Update node server profile
 CMD-CONTROLLER-REMOVE_NOTICES-NAME = Remove node server notices
 CMD-CONTROLLER-QUERY-NAME = Query
