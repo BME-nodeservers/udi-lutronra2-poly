@@ -206,6 +206,22 @@
     </cmds>
   </nodedef>
 
+  <nodedef id="ROOMSTATUS" nls="ROOMSTATUS">
+    <sts>
+      <st id="ST" editor="ROOMSTATUS"/>
+      <st id="GPV" editor="DEVTYPE"/>
+    </sts>
+    <cmds>
+      <sends>
+        <cmd id="DON"/>
+        <cmd id="DOF"/>
+      </sends>
+      <accepts>
+        <cmd id="QUERY"/>
+      </accepts>
+    </cmds>
+  </nodedef>
+
   <nodedef id="VCRX" nls="VCRX">
     <sts>
       <st id="ST" editor="BOOL"/>

@@ -15,6 +15,7 @@ module.exports = function(Polyglot) {
   const MaestroSwitchNode = require('./MaestroSwitchNode.js')(Polyglot);
   const MaestroFanControlNode = require('./MaestroFanControlNode.js')(Polyglot);
   const OccupancyNode = require('./OccupancyNode.js')(Polyglot);
+  const RoomStatusNode = require('./RoomStatusNode.js')(Polyglot);
   const Pico2BNode = require('./Pico2BNode.js')(Polyglot);
   const Pico2BRLNode = require('./Pico2BRLNode.js')(Polyglot);
   const Pico3BRLNode = require('./Pico3BRLNode.js')(Polyglot);
@@ -106,10 +107,9 @@ module.exports = function(Polyglot) {
               new OccupancyNode(this.polyInterface, _address,
                 _address, _devName)
             );
-            logger.info('Add node worked: %s', result);
-            // if (result) {
-            //   radiora2.queryOutputState(_lutronId);
-            // }
+            if (result) {
+              logger.info('Add node worked: %s', result);
+            }
           } catch (err) {
             logger.errorStack(err, 'Add node failed:');
           }
@@ -230,6 +230,19 @@ module.exports = function(Polyglot) {
             logger.errorStack(err, 'Add node failed:');
           }
         break;
+        case 12: // Room Status
+          try {
+            const result = await this.polyInterface.addNode(
+              new RoomStatusNode(this.polyInterface, _address,
+                _address, _devName)
+            );
+            if (result) {
+              logger.info('Add node worked: %s', result);
+            }
+          } catch (err) {
+            logger.errorStack(err, 'Add node failed:');
+          }
+          break;
         default:
           logger.info('No Device Type Defined');
           break;
@@ -534,11 +547,21 @@ module.exports = function(Polyglot) {
       radiora2.on('groupOccupied', function(groupId) {
         logger.info(groupId);
         logger.info('Group Id: ' + groupId + ' Occupied')
+        let nodeAddr = this.address + '_' + groupId;
+        let node = this.polyInterface.getNode(nodeAddr);
+        if (node) {
+          node.setDriver('ST', '1');
+        }
       }.bind(this));
 
       radiora2.on('groupUnoccupied', function(groupId) {
         logger.info(groupId);
         logger.info('Group Id: ' + groupId + ' Unoccupied')
+        let nodeAddr = this.address + '_' + groupId;
+        let node = this.polyInterface.getNode(nodeAddr);
+        if (node) {
+          node.setDriver('ST', '2');
+        }
       }.bind(this));
 
       radiora2.on('groupUnknown', function(data) {
@@ -584,6 +607,11 @@ module.exports = function(Polyglot) {
       lutronEmitter.on('queryDeviceButton', function(deviceId, buttonId) {
         radiora2.queryDeviceButtonState(deviceId, buttonId);
       })
+
+      lutronEmitter.on('queryGroupState', function(deviceId) {
+        radiora2.queryGroupState(deviceId);
+      })
+      
 
 
       return;

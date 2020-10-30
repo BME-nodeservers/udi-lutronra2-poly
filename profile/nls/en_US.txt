@@ -88,6 +88,13 @@ ND-VCRXBUTTON-NAME = Visor Control Receiver
 ND-VCRXBUTTON-ICON = Output
 ST-VCRXBTN-ST-NAME = Status
 
+ND-ROOMSTATUS-NAME = Room Occupancy
+ND-ROOMSTATUS-ICON = MotionSensor
+ST-ROOMSTATUS-ST-NAME = Status
+
+# Room Status
+ROOMSTATUS-1 = Occupied
+ROOMSTATUS-2 = Unoccupied
 
 # Device Type Mapping
 DEVTYPE-1 = Occupancy Sensor
@@ -101,3 +108,4 @@ DEVTYPE-8 = Switch
 DEVTYPE-9 = Dimmer
 DEVTYPE-10 = Fan Controller
 DEVTYPE-11 = Visor Control Receiver
+DEVTYPE-12 = Room Status
