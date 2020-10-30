@@ -42,4 +42,4 @@ If device type is not setup correctly the device will be created wrong or not at
 - VCRX                  = 13
 
 ###### Temperature Controls
-- Maybe Coming.  Depends on requests
+- Depends on requests
