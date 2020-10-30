@@ -470,69 +470,39 @@ module.exports = function(Polyglot) {
 
       radiora2.on('keypadbuttonLEDOn', function(deviceId, buttonId) {
         logger.info(deviceId + ': KeyPad Button: ' + buttonId + ' LED On');
+        let node = null;
 
         switch(buttonId) {
           case '81':
             let nodeAddr = this.address + '_' + deviceId + '_1';
-            logger.info('Address: ' + nodeAddr);
-            let node = this.polyInterface.getNode(nodeAddr);
+            node = this.polyInterface.getNode(nodeAddr);
             break;
           case '82':
-            node.setDriver('GV2', 100);
+            let nodeAddr = this.address + '_' + deviceId + '_2';
+            node = this.polyInterface.getNode(nodeAddr);            
             break;
           case '83':
-            node.setDriver('GV3', 100);
+            let nodeAddr = this.address + '_' + deviceId + '_3';
+            node = this.polyInterface.getNode(nodeAddr);
             break;
           case '84':
-            node.setDriver('GV4', 100);
+            let nodeAddr = this.address + '_' + deviceId + '_4';
+            node = this.polyInterface.getNode(nodeAddr);
             break;
           case '85':
-            node.setDriver('GV5', 100);
+            let nodeAddr = this.address + '_' + deviceId + '_5';
+            node = this.polyInterface.getNode(nodeAddr);
             break;
           case '86':
-            node.setDriver('GV6', 100);
+            let nodeAddr = this.address + '_' + deviceId + '_6';
+            node = this.polyInterface.getNode(nodeAddr);
             break;
           default:
             break;
         }
 
-        // let nodeAddr = this.address + '_' + deviceId;
-        // logger.info('Address: ' + nodeAddr);
-        // let node = this.polyInterface.getNode(nodeAddr);
-        // logger.info(node);
         if (node) {
-          // let _gpv = node.getDriver('GPV');
-          // let devType = _gpv['value'];
-          // logger.info('DevType: ' + devType);
           node.setDriver('ST', 1);
-
-          // switch(devType) {
-          //   case '11':
-          //     switch(buttonId) {
-          //       case '81':
-          //         node.setDriver('GV1', 100);
-          //         break;
-          //       case '82':
-          //         node.setDriver('GV2', 100);
-          //         break;
-          //       case '83':
-          //         node.setDriver('GV3', 100);
-          //         break;
-          //       case '84':
-          //         node.setDriver('GV4', 100);
-          //         break;
-          //       case '85':
-          //         node.setDriver('GV5', 100);
-          //         break;
-          //       case '86':
-          //         node.setDriver('GV6', 100);
-          //         break;
-          //       default:
-          //         break;
-          //     }
-          //   default:
-          //     break;
-          // }
         }
       }.bind(this));
 
@@ -572,45 +542,6 @@ module.exports = function(Polyglot) {
         if (node) {
           node.setDriver('ST', 0);
         }
-
-        // let nodeAddr = this.address + '_' + deviceId;
-        // logger.info('Address: ' + nodeAddr);
-        // let node = this.polyInterface.getNode(nodeAddr);
-        // logger.info(node);
-        // if (node) {
-        //   let _gpv = node.getDriver('GPV');
-        //   let devType = _gpv['value'];
-        //   logger.info('DevType: ' + devType);
-        //   // let _gv = 'GV' + buttonId;
-
-        //   switch(devType) {
-        //     case '11': // VCRX
-        //       switch(buttonId) {
-        //         case '81':
-        //           node.setDriver('GV1', 0);
-        //           break;
-        //         case '82':
-        //           node.setDriver('GV2', 0);
-        //           break;
-        //         case '83':
-        //           node.setDriver('GV3', 0);
-        //           break;
-        //         case '84':
-        //           node.setDriver('GV4', 0);
-        //           break;
-        //         case '85':
-        //           node.setDriver('GV5', 0);
-        //           break;
-        //         case '86':
-        //           node.setDriver('GV6', 0);
-        //           break;
-        //         default:
-        //           break;
-        //       }
-        //     default:
-        //       break;
-        //   }
-        // }
       }.bind(this));
 
       radiora2.on('groupOccupied', function(groupId) {
