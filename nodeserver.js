@@ -74,10 +74,6 @@ poly.on('config', function(config) {
     const md = fs.readFileSync('./configdoc.md');
     poly.setCustomParamsDoc(markdown.toHTML(md.toString()));
     
-    // if (Object.keys(config.typedCustomData).length > 0) {
-    //   callAsync(CreateLutronControllers());
-    // }
-
     if (!nodesCount) {
       try {
         logger.info('Auto-creating controller');
@@ -87,7 +83,11 @@ poly.on('config', function(config) {
       }
     } else {
       if (Object.keys(config.typedCustomData).length > 0) {
-        callAsync(CreateLutronControllers());
+        try {
+          callAsync(CreateLutronControllers());
+        } catch (err) {
+          logger.error('Error while creating RadioRA2 Main Repeater node: ', err);
+        }
       }
     }
 

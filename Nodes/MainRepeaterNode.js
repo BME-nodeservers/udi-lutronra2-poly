@@ -36,18 +36,41 @@ module.exports = function(Polyglot) {
 
       this.drivers = {
         ST: { value: '1', uom: 2 }, // uom 2 = Boolean. '1' is True.
-        GV1: {value: '0', uom: 0 },
+        GV0: {value: '0', uom: 0 },
       };
 
-      // this.isController = false;
-      this.listenerSetup();
-      this.repeaterSetup();
-      this.getDevices();
+      this.listenerAlive = false;
+      this.connected = false;
+
+      // this.isController = true;
+      // this.listenerSetup();
+      // this.repeaterSetup();
+      // this.getDevices();
+      this.startMainRepeater();
     }
 
     sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
     }
+
+    startMainRepeater() {
+      const _config = this.polyInterface.getConfig();
+      const config = Object(_config.typedCustomData);
+
+        if (config.ipAddress) {
+          if (this.listenerAlive) {
+            logger.info('RadioRA2 Listeners Alive');
+          } else {
+            this.listenerSetup();
+          }
+
+          if (this.connected) {
+            logger.info('Main Repeater already connected');  
+          } else {
+            this.repeaterSetup();
+          }
+        }
+      }
 
     repeaterSetup() {
       logger.info('Begin Main Repeater Setup...');
@@ -69,6 +92,15 @@ module.exports = function(Polyglot) {
   
         try {
           radiora2.connect(_host, _username, _password);
+          setTimeout(function() {
+            logger.info('Getting Devices');
+            try {
+              this.getDevices();
+            } catch (err) {
+              logger.errorStack(err, 'Get Devices Failed');
+            }
+          }.bind(this), 1000);
+          this.connected = true;
         } catch (err) {
           logger.errorStack(err, 'Connection to Main Repeater Failed');
         }
@@ -254,7 +286,7 @@ module.exports = function(Polyglot) {
     }
 
     onPhantom(button) {
-      this.setDriver('GV1', button.value);
+      this.setDriver('GV0', button.value);
       radiora2.pressButton('1', button.value);
     }
 
@@ -642,11 +674,11 @@ module.exports = function(Polyglot) {
       })
       
 
-
+      this.listenerAlive = true;
       return;
     };
 
-  }
+  }  
 
   // Required so that the interface can find this Node class using the nodeDefId
   MainRepeaterNode.nodeDefId = nodeDefId;
