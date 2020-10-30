@@ -23,7 +23,7 @@ module.exports = function(Polyglot) {
 
       this.drivers = {
         ST: {value: '1', uom: 2},
-        GPV: {value: '4', uom: 25},
+        GPV: {value: '6', uom: 25},
         GV2: {value: '0', uom: 2},
         GV3: {value: '0', uom: 2},
         GV4: {value: '0', uom: 2},

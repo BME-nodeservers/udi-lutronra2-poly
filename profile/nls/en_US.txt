@@ -102,15 +102,17 @@ ROOMSTATUS-1 = Occupied
 ROOMSTATUS-2 = Unoccupied
 
 # Device Type Mapping
-DEVTYPE-1 = Occupancy Sensor
-DEVTYPE-2 = 2B Pico
-DEVTYPE-3 = 2BRL Pico
-DEVTYPE-4 = 3B Pico
-DEVTYPE-5 = 3BRL Pico
-DEVTYPE-6 = 4B Pico
-DEVTYPE-7 = Audio Pico
-DEVTYPE-8 = Switch
-DEVTYPE-9 = Dimmer
-DEVTYPE-10 = Fan Controller
-DEVTYPE-11 = Visor Control Receiver
-DEVTYPE-12 = Room Status
+DEVTYPE-1 = Main Repeater
+DEVTYPE-2 = Occupancy Sensor
+DEVTYPE-3 = Room Status
+DEVTYPE-4 = 2B Pico
+DEVTYPE-5 = 2BRL Pico
+DEVTYPE-6 = 3B Pico
+DEVTYPE-7 = 3BRL Pico
+DEVTYPE-8 = 4B Pico
+DEVTYPE-9 = Audio Pico
+DEVTYPE-10 = Switch
+DEVTYPE-11 = Dimmer
+DEVTYPE-12 = Fan Controller
+DEVTYPE-13 = Visor Control Receiver
+

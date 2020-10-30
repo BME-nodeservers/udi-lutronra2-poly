@@ -21,7 +21,7 @@ module.exports = function(Polyglot) {
 
       this.drivers = {
         ST: {value: '2', uom: 25},
-        GPV: {value: '12', uom: 25},
+        GPV: {value: '3', uom: 25},
       };
 
       lutronId = this.address.split('_')[1];

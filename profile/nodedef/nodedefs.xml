@@ -19,6 +19,7 @@
   <nodedef id="MAINREPEATER" nls="MAINREPEATER">
     <sts>
       <st id="ST" editor="BOOL"/>
+      <st id="GPV" editor="DEVTYPE"/>
       <st id="GV0" editor="PHANTOM"/>
     </sts>
     <cmds>

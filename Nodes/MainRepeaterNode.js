@@ -36,6 +36,7 @@ module.exports = function(Polyglot) {
 
       this.drivers = {
         ST: { value: '1', uom: 2 }, // uom 2 = Boolean. '1' is True.
+        GPV: {value: '1', uom: 25},
         GV0: {value: '0', uom: 0 },
       };
 
@@ -59,7 +60,7 @@ module.exports = function(Polyglot) {
 
         if (config.ipAddress) {
           if (this.listenerAlive) {
-            logger.info('RadioRA2 Listeners Alive');
+            logger.info('RadioRA2 Listener Alive');
           } else {
             this.listenerSetup();
           }
@@ -137,7 +138,9 @@ module.exports = function(Polyglot) {
       let _devType = devType;
 
       switch(_devType) {
-        case 1: // Occupancy
+        case 1: // Main Repeater
+          break;
+        case 2: // Occupancy
           try {
             const result = await this.polyInterface.addNode(
               new OccupancyNode(this.polyInterface, _address,
@@ -150,7 +153,20 @@ module.exports = function(Polyglot) {
             logger.errorStack(err, 'Add node failed:');
           }
           break;
-        case 2: // 2B Pico
+        case 3: // Room Status
+          try {
+            const result = await this.polyInterface.addNode(
+              new RoomStatusNode(this.polyInterface, _address,
+                _address, _devName)
+            );
+            if (result) {
+              logger.info('Add node worked: %s', result);
+            }
+          } catch (err) {
+            logger.errorStack(err, 'Add node failed:');
+          }
+          break;
+        case 4: // 2B Pico
           try {
             const result = await this.polyInterface.addNode(
               new Pico2BNode(this.polyInterface, _address,
@@ -161,7 +177,7 @@ module.exports = function(Polyglot) {
             logger.errorStack(err, 'Add node failed:');
           }
           break;
-        case 3: // 2BRL Pico
+        case 5: // 2BRL Pico
         try {
           const result = await this.polyInterface.addNode(
             new Pico2BRLNode(this.polyInterface, _address,
@@ -172,7 +188,7 @@ module.exports = function(Polyglot) {
           logger.errorStack(err, 'Add node failed:');
         }
           break;
-        case 4: // 3B Pico
+        case 6: // 3B Pico
         try {
           const result = await this.polyInterface.addNode(
             new Pico3BNode(this.polyInterface, _address,
@@ -183,7 +199,7 @@ module.exports = function(Polyglot) {
           logger.errorStack(err, 'Add node failed:');
         }
           break;
-        case 5: // 3BRL Pico
+        case 7: // 3BRL Pico
           try {
             const result = await this.polyInterface.addNode(
               new Pico3BRLNode(this.polyInterface, _address,
@@ -194,7 +210,7 @@ module.exports = function(Polyglot) {
             logger.errorStack(err, 'Add node failed:');
           }
           break;
-        case 6: // 4B Pico
+        case 8: // 4B Pico
           try {
             const result = await this.polyInterface.addNode(
               new Pico4BNode(this.polyInterface, _address,
@@ -205,10 +221,10 @@ module.exports = function(Polyglot) {
             logger.errorStack(err, 'Add node failed:');
           }
           break;
-        case 7:
+        case 9:
           //code
           break;
-        case 8: // Switch
+        case 10: // Switch
             try {
               const result = await this.polyInterface.addNode(
                 new MaestroSwitchNode(this.polyInterface, _address,
@@ -223,7 +239,7 @@ module.exports = function(Polyglot) {
               logger.errorStack(err, 'Add node failed:');
             }
           break;
-        case 9: // Dimmer
+        case 11: // Dimmer
           try {
             const result = await this.polyInterface.addNode(
               new MaestroDimmerNode(this.polyInterface, _address,
@@ -238,7 +254,7 @@ module.exports = function(Polyglot) {
             logger.errorStack(err, 'Add node failed:');
           }
           break;
-        case 10: // Fan Controller
+        case 12: // Fan Controller
           try {
             const result = await this.polyInterface.addNode(
               new MaestroFanControlNode(this.polyInterface, _address,
@@ -253,7 +269,7 @@ module.exports = function(Polyglot) {
             logger.errorStack(err, 'Add node failed:');
           }
           break;
-        case 11: // VCRX
+        case 13: // VCRX
           try {
             const result = await this.polyInterface.addNode(
               new VCRXNode(this.polyInterface, _address,
@@ -265,20 +281,7 @@ module.exports = function(Polyglot) {
           } catch (err) {
             logger.errorStack(err, 'Add node failed:');
           }
-        break;
-        case 12: // Room Status
-          try {
-            const result = await this.polyInterface.addNode(
-              new RoomStatusNode(this.polyInterface, _address,
-                _address, _devName)
-            );
-            if (result) {
-              logger.info('Add node worked: %s', result);
-            }
-          } catch (err) {
-            logger.errorStack(err, 'Add node failed:');
-          }
-          break;
+        break; 
         default:
           logger.info('No Device Type Defined');
           break;
@@ -423,17 +426,17 @@ module.exports = function(Polyglot) {
           let _gv = 'GV' + buttonId;
 
           switch(devType) {
-            case '1': // Occupancy
+            case '2': // Occupancy
               node.setDriver('ST', 1);
               break;
-            case '2': // 2B Pico
+            case '4': // 2B Pico
               break;
-            case '3': // 2BRL Pico
+            case '5': // 2BRL Pico
               break;
-            case '4': // 3B Pico
-            case '5': // 3BRL Pico
+            case '6': // 3B Pico
+            case '7': // 3BRL Pico
               node.setDriver(_gv, 1);
-            case '11': // VCRX
+            case '13': // VCRX
               switch(buttonId) {
                 case '30':
                   node.setDriver('GV10', 100);
@@ -472,18 +475,18 @@ module.exports = function(Polyglot) {
           let _gv = 'GV' + buttonId;
 
           switch(devType) {
-            case '1': // Occupancy
+            case '2': // Occupancy
               node.setDriver('ST', 0);
               break;
-            case '2': // 2B Pico
+            case '4': // 2B Pico
               break;
-            case '3': // 2BRL Pico
+            case '5': // 2BRL Pico
               break;
-            case '4': // 3B Pico
+            case '6': // 3B Pico
               break;
-            case '5': // 3BRL Pico
+            case '7': // 3BRL Pico
               node.setDriver(_gv, 0);
-            case '11': // VCRX
+            case '13': // VCRX
               switch(buttonId) {
                 case '30':
                   node.setDriver('GV10', 0);
