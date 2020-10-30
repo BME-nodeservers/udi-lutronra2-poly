@@ -27,24 +27,24 @@ module.exports = function(Polyglot) {
 
       };
 
-      lutronId = this.address.split('_')[1];
+      this.lutronId = this.address.split('_')[1];
     }
 
     query() {
-      lutronEmitter.emit('query', lutronId);
+      lutronEmitter.emit('query', this.lutronId);
     }
 
     onDON(message) {
       // setDrivers accepts string or number (message.value is a string)
       logger.info('DON (%s)', this.address);
       this.setDriver('ST', message.value ? message.value : '100');
-      lutronEmitter.emit('on', lutronId);
+      lutronEmitter.emit('on', this.lutronId);
     }
 
     onDOF() {
       logger.info('DOF (%s)', this.address);
       this.setDriver('ST', '0');
-      lutronEmitter.emit('off', lutronId);
+      lutronEmitter.emit('off', this.lutronId);
     }
 
   }

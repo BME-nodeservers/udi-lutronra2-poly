@@ -18,25 +18,26 @@ If device type is not setup correctly the device will be created wrong or not at
 #### Device Types:
 
 ##### Occupancy Sensors
-- All Occupancy = 1
+- All Sensors           = 2
+- Room Status           = 3
 
 ##### Pico Remotes
-- 2 Button = 2
-- 2 Button Raise Lower = 3
-- 3 Button = 4
-- 3 Button Raise Lower = 5
-- 4 Button Pico = 6
+- 2 Button              = 4
+- 2 Button Raise Lower  = 5
+- 3 Button              = 6
+- 3 Button Raise Lower  = 7
+- 4 Button Pico         = 8
 
 ##### Switch / Dimmer
-- Switch = 8
-- Dimmer = 9
-- Fan Controller = 10
+- Switch                = 10
+- Dimmer                = 11
+- Fan Controller        = 12
 
 ##### Key Pads
 - Coming Soon
 
 ##### Visor Control Receiver (VCRX)
-- Coming Soon
+- VCRX                  = 13
 
 ###### Temperature Controls
 - Maybe Coming.  Depends on requests

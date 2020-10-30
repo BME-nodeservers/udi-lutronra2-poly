@@ -3,12 +3,12 @@
 let eventEmitter = require('../lib/lutronEvents.js');
 let lutronEmitter = eventEmitter.lutronEmitter;
 
-const nodeDefId = 'VCRXBUTTON';
+const nodeDefId = 'T5RLBUTTON';
 
 module.exports = function(Polyglot) {
   const logger = Polyglot.logger;
 
-  class VCRXButtonNode extends Polyglot.Node {
+  class T5RLButtonNode extends Polyglot.Node {
     constructor(polyInterface, primary, address, name) {
       super(nodeDefId, polyInterface, primary, address, name);
 
@@ -21,7 +21,7 @@ module.exports = function(Polyglot) {
 
       this.drivers = {
         ST: {value: '1', uom: 2},
-        GPV: {value: '13', uom: 25},
+        GPV: {value: '14', uom: 25},
       };
 
       this.lutronId = this.address.split('_')[1];
@@ -29,7 +29,7 @@ module.exports = function(Polyglot) {
     }
 
     query() {
-      
+
       switch(this.buttonId) {
         case '1':
           lutronEmitter.emit('queryDeviceButton', this.lutronId, 81);
@@ -47,7 +47,10 @@ module.exports = function(Polyglot) {
           lutronEmitter.emit('queryDeviceButton', this.lutronId, 85);
           break;
         case '6':
-          lutronEmitter.emit('queryDeviceButton', this.lutronId, 86);
+          this.setDriver('ST', 0);
+          break;
+        case '7':
+          this.setDriver('ST', 0);
           break;
         default:
           break;
@@ -61,7 +64,7 @@ module.exports = function(Polyglot) {
   }
 
   // Required so that the interface can find this Node class using the nodeDefId
-  VCRXButtonNode.nodeDefId = nodeDefId;
+  T5RLButtonNode.nodeDefId = nodeDefId;
 
-  return VCRXButtonNode;
+  return T5RLButtonNode;
 };

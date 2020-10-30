@@ -24,12 +24,11 @@ module.exports = function(Polyglot) {
         GPV: {value: '3', uom: 25},
       };
 
-      lutronId = this.address.split('_')[1];
-      this.query();
+      this.lutronId = this.address.split('_')[1];
     }
 
     query() {
-      lutronEmitter.emit('queryGroupState', lutronId);
+      lutronEmitter.emit('queryGroupState', this.lutronId);
     }
 
   }

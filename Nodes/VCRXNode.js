@@ -42,7 +42,7 @@ module.exports = function(Polyglot) {
     }
 
     query() {
-      lutronEmitter.emit('query', lutronId);
+      lutronEmitter.emit('query', this.lutronId);
     }
   }
 

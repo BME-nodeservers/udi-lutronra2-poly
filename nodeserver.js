@@ -23,6 +23,8 @@ const OccupancyNode = require('./Nodes/OccupancyNode.js')(Polyglot);
 const RoomStatusNode = require('./Nodes/RoomStatusNode.js')(Polyglot);
 const VCRXNode = require('./Nodes/VCRXNode.js')(Polyglot);
 const VCRXButtonNode = require('./Nodes/VCRXButtonNode.js')(Polyglot);
+const T5RLNode = require('./Nodes/T5RLNode.js')(Polyglot);
+const T5RLButtonNode = require('./Nodes/T5RLButtonNode.js')(Polyglot);
 
 
 const typedParams = [
@@ -56,7 +58,7 @@ logger.info('Starting Lutron Node Server');
 const poly = new Polyglot.Interface([ControllerNode, MainRepeaterNode,
   MaestroDimmerNode, MaestroSwitchNode, MaestroFanControlNode, OccupancyNode,
   RoomStatusNode, Pico2BNode, Pico2BRLNode, Pico3BNode, Pico3BRLNode, Pico4BNode,
-  VCRXNode, VCRXButtonNode,
+  VCRXNode, VCRXButtonNode, T5RLNode, T5RLButtonNode,
   ]);
   // , MainRepeaterNode, MaestroDimmerNode, MaestroSwitchNode]);
 

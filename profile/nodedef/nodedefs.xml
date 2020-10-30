@@ -272,5 +272,34 @@
     </cmds>
   </nodedef>
 
+  <nodedef id="T5RL" nls="T5RL">
+    <sts>
+      <st id="ST" editor="BOOL"/>
+      <st id="GPV" editor="DEVTYPE"/>
+    </sts>
+    <cmds>
+      <sends>
+      </sends>
+      <accepts>
+        <cmd id="QUERY"/>
+      </accepts>
+    </cmds>
+  </nodedef>
+
+  <nodedef id="T5RLBUTTON" nls="T5RLBTN">
+    <sts>
+      <st id="ST" editor="BOOL"/>
+      <st id="GPV" editor="DEVTYPE"/>
+    </sts>
+    <cmds>
+      <sends>
+      </sends>
+      <accepts>
+        <cmd id="DON"/>
+        <cmd id="QUERY"/>
+      </accepts>
+    </cmds>
+  </nodedef>
+
 </nodeDefs>
 

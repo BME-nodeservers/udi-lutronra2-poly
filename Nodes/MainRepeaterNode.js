@@ -21,6 +21,8 @@ module.exports = function(Polyglot) {
   const Pico3BRLNode = require('./Pico3BRLNode.js')(Polyglot);
   const Pico4BNode = require('./Pico4BNode.js')(Polyglot);
   const VCRXNode = require('./VCRXNode.js')(Polyglot);
+  const T5RLNode = require('./T5RLNode.js')(Polyglot);
+
 
   class MainRepeaterNode extends Polyglot.Node {
     constructor(polyInterface, primary, address, name) {
@@ -281,7 +283,20 @@ module.exports = function(Polyglot) {
           } catch (err) {
             logger.errorStack(err, 'Add node failed:');
           }
-        break; 
+        break;
+        case 14: // T5RL
+          try {
+            const result = await this.polyInterface.addNode(
+              new T5RLNode(this.polyInterface, _address,
+                _address, _devName)
+            );
+            if (result) {
+              logger.info('Add node worked: %s', result);
+            }
+          } catch (err) {
+            logger.errorStack(err, 'Add node failed:');
+          }
+          break;
         default:
           logger.info('No Device Type Defined');
           break;
@@ -517,6 +532,7 @@ module.exports = function(Polyglot) {
       radiora2.on('keypadbuttonLEDOn', function(deviceId, buttonId) {
         logger.info(deviceId + ': KeyPad Button: ' + buttonId + ' LED On');
         let nodeAddr = null;
+        let myNodeAddr = this.address.split('_')[0] + '_' + deviceId;
         let node = null;
 
         switch(buttonId) {

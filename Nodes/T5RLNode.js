@@ -2,14 +2,15 @@
 
 let eventEmitter = require('../lib/lutronEvents.js');
 let lutronEmitter = eventEmitter.lutronEmitter;
-let lutronId = '';
 
-const nodeDefId = 'PICO3B';
+const nodeDefId = 'T5RL';
 
 module.exports = function(Polyglot) {
   const logger = Polyglot.logger;
 
-  class Pico3BNode extends Polyglot.Node {
+  const T5RLButtonNode = require('./T5RLButtonNode.js')(Polyglot);
+
+  class T5RLNode extends Polyglot.Node {
     constructor(polyInterface, primary, address, name) {
       super(nodeDefId, polyInterface, primary, address, name);
 
@@ -21,36 +22,28 @@ module.exports = function(Polyglot) {
 
       this.drivers = {
         ST: {value: '1', uom: 2},
-        GPV: {value: '6', uom: 25},
-        GV2: {value: '0', uom: 2},
-        GV3: {value: '0', uom: 2},
-        GV4: {value: '0', uom: 2},
+        GPV: {value: '14', uom: 25},
       };
 
       this.lutronId = this.address.split('_')[1];
+      
+      // T5RL Has 7 Scene Buttons
+      for (let button = 1; button <= 7; button++) {
+        this._address = this.address + '_' + button;
+        const result = this.polyInterface.addNode(
+          new T5RLButtonNode(this.polyInterface, this.address,
+            this._address, 'Scene ' + button)
+        );
+      }      
     }
 
     query() {
       lutronEmitter.emit('query', this.lutronId);
     }
-
-    onDON(message) {
-      // setDrivers accepts string or number (message.value is a string)
-      logger.info('DON (%s)', this.address);
-      this.setDriver('ST', message.value ? message.value : '1');
-      lutronEmitter.emit('on', this.lutronId);
-    }
-
-    onDOF() {
-      logger.info('DOF (%s)', this.address);
-      this.setDriver('ST', '0');
-      lutronEmitter.emit('off', this.lutronId);
-    }
-
   }
 
   // Required so that the interface can find this Node class using the nodeDefId
-  Pico3BNode.nodeDefId = nodeDefId;
+  T5RLNode.nodeDefId = nodeDefId;
 
-  return Pico3BNode;
+  return T5RLNode;
 };
