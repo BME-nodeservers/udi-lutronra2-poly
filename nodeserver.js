@@ -152,7 +152,7 @@ async function doPoll(longPoll) {
 async function autoCreateController() {
   try {
     await poly.addNode(
-      new ControllerNode(poly, 'controller', 'controller', 'Lutron')
+      new ControllerNode(poly, 'controller', 'controller', 'RadioRA 2')
     );
   } catch (err) {
     logger.error('Error creating controller node');
