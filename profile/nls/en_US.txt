@@ -93,6 +93,7 @@ ND-ROOMSTATUS-ICON = MotionSensor
 ST-ROOMSTATUS-ST-NAME = Status
 
 # Room Status
+ROOMSTATUS-0 = Unknown
 ROOMSTATUS-1 = Occupied
 ROOMSTATUS-2 = Unoccupied
 

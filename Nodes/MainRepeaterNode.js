@@ -545,7 +545,6 @@ module.exports = function(Polyglot) {
       }.bind(this));
 
       radiora2.on('groupOccupied', function(groupId) {
-        logger.info(groupId);
         logger.info('Group Id: ' + groupId + ' Occupied')
         let nodeAddr = this.address + '_' + groupId;
         let node = this.polyInterface.getNode(nodeAddr);
@@ -555,7 +554,6 @@ module.exports = function(Polyglot) {
       }.bind(this));
 
       radiora2.on('groupUnoccupied', function(groupId) {
-        logger.info(groupId);
         logger.info('Group Id: ' + groupId + ' Unoccupied')
         let nodeAddr = this.address + '_' + groupId;
         let node = this.polyInterface.getNode(nodeAddr);
@@ -564,8 +562,13 @@ module.exports = function(Polyglot) {
         }
       }.bind(this));
 
-      radiora2.on('groupUnknown', function(data) {
-        logger.info(data);
+      radiora2.on('groupUnknown', function(groupId) {
+        logger.info('Group Id: ' + groupId + ' Unknown')
+        let nodeAddr = this.address + '_' + groupId;
+        let node = this.polyInterface.getNode(nodeAddr);
+        if (node) {
+          node.setDriver('ST', '0');
+        }
       }.bind(this));
 
       // Receive Events from ISY Admin Console

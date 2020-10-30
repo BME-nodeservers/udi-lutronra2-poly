@@ -28,7 +28,7 @@
   </editor>
 
   <editor id="ROOMSTATUS">
-    <range uom="25" subset="1-2" nls="ROOMSTATUS" />
+    <range uom="25" subset="0-2" nls="ROOMSTATUS" />
   </editor>
 
 </editors>
