@@ -22,6 +22,8 @@ module.exports = function(Polyglot) {
   const Pico4BNode = require('./Pico4BNode.js')(Polyglot);
   const VCRXNode = require('./VCRXNode.js')(Polyglot);
   const T5RLNode = require('./T5RLNode.js')(Polyglot);
+  const T10RLNode = require('./T10RLNode.js')(Polyglot);
+  const T15RLNode = require('./T15RLNode.js')(Polyglot);
 
 
   class MainRepeaterNode extends Polyglot.Node {
@@ -297,6 +299,32 @@ module.exports = function(Polyglot) {
             logger.errorStack(err, 'Add node failed:');
           }
           break;
+        case 15: // T10RL
+          try {
+            const result = await this.polyInterface.addNode(
+              new T10RLNode(this.polyInterface, _address,
+                _address, _devName)
+            );
+            if (result) {
+              logger.info('Add node worked: %s', result);
+            }
+          } catch (err) {
+            logger.errorStack(err, 'Add node failed:');
+          }
+          break;
+        case 16: // T15RL
+          try {
+            const result = await this.polyInterface.addNode(
+              new T15RLNode(this.polyInterface, _address,
+                _address, _devName)
+            );
+            if (result) {
+              logger.info('Add node worked: %s', result);
+            }
+          } catch (err) {
+            logger.errorStack(err, 'Add node failed:');
+          }
+          break;
         default:
           logger.info('No Device Type Defined');
           break;
@@ -541,34 +569,64 @@ module.exports = function(Polyglot) {
             node = this.polyInterface.getNode(nodeAddr);
             break;
           case '82':
-            // nodeAddr = this.address + '_' + deviceId + '_2';
             nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_2';
             node = this.polyInterface.getNode(nodeAddr);            
             break;
           case '83':
-            // nodeAddr = this.address + '_' + deviceId + '_3';
             nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_3';
             node = this.polyInterface.getNode(nodeAddr);
             break;
           case '84':
-            // nodeAddr = this.address + '_' + deviceId + '_4';
             nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_4';
             node = this.polyInterface.getNode(nodeAddr);
             break;
           case '85':
-            // nodeAddr = this.address + '_' + deviceId + '_5';
             nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_5';
             node = this.polyInterface.getNode(nodeAddr);
             break;
           case '86':
-            // nodeAddr = this.address + '_' + deviceId + '_6';
             nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_6';
+            node = this.polyInterface.getNode(nodeAddr);
+            break;
+          case '87':
+            nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_7';
+            node = this.polyInterface.getNode(nodeAddr);
+            break;
+          case '88':
+            nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_8';
+            node = this.polyInterface.getNode(nodeAddr);
+            break;
+          case '89':
+            nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_9';
+            node = this.polyInterface.getNode(nodeAddr);
+            break;
+          case '90':
+            nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_10';
+            node = this.polyInterface.getNode(nodeAddr);
+            break;
+          case '91':
+            nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_11';
+            node = this.polyInterface.getNode(nodeAddr);
+            break;
+          case '92':
+            nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_12';
+            node = this.polyInterface.getNode(nodeAddr);
+            break;
+          case '93':
+            nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_13';
+            node = this.polyInterface.getNode(nodeAddr);
+            break;
+          case '94':
+            nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_14';
+            node = this.polyInterface.getNode(nodeAddr);
+            break;
+          case '95':
+            nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_15';
             node = this.polyInterface.getNode(nodeAddr);
             break;
           default:
             break;
         }
-
         if (node) {
           node.setDriver('ST', 1);
         }
@@ -581,39 +639,68 @@ module.exports = function(Polyglot) {
 
         switch(buttonId) {
           case '81':
-            // nodeAddr = this.address + '_' + deviceId + '_1';
             nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_1';
             node = this.polyInterface.getNode(nodeAddr);
             break;
           case '82':
-            // nodeAddr = this.address + '_' + deviceId + '_2';
             nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_2';
             node = this.polyInterface.getNode(nodeAddr);            
             break;
           case '83':
-            // nodeAddr = this.address + '_' + deviceId + '_3';
             nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_3';
             node = this.polyInterface.getNode(nodeAddr);
             break;
           case '84':
-            // nodeAddr = this.address + '_' + deviceId + '_4';
             nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_4';
             node = this.polyInterface.getNode(nodeAddr);
             break;
           case '85':
-            // nodeAddr = this.address + '_' + deviceId + '_5';
             nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_5';
             node = this.polyInterface.getNode(nodeAddr);
             break;
           case '86':
-            // nodeAddr = this.address + '_' + deviceId + '_6';
             nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_6';
+            node = this.polyInterface.getNode(nodeAddr);
+            break;
+          case '87':
+            nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_7';
+            node = this.polyInterface.getNode(nodeAddr);
+            break;
+          case '88':
+            nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_8';
+            node = this.polyInterface.getNode(nodeAddr);            
+            break;
+          case '89':
+            nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_9';
+            node = this.polyInterface.getNode(nodeAddr);
+            break;
+          case '90':
+            nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_10';
+            node = this.polyInterface.getNode(nodeAddr);
+            break;
+          case '91':
+            nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_11';
+            node = this.polyInterface.getNode(nodeAddr);
+            break;
+          case '92':
+            nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_12';
+            node = this.polyInterface.getNode(nodeAddr);
+            break;
+          case '93':
+            nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_13';
+            node = this.polyInterface.getNode(nodeAddr);
+            break;
+          case '94':
+            nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_14';
+            node = this.polyInterface.getNode(nodeAddr);
+            break;
+          case '95':
+            nodeAddr = this.address.split('_')[0] + '_' + deviceId + '_15';
             node = this.polyInterface.getNode(nodeAddr);
             break;
           default:
             break;
         }
-
         if (node) {
           node.setDriver('ST', 0);
         }

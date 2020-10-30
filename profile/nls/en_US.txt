@@ -100,6 +100,22 @@ ND-T5RLBUTTON-NAME = Tabletop 5 Button
 ND-T5RLBUTTON-ICON = Output
 ST-T5RLBTN-ST-NAME = Status
 
+ND-T10RL-NAME = Tabletop 10 Button
+ND-T10RL-ICON = Output
+ST-T10RL-ST-NAME = Status
+
+ND-T10RLBUTTON-NAME = Tabletop 10 Button
+ND-T10RLBUTTON-ICON = Output
+ST-T10RLBTN-ST-NAME = Status
+
+ND-T15RL-NAME = Tabletop 15 Button
+ND-T15RL-ICON = Output
+ST-T15RL-ST-NAME = Status
+
+ND-T15RLBUTTON-NAME = Tabletop 15 Button
+ND-T15RLBUTTON-ICON = Output
+ST-T15RLBTN-ST-NAME = Status
+
 ND-ROOMSTATUS-NAME = Room Occupancy
 ND-ROOMSTATUS-ICON = MotionSensor
 ST-ROOMSTATUS-ST-NAME = Status
@@ -124,3 +140,5 @@ DEVTYPE-11 = Dimmer
 DEVTYPE-12 = Fan Controller
 DEVTYPE-13 = Visor Control Receiver
 DEVTYPE-14 = Tabletop 5 Button RL
+DEVTYPE-15 = Tabletop 10 Button RL
+DEVTYPE-16 = Tabletop 15 Button RL

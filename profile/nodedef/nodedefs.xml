@@ -301,5 +301,64 @@
     </cmds>
   </nodedef>
 
+  <nodedef id="T10RL" nls="T10RL">
+    <sts>
+      <st id="ST" editor="BOOL"/>
+      <st id="GPV" editor="DEVTYPE"/>
+    </sts>
+    <cmds>
+      <sends>
+      </sends>
+      <accepts>
+        <cmd id="QUERY"/>
+      </accepts>
+    </cmds>
+  </nodedef>
+
+  <nodedef id="T10RLBUTTON" nls="T10RLBTN">
+    <sts>
+      <st id="ST" editor="BOOL"/>
+      <st id="GPV" editor="DEVTYPE"/>
+    </sts>
+    <cmds>
+      <sends>
+      </sends>
+      <accepts>
+        <cmd id="DON"/>
+        <cmd id="QUERY"/>
+      </accepts>
+    </cmds>
+  </nodedef>
+
+  <nodedef id="T15RL" nls="T15RL">
+    <sts>
+      <st id="ST" editor="BOOL"/>
+      <st id="GPV" editor="DEVTYPE"/>
+    </sts>
+    <cmds>
+      <sends>
+      </sends>
+      <accepts>
+        <cmd id="QUERY"/>
+      </accepts>
+    </cmds>
+  </nodedef>
+
+  <nodedef id="T15RLBUTTON" nls="T15RLBTN">
+    <sts>
+      <st id="ST" editor="BOOL"/>
+      <st id="GPV" editor="DEVTYPE"/>
+    </sts>
+    <cmds>
+      <sends>
+      </sends>
+      <accepts>
+        <cmd id="DON"/>
+        <cmd id="QUERY"/>
+      </accepts>
+    </cmds>
+  </nodedef>
+
+  
 </nodeDefs>
 

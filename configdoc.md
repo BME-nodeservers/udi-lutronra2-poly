@@ -34,7 +34,9 @@ If device type is not setup correctly the device will be created wrong or not at
 - Fan Controller        = 12
 
 ##### Key Pads
-- Coming Soon
+- 5 Button Tabletop     = 14
+- 10 Button Tabletop    = 15
+- 15 Button Tabletop    = 16
 
 ##### Visor Control Receiver (VCRX)
 - VCRX                  = 13
