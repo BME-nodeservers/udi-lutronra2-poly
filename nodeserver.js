@@ -65,7 +65,6 @@ const poly = new Polyglot.Interface([ControllerNode, MainRepeaterNode,
   VCRXNode, VCRXButtonNode, T5RLNode, T5RLButtonNode, T10RLNode, T10RLButtonNode,
   T15RLNode, T15RLButtonNode,
   ]);
-  // , MainRepeaterNode, MaestroDimmerNode, MaestroSwitchNode]);
 
 poly.on('mqttConnected', function() {
   logger.info('MQTT Connection started');
