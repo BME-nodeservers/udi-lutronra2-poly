@@ -426,20 +426,21 @@ module.exports = function(Polyglot) {
             let currentValue = parseInt(fanSpeed['value'], 10);
             logger.info('Fan Speed %: ' + currentValue);
 
+            let fanSpeedStatus = null;
             if (currentValue > 1 && currentValue <= 25) {
-              node.setDriver('CLIFRS', '1');
+              node.setDriver('CLIFRS', '1', true, true);
               logger.info('Fan Speed: Low');
             } else if (currentValue >= 26 && currentValue <= 51) {
-              node.setDriver('CLIFRS', '2');
+              node.setDriver('CLIFRS', '2', true, true);
               logger.info('Fan Speed: Medium');
             } else if (currentValue >= 56 && currentValue <= 76) {
-              node.setDriver('CLIFRS', '3');
+              node.setDriver('CLIFRS', '3', true, true);
               logger.info('Fan Speed: Med High');
             } else if (currentValue > 76) {
-              node.setDriver('CLIFRS', '4');
+              node.setDriver('CLIFRS', '4', true, true);
               logger.info('Fan Speed: High');
             } else {
-              node.setDriver('CLIFRS', '0');
+              node.setDriver('CLIFRS', '0', true, true);
               logger.info('Fan Speed: Off');
             }
           } else {
