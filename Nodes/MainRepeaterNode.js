@@ -113,7 +113,7 @@ module.exports = function(Polyglot) {
       
     }
 
-    getDevices() {
+    async getDevices() {
       const _config = this.polyInterface.getConfig();
       const config = Object(_config.typedCustomData);
       const devices = Object(config.devices);
@@ -124,6 +124,7 @@ module.exports = function(Polyglot) {
         logger.info('Integration ID: ' + key.intId);
         logger.info('Device Type: ' + key.devType);
         try {
+          await this.sleep(3000);
           this.createDevice(key.intId, key.devType, key.name);
         } catch (err) {
           logger.errorStack(err, 'Device Create Failed: ' + key.name);
@@ -165,6 +166,7 @@ module.exports = function(Polyglot) {
             );
             if (result) {
               logger.info('Add node worked: %s', result);
+              radiora2.queryGroupState(_lutronId)
             }
           } catch (err) {
             logger.errorStack(err, 'Add node failed:');
@@ -236,8 +238,7 @@ module.exports = function(Polyglot) {
               );
               if (result) {
                 logger.info('Add node worked: %s', result);
-                // await this.sleep(1000);
-                // radiora2.queryOutputState(_lutronId);
+                radiora2.queryOutputState(_lutronId);
               }
             } catch (err) {
               logger.errorStack(err, 'Add node failed:');
@@ -251,8 +252,7 @@ module.exports = function(Polyglot) {
             );
             if (result) {
               logger.info('Add node worked: %s', result);
-              // await this.sleep(1000);
-              // radiora2.queryOutputState(_lutronId);
+              radiora2.queryOutputState(_lutronId);
             }
           } catch (err) {
             logger.errorStack(err, 'Add node failed:');
@@ -266,8 +266,7 @@ module.exports = function(Polyglot) {
             );
             if (result) {
               logger.info('Add node worked: %s', result);
-              // await this.sleep(1000);
-              // radiora2.queryOutputState(_lutronId);
+              radiora2.queryOutputState(_lutronId);
             }
           } catch (err) {
             logger.errorStack(err, 'Add node failed:');
@@ -777,7 +776,6 @@ module.exports = function(Polyglot) {
         radiora2.queryGroupState(deviceId);
       })
       
-
       this.listenerAlive = true;
       return;
     };
