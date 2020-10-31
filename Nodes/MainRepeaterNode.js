@@ -1,11 +1,14 @@
 'use strict';
 
 const RadioRa2 = require('../lib/radiora2');
-let radiora2 = new RadioRa2();
 let lutronEvents = require('../lib/lutronEvents.js');
-let lutronEmitter = lutronEvents.lutronEmitter;
+let util = require('../lib/utils.js');
 
+let radiora2 = new RadioRa2();
+let lutronEmitter = lutronEvents.lutronEmitter;
 let reconnect = 300000;
+let listenerActive = false;
+let repeaterConnected = false;
 
 const nodeDefId = 'MAINREPEATER';
 
@@ -44,9 +47,6 @@ module.exports = function(Polyglot) {
         GV0: {value: '0', uom: 0 },
       };
 
-      this.listenerAlive = false;
-      this.connected = false;
-
       // this.isController = true;
       // this.listenerSetup();
       // this.repeaterSetup();
@@ -54,22 +54,22 @@ module.exports = function(Polyglot) {
       this.startMainRepeater();
     }
 
-    sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
+    // sleep(ms) {
+    //   return new Promise(resolve => setTimeout(resolve, ms));
+    // }
 
     startMainRepeater() {
       const _config = this.polyInterface.getConfig();
       const config = Object(_config.typedCustomData);
 
         if (config.ipAddress) {
-          if (this.listenerAlive) {
+          if (listenerActive) {
             logger.info('RadioRA2 Listener Alive');
           } else {
             this.listenerSetup();
           }
 
-          if (this.connected) {
+          if (repeaterConnected) {
             logger.info('Main Repeater already connected');  
           } else {
             this.repeaterSetup();
@@ -77,7 +77,7 @@ module.exports = function(Polyglot) {
         }
       }
 
-    repeaterSetup() {
+    async repeaterSetup() {
       logger.info('Begin Main Repeater Setup...');
 
       const _config = this.polyInterface.getConfig();
@@ -97,15 +97,8 @@ module.exports = function(Polyglot) {
   
         try {
           radiora2.connect(_host, _username, _password);
-          setTimeout(function() {
-            logger.info('Getting Devices');
-            try {
-              this.getDevices();
-            } catch (err) {
-              logger.errorStack(err, 'Get Devices Failed');
-            }
-          }.bind(this), 1000);
-          this.connected = true;
+          this.getDevices();
+          repeaterConnected = true;
         } catch (err) {
           logger.errorStack(err, 'Connection to Main Repeater Failed');
         }
@@ -124,7 +117,7 @@ module.exports = function(Polyglot) {
         logger.info('Integration ID: ' + key.intId);
         logger.info('Device Type: ' + key.devType);
         try {
-          await this.sleep(3000);
+          await util.sleep(3000);
           this.createDevice(key.intId, key.devType, key.name);
         } catch (err) {
           logger.errorStack(err, 'Device Create Failed: ' + key.name);
@@ -166,6 +159,7 @@ module.exports = function(Polyglot) {
             );
             if (result) {
               logger.info('Add node worked: %s', result);
+              await util.sleep(2000);
               radiora2.queryGroupState(_lutronId)
             }
           } catch (err) {
@@ -238,6 +232,7 @@ module.exports = function(Polyglot) {
               );
               if (result) {
                 logger.info('Add node worked: %s', result);
+                await util.sleep(2000);
                 radiora2.queryOutputState(_lutronId);
               }
             } catch (err) {
@@ -252,6 +247,7 @@ module.exports = function(Polyglot) {
             );
             if (result) {
               logger.info('Add node worked: %s', result);
+              await util.sleep(2000);
               radiora2.queryOutputState(_lutronId);
             }
           } catch (err) {
@@ -266,6 +262,7 @@ module.exports = function(Polyglot) {
             );
             if (result) {
               logger.info('Add node worked: %s', result);
+              await util.sleep(2000);
               radiora2.queryOutputState(_lutronId);
             }
           } catch (err) {
@@ -418,7 +415,7 @@ module.exports = function(Polyglot) {
         let nodeAddr = this.address.split('_')[0] + '_' + id;
         logger.info('Address: ' + nodeAddr);
         let node = this.polyInterface.getNode(nodeAddr);
-        logger.info(node);
+        // logger.info(node);
         if (node) {
           let newLevel = Math.round(level);
           logger.info('Rounded Level: ' + newLevel);
@@ -776,8 +773,8 @@ module.exports = function(Polyglot) {
         radiora2.queryGroupState(deviceId);
       })
       
-      this.listenerAlive = true;
-      return;
+      listenerActive = true;
+      // return;
     };
 
   }  
