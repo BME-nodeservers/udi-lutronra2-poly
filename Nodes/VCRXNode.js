@@ -2,6 +2,7 @@
 
 let eventEmitter = require('../lib/lutronEvents.js');
 let lutronEmitter = eventEmitter.lutronEmitter;
+let util = require('../lib/utils.js');
 
 const nodeDefId = 'VCRX';
 
@@ -34,15 +35,56 @@ module.exports = function(Polyglot) {
       // VCRX Has 6 Scene Buttons
       for (let button = 1; button <= 6; button++) {
         this._address = this.address + '_' + button;
-        const result = this.polyInterface.addNode(
-          new VCRXButtonNode(this.polyInterface, this.address,
-            this._address, 'Scene ' + button)
-        );
+
+        setTimeout(function() {
+          logger.info('Create VCRX LED Button: ' + button);
+          try {
+            const result = this.polyInterface.addNode(
+              new VCRXButtonNode(this.polyInterface, this.address,
+                this._address, 'Scene ' + button)
+            );
+            if (result) {
+              this.buttonQuery(button);
+            }
+          } catch (err) {
+            logger.errorStack(err, 'Create VCRX LED ' + button + ' Failed');
+          }
+        }.bind(this), 2000);
       }      
     }
 
     query() {
       lutronEmitter.emit('query', this.lutronId);
+    }
+
+    async buttonQuery(button) {
+      let buttonLED = null;
+
+      switch(button) {
+        case 1:
+          buttonLED = 81;
+          break;
+        case 2:
+          buttonLED = 82;
+          break;
+        case 3:
+          buttonLED = 83;
+          break;
+        case 4:
+          buttonLED = 84;
+          break;
+        case 5:
+          buttonLED = 85;
+          break;
+        case 6:
+          buttonLED = 86;
+          break;
+        default:
+          break;
+      }
+
+      await util.sleep(2000);
+      lutronEmitter.emit('queryDeviceButton', this.lutronId, buttonLED)
     }
   }
 
