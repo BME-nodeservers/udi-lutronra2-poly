@@ -31,7 +31,8 @@ module.exports = function(Polyglot) {
     }
 
     query() {
-      lutronEmitter.emit('query', this.lutronId);
+      // lutronEmitter.emit('query', this.lutronId);
+      this.setDriver('ST', 1);
     }
 
     onDON(message) {

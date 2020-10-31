@@ -394,18 +394,16 @@ module.exports = function(Polyglot) {
         let node = this.polyInterface.getNode(nodeAddr);
         if (node) {
           logger.info('Received for Node: ' + nodeAddr);
-          node.setDriver('ST', '100');
+          node.setDriver('ST', '100', true, true);
         }
       }.bind(this));
 
       radiora2.on('off', function(id) {
-        // logger.info(id);
-        // let nodeAddr = this.address + '_' + id;
         let nodeAddr = this.address.split('_')[0] + '_' + id;
         let node = this.polyInterface.getNode(nodeAddr);
         if (node) {
           logger.info('Received for Node: ' + nodeAddr);
-          node.setDriver('ST', '0');
+          node.setDriver('ST', '0', true, true);
         }
 
       }.bind(this));
@@ -415,12 +413,12 @@ module.exports = function(Polyglot) {
         let nodeAddr = this.address.split('_')[0] + '_' + id;
         logger.info('Address: ' + nodeAddr);
         let node = this.polyInterface.getNode(nodeAddr);
-        // logger.info(node);
+        logger.info(node);
         if (node) {
           let newLevel = Math.round(level);
           logger.info('Rounded Level: ' + newLevel);
           logger.info('Received for Node: ' + nodeAddr);
-          node.setDriver('ST', newLevel);
+          node.setDriver('ST', newLevel, true, true);
 
           let fanIndex = node.getDriver('CLIFRS');
           if (fanIndex) {
@@ -447,12 +445,13 @@ module.exports = function(Polyglot) {
           } else {
             logger.info(id + ': Not a fan controller');
           }
+        } else {
+          logger.info(id + ': Not a valid Node');
         }
       }.bind(this));
 
       radiora2.on('buttonPress', function(id, buttonId) {
         logger.info(id + ': Button ' + buttonId + ' Pressed');
-
         let nodeAddr = this.address.split('_')[0] + '_' + id;
         logger.info('Address: ' + nodeAddr);
         let node = this.polyInterface.getNode(nodeAddr);
@@ -465,7 +464,7 @@ module.exports = function(Polyglot) {
 
           switch(devType) {
             case '2': // Occupancy
-              node.setDriver('ST', 1);
+              node.setDriver('ST', 1, true, true);
               break;
             case '4': // 2B Pico
               break;
@@ -477,16 +476,16 @@ module.exports = function(Polyglot) {
             case '13': // VCRX
               switch(buttonId) {
                 case '30':
-                  node.setDriver('GV10', 100);
+                  node.setDriver('GV10', 100, true, true);
                   break;
                 case '31':
-                  node.setDriver('GV11', 100);
+                  node.setDriver('GV11', 100, true, true);
                   break;
                 case '32':
-                  node.setDriver('GV12', 100);
+                  node.setDriver('GV12', 100, true, true);
                   break;
                 case '33':
-                  node.setDriver('GV13', 100);
+                  node.setDriver('GV13', 100, true, true);
                   break;
                 default:
                   break;
@@ -500,8 +499,6 @@ module.exports = function(Polyglot) {
 
       radiora2.on('buttonReleased', function(id, buttonId) {
         logger.info(id + ': Button Released');
-
-        // let nodeAddr = this.address + '_' + id;
         let nodeAddr = this.address.split('_')[0] + '_' + id;
         logger.info('Address: ' + nodeAddr);
         let node = this.polyInterface.getNode(nodeAddr);
@@ -514,7 +511,7 @@ module.exports = function(Polyglot) {
 
           switch(devType) {
             case '2': // Occupancy
-              node.setDriver('ST', 0);
+              node.setDriver('ST', 0, true, true);
               break;
             case '4': // 2B Pico
               break;
@@ -523,20 +520,20 @@ module.exports = function(Polyglot) {
             case '6': // 3B Pico
               break;
             case '7': // 3BRL Pico
-              node.setDriver(_gv, 0);
+              node.setDriver(_gv, 0, true, true);
             case '13': // VCRX
               switch(buttonId) {
                 case '30':
-                  node.setDriver('GV10', 0);
+                  node.setDriver('GV10', 0, true, true);
                   break;
                 case '31':
-                  node.setDriver('GV11', 0);
+                  node.setDriver('GV11', 0, true, true);
                   break;
                 case '32':
-                  node.setDriver('GV12', 0);
+                  node.setDriver('GV12', 0, true, true);
                   break;
                 case '33':
-                  node.setDriver('GV13', 0);
+                  node.setDriver('GV13', 0, true, true);
                   break;
                 default:
                   break;
@@ -622,7 +619,7 @@ module.exports = function(Polyglot) {
             break;
         }
         if (node) {
-          node.setDriver('ST', 1);
+          node.setDriver('ST', 1, true, true);
         }
       }.bind(this));
 
@@ -696,16 +693,17 @@ module.exports = function(Polyglot) {
             break;
         }
         if (node) {
-          node.setDriver('ST', 0);
+          node.setDriver('ST', 0, true, true);
         }
       }.bind(this));
 
       radiora2.on('groupOccupied', function(groupId) {
         logger.info('Group Id: ' + groupId + ' Occupied')
-        let nodeAddr = this.address + '_' + groupId;
+        // let nodeAddr = this.address + '_' + groupId;
+        let nodeAddr = this.address.split('_')[0] + '_' + groupId;
         let node = this.polyInterface.getNode(nodeAddr);
         if (node) {
-          node.setDriver('ST', '1');
+          node.setDriver('ST', '1', true, true);
         }
       }.bind(this));
 
@@ -715,7 +713,7 @@ module.exports = function(Polyglot) {
         let nodeAddr = this.address.split('_')[0] + '_' + groupId;
         let node = this.polyInterface.getNode(nodeAddr);
         if (node) {
-          node.setDriver('ST', '2');
+          node.setDriver('ST', '2', true, true);
         }
       }.bind(this));
 
@@ -725,7 +723,7 @@ module.exports = function(Polyglot) {
         let nodeAddr = this.address.split('_')[0] + '_' + groupId;
         let node = this.polyInterface.getNode(nodeAddr);
         if (node) {
-          node.setDriver('ST', '0');
+          node.setDriver('ST', '0', true, true);
         }
       }.bind(this));
 
