@@ -1,19 +1,25 @@
-# udi-poly-RadioRa2
+# udi-poly-lutron-radiora2
 
-Lutron RadioRa 2 NodeServer for Polyglot
+Lutron RadioRA 2 NodeServer for Polyglot
 
-- Polyglot V2 (On-premises installation).
-- Testing done with Polisy
+- Polyglot V2 (On-premise installation).
+- Testing Platform
+    - Polisy
+    - Polyglot 2.2.9
+    - Lutron RadioRA 2 Main Repeater 12.8.0
 
 To get started with an on-premise installation: 
 - NodeServer is availble in the Polyglot Store
 
-[Lutron RadioRa 2 Information](https://www.lutron.com/en-US/Products/Pages/WholeHomeSystems/RadioRA2/Overview.aspx)
+[Lutron RadioRA 2 Information](https://www.lutron.com/en-US/Products/Pages/WholeHomeSystems/RadioRA2/Overview.aspx)
 
-[Lutron RadioRa 2 Components](https://www.lutron.com/en-US/Products/Pages/WholeHomeSystems/RadioRA2/Components.aspx)
+[Lutron RadioRA 2 Components](https://www.lutron.com/en-US/Products/Pages/WholeHomeSystems/RadioRA2/Components.aspx)
 
 ### Currently Supported Components
 - Occupancy Sensors
+    - Ceiling
+    - Wall
+- Room Occupancy
 - Dimmer
 - Switch
 - Pico Remotes
