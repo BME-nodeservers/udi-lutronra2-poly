@@ -30,11 +30,14 @@ module.exports = function(Polyglot) {
       };
 
       this.lutronId = this.address.split('_')[1];
+      this.setDriver('ST', 1, true, true);
+      this.setDriver('GPV', 7, true, true);
     }
 
     query() {
       // lutronEmitter.emit('query', this.lutronId);
-      this.setDriver('ST', 1);
+      this.setDriver('ST', 1, true, true);
+      this.setDriver('GPV', 7, true, true);
     }
 
     onDON(message) {

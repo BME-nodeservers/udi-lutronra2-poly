@@ -26,6 +26,8 @@ module.exports = function(Polyglot) {
       };
 
       this.lutronId = this.address.split('_')[1];
+      this.setDriver('ST', 1, true, true);
+      this.setDriver('GPV', 16, true, true);
       
       // T15RL Has 17 Scene Buttons
       for (let button = 1; button <= 17; button++) {

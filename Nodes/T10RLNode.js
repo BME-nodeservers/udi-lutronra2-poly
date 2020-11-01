@@ -26,6 +26,8 @@ module.exports = function(Polyglot) {
       };
 
       this.lutronId = this.address.split('_')[1];
+      this.setDriver('ST', 1, true, true);
+      this.setDriver('GPV', 15, true, true);
       
       // T5RL Has 12 Scene Buttons
       for (let button = 1; button <= 12; button++) {

@@ -773,7 +773,7 @@ module.exports = function(Polyglot) {
       })
       
       listenerActive = true;
-      // return;
+      return;
     };
 
   }  

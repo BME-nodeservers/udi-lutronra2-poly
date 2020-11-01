@@ -27,6 +27,7 @@ module.exports = function(Polyglot) {
       };
 
       this.lutronId = this.address.split('_')[1];
+      this.setDriver('GPV', 2, true, true);
     }
 
     query() {
