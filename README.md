@@ -4,8 +4,8 @@ Lutron RadioRA 2 NodeServer for Polyglot
 
 - Polyglot V2 (On-premise installation).
 - Testing Platform
-    - Polisy
-    - Polyglot 2.2.9
+    - ISY FW 5.3
+    - Polisy Polyglot 2.2.9
     - Lutron RadioRA 2 Main Repeater 12.8.0
 
 To get started with an on-premise installation: 
