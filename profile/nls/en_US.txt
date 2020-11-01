@@ -1,11 +1,15 @@
 ND-CONTROLLER-NAME = Node server status
 ND-CONTROLLER-ICON = GenericCtl
 ST-CONTROLLER-ST-NAME = Status
-CMD-CONTROLLER-DISCOVER-NAME = Discover new devices
-CMD-CONTROLLER-CREATE_NEW-NAME = Create a new device
 CMD-CONTROLLER-UPDATE_PROFILE-NAME = Update node server profile
 CMD-CONTROLLER-REMOVE_NOTICES-NAME = Remove node server notices
 CMD-CONTROLLER-QUERY-NAME = Query
+
+ND-MAINREPEATER-NAME = RadioRA 2 Main Repeater
+ND-MAINREPEATER-ICON = GenericCtl
+ST-MAINREPEATER-ST-NAME = Status
+ST-MAINREPEATER-GV0-NAME = Phantom Button Pressed
+CMD-MAINREPEATER-PBUTTON-NAME = Press Phantom button
 
 ND-MAESTRO_DIMMER-NAME = Maestro Dimmer
 ND-MAESTRO_DIMMER-ICON = Lamp
@@ -79,32 +83,62 @@ ST-OCC-ST-NAME = Status
 ND-VCRX-NAME = Visor Control Receiver
 ND-VCRX-ICON = Output
 ST-VCRX-ST-NAME = Status
-ST-VCRX-GV1-NAME = Scene 1
-ST-VCRX-GV2-NAME = Scene 2
-ST-VCRX-GV3-NAME = Scene 3
-ST-VCRX-GV4-NAME = Scene 4
-ST-VCRX-GV5-NAME = Scene 5
-ST-VCRX-GV6-NAME = Scene 6
 ST-VCRX-GV10-NAME = Full / Security
 ST-VCRX-GV11-NAME = Security Flash
 ST-VCRX-GV12-NAME = Input 1
 ST-VCRX-GV13-NAME = Input 2
-CMD-VCRX-GV1-NAME = Scene 1
-CMD-VCRX-GV2-NAME = Scene 2
-CMD-VCRX-GV3-NAME = Scene 3
-CMD-VCRX-GV4-NAME = Scene 4
-CMD-VCRX-GV5-NAME = Scene 5
-CMD-VCRX-GV6-NAME = Scene 6
+
+ND-VCRXBUTTON-NAME = Visor Control Receiver
+ND-VCRXBUTTON-ICON = Output
+ST-VCRXBTN-ST-NAME = Status
+
+ND-T5RL-NAME = Tabletop 5 Button
+ND-T5RL-ICON = Output
+ST-T5RL-ST-NAME = Status
+
+ND-T5RLBUTTON-NAME = Tabletop 5 Button
+ND-T5RLBUTTON-ICON = Output
+ST-T5RLBTN-ST-NAME = Status
+
+ND-T10RL-NAME = Tabletop 10 Button
+ND-T10RL-ICON = Output
+ST-T10RL-ST-NAME = Status
+
+ND-T10RLBUTTON-NAME = Tabletop 10 Button
+ND-T10RLBUTTON-ICON = Output
+ST-T10RLBTN-ST-NAME = Status
+
+ND-T15RL-NAME = Tabletop 15 Button
+ND-T15RL-ICON = Output
+ST-T15RL-ST-NAME = Status
+
+ND-T15RLBUTTON-NAME = Tabletop 15 Button
+ND-T15RLBUTTON-ICON = Output
+ST-T15RLBTN-ST-NAME = Status
+
+ND-ROOMSTATUS-NAME = Room Occupancy
+ND-ROOMSTATUS-ICON = MotionSensor
+ST-ROOMSTATUS-ST-NAME = Status
+
+# Room Status
+ROOMSTATUS-0 = Unknown
+ROOMSTATUS-1 = Occupied
+ROOMSTATUS-2 = Unoccupied
 
 # Device Type Mapping
-DEVTYPE-1 = Occupancy Sensor
-DEVTYPE-2 = 2B Pico
-DEVTYPE-3 = 2BRL Pico
-DEVTYPE-4 = 3B Pico
-DEVTYPE-5 = 3BRL Pico
-DEVTYPE-6 = 4B Pico
-DEVTYPE-7 = Audio Pico
-DEVTYPE-8 = Switch
-DEVTYPE-9 = Dimmer
-DEVTYPE-10 = Fan Controller
-DEVTYPE-11 = Visor Control Receiver
+DEVTYPE-1 = Main Repeater
+DEVTYPE-2 = Occupancy Sensor
+DEVTYPE-3 = Room Status
+DEVTYPE-4 = 2B Pico
+DEVTYPE-5 = 2BRL Pico
+DEVTYPE-6 = 3B Pico
+DEVTYPE-7 = 3BRL Pico
+DEVTYPE-8 = 4B Pico
+DEVTYPE-9 = Audio Pico
+DEVTYPE-10 = Switch
+DEVTYPE-11 = Dimmer
+DEVTYPE-12 = Fan Controller
+DEVTYPE-13 = Visor Control Receiver
+DEVTYPE-14 = Tabletop 5 Button RL
+DEVTYPE-15 = Tabletop 10 Button RL
+DEVTYPE-16 = Tabletop 15 Button RL

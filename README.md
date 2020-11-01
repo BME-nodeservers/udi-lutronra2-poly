@@ -22,11 +22,19 @@ To get started with an on-premise installation:
     - 3 Button
     - 3 Button Raise/Lower
     - 4 Button
+- Tabletop Keypad
+    - 5 Button Tabletop
+    - 10 Button Tabletop
+    - 15 Button Tabletop
 
 ### In-Development Components
-- Keypads
+- Wall Keypads
+- Hybrid Keypads
 - Visor Control Receiver (VCRX)
 - Temperature Control
     - Pending demand
 - Shades
     - Pending demand
+
+## Notes
+- Keypad raise/lower functionality is not presented to the Admin Console as there's no percentage of scene status available to manipulate.

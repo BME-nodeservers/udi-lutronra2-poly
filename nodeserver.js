@@ -20,7 +20,16 @@ const Pico3BNode = require('./Nodes/Pico3BNode.js')(Polyglot);
 const Pico3BRLNode = require('./Nodes/Pico3BRLNode.js')(Polyglot);
 const Pico4BNode = require('./Nodes/Pico4BNode.js')(Polyglot);
 const OccupancyNode = require('./Nodes/OccupancyNode.js')(Polyglot);
+const RoomStatusNode = require('./Nodes/RoomStatusNode.js')(Polyglot);
 const VCRXNode = require('./Nodes/VCRXNode.js')(Polyglot);
+const VCRXButtonNode = require('./Nodes/VCRXButtonNode.js')(Polyglot);
+const T5RLNode = require('./Nodes/T5RLNode.js')(Polyglot);
+const T5RLButtonNode = require('./Nodes/T5RLButtonNode.js')(Polyglot);
+const T10RLNode = require('./Nodes/T10RLNode.js')(Polyglot);
+const T10RLButtonNode = require('./Nodes/T10RLButtonNode.js')(Polyglot);
+const T15RLNode = require('./Nodes/T15RLNode.js')(Polyglot);
+const T15RLButtonNode = require('./Nodes/T15RLButtonNode.js')(Polyglot);
+
 
 const typedParams = [
   {name: 'name', title: 'Repeater Name', type: 'STRING',
@@ -31,8 +40,8 @@ const typedParams = [
     desc: ''},
   {name: 'password', title: 'Password', type: 'STRING',
     desc: ''},
-  {name: 'reconnect', title: 'Recconect Wait Time', type: 'NUMBER',
-    desc: 'Time in Milliseconds to wait before attempting reconnect'},
+  {name: 'reconnect', title: 'Restart Wait Time', type: 'NUMBER',
+    desc: 'Time in Milliseconds to wait before restarting', defaultValue: '300000' },
   { name: 'devices', title: 'Lutron Devices', isList: true,
     params:
     [
@@ -50,11 +59,12 @@ const typedParams = [
 
 logger.info('Starting Lutron Node Server');
 
-const poly = new Polyglot.Interface([ControllerNode,
+const poly = new Polyglot.Interface([ControllerNode, MainRepeaterNode,
   MaestroDimmerNode, MaestroSwitchNode, MaestroFanControlNode, OccupancyNode,
-  Pico2BNode, Pico2BRLNode, Pico3BNode, Pico3BRLNode, Pico4BNode, VCRXNode,
+  RoomStatusNode, Pico2BNode, Pico2BRLNode, Pico3BNode, Pico3BRLNode, Pico4BNode,
+  VCRXNode, VCRXButtonNode, T5RLNode, T5RLButtonNode, T10RLNode, T10RLButtonNode,
+  T15RLNode, T15RLButtonNode,
   ]);
-  // MainRepeaterNode, MaestroDimmerNode, MaestroSwitchNode]);
 
 poly.on('mqttConnected', function() {
   logger.info('MQTT Connection started');
@@ -69,7 +79,7 @@ poly.on('config', function(config) {
     poly.saveTypedParams(typedParams);
     const md = fs.readFileSync('./configdoc.md');
     poly.setCustomParamsDoc(markdown.toHTML(md.toString()));
-
+    
     if (!nodesCount) {
       try {
         logger.info('Auto-creating controller');
@@ -79,7 +89,11 @@ poly.on('config', function(config) {
       }
     } else {
       if (Object.keys(config.typedCustomData).length > 0) {
-        callAsync(CreateLutronControllers());
+        try {
+          callAsync(CreateLutronControllers());
+        } catch (err) {
+          logger.error('Error while creating RadioRA2 Main Repeater node: ', err);
+        }
       }
     }
 
@@ -144,7 +158,7 @@ async function doPoll(longPoll) {
 async function autoCreateController() {
   try {
     await poly.addNode(
-      new ControllerNode(poly, 'controller', 'controller', 'Lutron')
+      new ControllerNode(poly, 'controller', 'controller', 'RadioRA 2')
     );
   } catch (err) {
     logger.error('Error creating controller node');
@@ -165,7 +179,8 @@ async function CreateLutronControllers() {
 
   let _ipJoin = config.ipAddress.toString().replace(/\./g, '');
   let _repeaterUID = _ipJoin.substring(_ipJoin.length - 3);
-  let address = 'lip' + _repeaterUID;
+  // let address = 'lip' + _repeaterUID;
+  let address = _repeaterUID + '_1';;
 
   try {
     await poly.addNode(

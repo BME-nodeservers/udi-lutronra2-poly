@@ -33,7 +33,7 @@ module.exports = function(Polyglot) {
 
       this.drivers = {
         ST: {value: '0', uom: 51},
-        GPV: {value: '10', uom: 25},
+        GPV: {value: '12', uom: 25},
         CLIFRS: {value: '0', uom: 25},
         GV1: {value: '0', uom: 2},
         GV2: {value: '0', uom: 2},
@@ -41,11 +41,11 @@ module.exports = function(Polyglot) {
         GV4: {value: '0', uom: 2},
       };
 
-      lutronId = this.address.split('_')[1];
+      this.lutronId = this.address.split('_')[1];
     }
 
     query() {
-      lutronEmitter.emit('query', lutronId);
+      lutronEmitter.emit('query', this.lutronId);
     }
 
     onDON(message) {
@@ -53,16 +53,16 @@ module.exports = function(Polyglot) {
       this.setDriver('ST', message.value ? message.value : '100');
 
       if (!message.value) {
-        lutronEmitter.emit('on', lutronId);
+        lutronEmitter.emit('on', this.lutronId);
       } else {
-        lutronEmitter.emit('level', lutronId, message.value);
+        lutronEmitter.emit('level', this.lutronId, message.value);
       }
     }
 
     onDOF() {
       // logger.info('DOF (%s)', this.address);
       this.setDriver('ST', '0');
-      lutronEmitter.emit('off', lutronId);
+      lutronEmitter.emit('off', this.lutronId);
     }
 
     onLow(message) {
@@ -71,7 +71,7 @@ module.exports = function(Polyglot) {
       this.setDriver('GV2', '0');
       this.setDriver('GV3', '0');
       this.setDriver('GV4', '0');
-      lutronEmitter.emit('level', lutronId, 25);
+      lutronEmitter.emit('level', this.lutronId, 25);
     }
 
     onMed(message) {
@@ -80,7 +80,7 @@ module.exports = function(Polyglot) {
       this.setDriver('GV2', '1');
       this.setDriver('GV3', '0');
       this.setDriver('GV4', '0');
-      lutronEmitter.emit('level', lutronId, 50);
+      lutronEmitter.emit('level', this.lutronId, 50);
     }
 
     onMedHigh(message) {
@@ -89,7 +89,7 @@ module.exports = function(Polyglot) {
       this.setDriver('GV2', '0');
       this.setDriver('GV3', '1');
       this.setDriver('GV4', '0');
-      lutronEmitter.emit('level', lutronId, 75);
+      lutronEmitter.emit('level', this.lutronId, 75);
     }
 
     onHigh(message) {
@@ -98,7 +98,7 @@ module.exports = function(Polyglot) {
       this.setDriver('GV2', '0');
       this.setDriver('GV3', '0');
       this.setDriver('GV4', '1');
-      lutronEmitter.emit('level', lutronId, 100);
+      lutronEmitter.emit('level', this.lutronId, 100);
     }
   }
 

@@ -16,14 +16,12 @@ module.exports = function(Polyglot) {
       this.hint = '0x01020900'; // Example for a Dimmer switch
 
       this.commands = {
-        // DON: this.onDON,
-        // DOF: this.onDOF,
         QUERY: this.query,
       };
 
       this.drivers = {
         ST: {value: '1', uom: 2},
-        GPV: {value: '5', uom: 25},
+        GPV: {value: '7', uom: 25},
         GV2: {value: '0', uom: 2},
         GV3: {value: '0', uom: 2},
         GV4: {value: '0', uom: 2},
@@ -31,24 +29,28 @@ module.exports = function(Polyglot) {
         GV6: {value: '0', uom: 2},
       };
 
-      lutronId = this.address.split('_')[1];
+      this.lutronId = this.address.split('_')[1];
+      this.setDriver('ST', 1, true, true);
+      this.setDriver('GPV', 7, true, true);
     }
 
     query() {
-      lutronEmitter.emit('query', lutronId);
+      // lutronEmitter.emit('query', this.lutronId);
+      this.setDriver('ST', 1, true, true);
+      this.setDriver('GPV', 7, true, true);
     }
 
     onDON(message) {
       // setDrivers accepts string or number (message.value is a string)
       logger.info('DON (%s)', this.address);
       this.setDriver('ST', message.value ? message.value : '1');
-      lutronEmitter.emit('on', lutronId);
+      lutronEmitter.emit('on', this.lutronId);
     }
 
     onDOF() {
       logger.info('DOF (%s)', this.address);
       this.setDriver('ST', '0');
-      lutronEmitter.emit('off', lutronId);
+      lutronEmitter.emit('off', this.lutronId);
     }
 
   }
