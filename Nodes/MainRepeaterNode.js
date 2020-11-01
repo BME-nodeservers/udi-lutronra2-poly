@@ -350,19 +350,19 @@ module.exports = function(Polyglot) {
       }.bind(this));
 
       radiora2.on('debug', function(data) {
-        logger.info(data);
+        logger.info('Debug: ' + data);
       }.bind(this));
 
       radiora2.on('info', function(data) {
-        logger.info(data);
+        logger.info('Info: ' + data);
       }.bind(this));
 
       radiora2.on('warn', function(data) {
-        logger.info(data);
+        logger.info('Warn: ' + data);
       }.bind(this));
 
       radiora2.on('error', function(data) {
-        logger.info(data);
+        logger.info('Error: ' + data);
       }.bind(this));
 
       radiora2.on('close', function(data) {
@@ -414,7 +414,7 @@ module.exports = function(Polyglot) {
             let currentValue = parseInt(fanSpeed['value'], 10);
             logger.info('Fan Speed %: ' + currentValue);
 
-            let fanSpeedStatus = null;
+            // let fanSpeedStatus = null;
             if (currentValue > 1 && currentValue <= 25) {
               node.setDriver('CLIFRS', '1', true, true);
               logger.info('Fan Speed: Low');
