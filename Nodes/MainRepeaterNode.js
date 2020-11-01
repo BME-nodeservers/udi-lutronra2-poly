@@ -42,21 +42,14 @@ module.exports = function(Polyglot) {
       };
 
       this.drivers = {
-        ST: { value: '1', uom: 2 }, // uom 2 = Boolean. '1' is True.
+        ST: { value: '1', uom: 2 },
         GPV: {value: '1', uom: 25},
         GV0: {value: '0', uom: 0 },
       };
 
-      // this.isController = true;
-      // this.listenerSetup();
-      // this.repeaterSetup();
-      // this.getDevices();
       this.startMainRepeater();
+      this.setDriver('ST', 1);
     }
-
-    // sleep(ms) {
-    //   return new Promise(resolve => setTimeout(resolve, ms));
-    // }
 
     startMainRepeater() {
       const _config = this.polyInterface.getConfig();
@@ -126,10 +119,6 @@ module.exports = function(Polyglot) {
     }
 
     async createDevice(intId, devType, devName) {
-      // const prefix = '_';
-      // let _address = this.address + prefix + intId;
-      // lutronId = this.address.split('_')[1];
-      // let _address = this.address + '_' + intId;
       let _address = this.address.split('_')[0] + '_' + intId;
       let _lutronId = intId;
       let _devName = devName;
@@ -389,7 +378,6 @@ module.exports = function(Polyglot) {
       }.bind(this));
 
       radiora2.on('on', function(id) {
-        // let nodeAddr = this.address + '_' + id;
         let nodeAddr = this.address.split('_')[0] + '_' + id;
         let node = this.polyInterface.getNode(nodeAddr);
         if (node) {
@@ -411,13 +399,13 @@ module.exports = function(Polyglot) {
       radiora2.on('level', function(id, level) {
         logger.info('ID: ' + id + ' Level: ' + level);
         let nodeAddr = this.address.split('_')[0] + '_' + id;
-        logger.info('Address: ' + nodeAddr);
+        // logger.info('Address: ' + nodeAddr);
         let node = this.polyInterface.getNode(nodeAddr);
-        logger.info(node);
+        // logger.info(node);
         if (node) {
           let newLevel = Math.round(level);
-          logger.info('Rounded Level: ' + newLevel);
-          logger.info('Received for Node: ' + nodeAddr);
+          // logger.info('Rounded Level: ' + newLevel);
+          // logger.info('Received for Node: ' + nodeAddr);
           node.setDriver('ST', newLevel, true, true);
 
           let fanIndex = node.getDriver('CLIFRS');
@@ -454,13 +442,13 @@ module.exports = function(Polyglot) {
       radiora2.on('buttonPress', function(id, buttonId) {
         logger.info(id + ': Button ' + buttonId + ' Pressed');
         let nodeAddr = this.address.split('_')[0] + '_' + id;
-        logger.info('Address: ' + nodeAddr);
+        // logger.info('Address: ' + nodeAddr);
         let node = this.polyInterface.getNode(nodeAddr);
 
         if (node) {
           let _gpv = node.getDriver('GPV');
           let devType = _gpv['value'];
-          logger.info('DevType: ' + devType);
+          // logger.info('DevType: ' + devType);
           let _gv = 'GV' + buttonId;
 
           switch(devType) {
@@ -468,12 +456,20 @@ module.exports = function(Polyglot) {
               node.setDriver('ST', 1, true, true);
               break;
             case '4': // 2B Pico
+              node.setDriver(_gv, 1, true, true);
               break;
             case '5': // 2BRL Pico
+              node.setDriver(_gv, 1, true, true);
               break;
             case '6': // 3B Pico
+              node.setDriver(_gv, 1, true, true);
+              break;
             case '7': // 3BRL Pico
-              node.setDriver(_gv, 1);
+              node.setDriver(_gv, 1, true, true);
+              break;
+            case '8': // 4B Pico
+              node.setDriver(_gv, 1, true, true);
+              break;
             case '13': // VCRX
               switch(buttonId) {
                 case '30':
@@ -501,13 +497,13 @@ module.exports = function(Polyglot) {
       radiora2.on('buttonReleased', function(id, buttonId) {
         logger.info(id + ': Button Released');
         let nodeAddr = this.address.split('_')[0] + '_' + id;
-        logger.info('Address: ' + nodeAddr);
+        // logger.info('Address: ' + nodeAddr);
         let node = this.polyInterface.getNode(nodeAddr);
-        logger.info(node);
+        // logger.info(node);
         if (node) {
           let _gpv = node.getDriver('GPV');
           let devType = _gpv['value'];
-          logger.info('DevType: ' + devType);
+          // logger.info('DevType: ' + devType);
           let _gv = 'GV' + buttonId;
 
           switch(devType) {
@@ -515,13 +511,20 @@ module.exports = function(Polyglot) {
               node.setDriver('ST', 0, true, true);
               break;
             case '4': // 2B Pico
+              node.setDriver(_gv, 0, true, true);
               break;
             case '5': // 2BRL Pico
+              node.setDriver(_gv, 0, true, true);
               break;
             case '6': // 3B Pico
+              node.setDriver(_gv, 0, true, true);
               break;
             case '7': // 3BRL Pico
               node.setDriver(_gv, 0, true, true);
+              break;
+            case '8': // 4B Pico
+              node.setDriver(_gv, 0, true, true);
+              break;
             case '13': // VCRX
               switch(buttonId) {
                 case '30':
@@ -734,17 +737,17 @@ module.exports = function(Polyglot) {
       });
 
       lutronEmitter.on('on', function(id) {
-        logger.info('Node On Message: ' + id);
+        // logger.info('Node On Message: ' + id);
         radiora2.setSwitch(id, 100);
       });
 
       lutronEmitter.on('off', function(id) {
-        logger.info('Node Off Message: ' + id);
+        // logger.info('Node Off Message: ' + id);
         radiora2.setSwitch(id, 0);
       });
 
       lutronEmitter.on('level', function(id, level, fade, delay) {
-        logger.info('Node Level Message: ' + id + ' Level:' + level);
+        // logger.info('Node Level Message: ' + id + ' Level:' + level);
         radiora2.setDimmer(id, level, fade, delay);
       });
 
