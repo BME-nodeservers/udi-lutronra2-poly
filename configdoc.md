@@ -43,3 +43,6 @@ If device type is not setup correctly the device will be created wrong or not at
 
 ###### Temperature Controls
 - Depends on requests
+
+###### Shades
+- Depends on requests
