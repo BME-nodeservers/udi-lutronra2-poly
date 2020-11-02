@@ -9,8 +9,6 @@
     <cmds>
       <sends/>
       <accepts>
-        <cmd id="DISCOVER"/>
-        <cmd id="CREATE_NEW"/>
         <cmd id="UPDATE_PROFILE"/>
         <cmd id="REMOVE_NOTICES"/>
         <cmd id="QUERY"/>
@@ -18,30 +16,27 @@
     </cmds>
   </nodedef>
 
-  <!-- Virtual node - dimmer -->
-  <nodedef id="VNODE_DIMMER" nls="VN">
+  <nodedef id="MAINREPEATER" nls="MAINREPEATER">
     <sts>
-      <st id="ST" editor="PERCENT"/>
+      <st id="ST" editor="BOOL"/>
+      <st id="GPV" editor="DEVTYPE"/>
+      <st id="GV0" editor="PHANTOM"/>
     </sts>
     <cmds>
-      <sends>
-        <cmd id="DON"/>
-        <cmd id="DOF"/>
-      </sends>
+      <sends/>
       <accepts>
-        <cmd id="DON">
-          <p id="" editor="PERCENT" optional="T"/>
+        <cmd id="PBUTTON">
+          <p id="" editor="PHANTOM" optional="T"/>
         </cmd>
-        <cmd id="DOF"/>
         <cmd id="QUERY"/>
       </accepts>
     </cmds>
   </nodedef>
 
-  <!-- Maestro Switch node -->
   <nodedef id="MAESTRO_SWITCH" nls="MS">
     <sts>
-      <st id="ST" editor="_78_1"/>
+      <st id="ST" editor="POWER"/>
+      <st id="GPV" editor="DEVTYPE"/>
     </sts>
     <cmds>
       <sends>
@@ -56,10 +51,10 @@
     </cmds>
   </nodedef>
 
-  <!-- Maestro Dimmer node - dimmer -->
   <nodedef id="MAESTRO_DIMMER" nls="MD">
     <sts>
-      <st id="ST" editor="_51_1"/>
+      <st id="ST" editor="PERCENT"/>
+      <st id="GPV" editor="DEVTYPE"/>
       <st id="RR" editor="_58_1"/>
       <st id="DELAY" editor="_58_1"/>
     </sts>
@@ -75,7 +70,7 @@
       </sends>
       <accepts>
         <cmd id="DON">
-          <p id="" editor="PERCENT" optional="T"/>
+          <p id="" editor="_51_1" optional="T"/>
         </cmd>
         <cmd id="DOF"/>
         <cmd id="RR">
@@ -94,4 +89,276 @@
     </cmds>
   </nodedef>
 
+  <nodedef id="MAESTRO_FAN" nls="MFC">
+    <sts>
+      <st id="ST" editor="_51_1"/>
+      <st id="CLIFRS" editor="FANSPEED"/>
+    </sts>
+    <cmds>
+      <sends>
+        <cmd id="DON"/>
+        <cmd id="DOF"/>
+      </sends>
+      <accepts>
+        <cmd id="DON"/>
+        <cmd id="DOF"/>
+        <cmd id="GV1" editor="_2_1" optional="T"/> <!-- Low -->
+        <cmd id="GV2" editor="_2_1" optional="T"/> <!-- Medium -->
+        <cmd id="GV3" editor="_2_1" optional="T"/> <!-- Medium High -->
+        <cmd id="GV4" editor="_2_1" optional="T"/> <!-- High -->
+        <cmd id="QUERY"/>
+      </accepts>
+    </cmds>
+  </nodedef>
+
+  <nodedef id="PICO2B" nls="2B">
+    <sts>
+      <st id="ST" editor="BOOL"/>
+      <st id="GPV" editor="DEVTYPE"/>
+      <st id="GV2" editor="BOOL"/>
+      <st id="GV4" editor="BOOL"/>
+    </sts>
+    <cmds>
+      <sends>
+       <cmd id="DON"/>
+       <cmd id="DOF"/>
+      </sends>
+      <accepts>
+      </accepts>
+    </cmds>
+  </nodedef>
+
+  <nodedef id="PICO2BRL" nls="2BRL">
+    <sts>
+      <st id="ST" editor="BOOL"/>
+      <st id="GPV" editor="DEVTYPE"/>
+      <st id="GV2" editor="BOOL"/>
+      <st id="GV4" editor="BOOL"/>
+      <st id="GV5" editor="BOOL"/>
+      <st id="GV6" editor="BOOL"/>
+    </sts>
+    <cmds>
+      <sends>
+       <cmd id="DON"/>
+       <cmd id="DOF"/>
+       <cmd id="FDUP"/>
+       <cmd id="FDDOWN"/>
+      </sends>
+      <accepts>
+      </accepts>
+    </cmds>
+  </nodedef>
+
+  <nodedef id="PICO3B" nls="3B">
+    <sts>
+      <st id="ST" editor="BOOL"/>
+      <st id="GPV" editor="DEVTYPE"/>
+      <st id="GV2" editor="BOOL"/>
+      <st id="GV3" editor="BOOL"/>
+      <st id="GV4" editor="BOOL"/>
+    </sts>
+    <cmds>
+      <sends>
+       <cmd id="DON"/>
+       <cmd id="DOF"/>
+      </sends>
+      <accepts>
+      </accepts>
+    </cmds>
+  </nodedef>
+ 
+  <nodedef id="PICO3BRL" nls="3BRL">
+    <sts>
+      <st id="ST" editor="BOOL"/>
+      <st id="GPV" editor="DEVTYPE"/>
+      <st id="GV2" editor="BOOL"/>
+      <st id="GV3" editor="BOOL"/>
+      <st id="GV4" editor="BOOL"/>
+      <st id="GV5" editor="BOOL"/>
+      <st id="GV6" editor="BOOL"/>
+    </sts>
+    <cmds>
+      <sends>
+       <cmd id="DON"/>
+       <cmd id="DOF"/>
+       <cmd id="FDUP"/>
+       <cmd id="FDDOWN"/>
+      </sends>
+      <accepts>
+      </accepts>
+    </cmds>
+  </nodedef>
+
+  <nodedef id="PICO4B" nls="4B">
+    <sts>
+      <st id="ST" editor="BOOL"/>
+      <st id="GPV" editor="DEVTYPE"/>
+      <st id="GV8" editor="BOOL"/>
+      <st id="GV9" editor="BOOL"/>
+      <st id="GV10" editor="BOOL"/>
+      <st id="GV11" editor="BOOL"/>
+    </sts>
+    <cmds>
+      <sends>
+       <cmd id="DON"/>
+       <cmd id="DOF"/>
+      </sends>
+      <accepts>
+      </accepts>
+    </cmds>
+  </nodedef>
+
+  <nodedef id="OCCUPANCY" nls="OCC">
+    <sts>
+      <st id="ST" editor="BOOL"/>
+      <st id="GPV" editor="DEVTYPE"/>
+    </sts>
+    <cmds>
+      <sends>
+       <cmd id="DON"/>
+       <cmd id="DOF"/>
+      </sends>
+      <accepts>
+      </accepts>
+    </cmds>
+  </nodedef>
+
+  <nodedef id="ROOMSTATUS" nls="ROOMSTATUS">
+    <sts>
+      <st id="ST" editor="ROOMSTATUS"/>
+      <st id="GPV" editor="DEVTYPE"/>
+    </sts>
+    <cmds>
+      <sends>
+        <cmd id="DON"/>
+        <cmd id="DOF"/>
+      </sends>
+      <accepts>
+        <cmd id="QUERY"/>
+      </accepts>
+    </cmds>
+  </nodedef>
+
+  <nodedef id="VCRX" nls="VCRX">
+    <sts>
+      <st id="ST" editor="BOOL"/>
+      <st id="GPV" editor="DEVTYPE"/>
+      <st id="GV10" editor="_79_1"/>     <!--Component 30-->
+      <st id="GV11" editor="_79_1"/>     <!--Component 31-->
+      <st id="GV12" editor="_79_1"/>     <!--Component 32-->
+      <st id="GV13" editor="_79_1"/>     <!--Component 33-->
+    </sts>
+    <cmds>
+      <sends>
+      </sends>
+      <accepts>
+        <cmd id="QUERY"/>
+      </accepts>
+    </cmds>
+  </nodedef>
+
+  <nodedef id="VCRXBUTTON" nls="VCRXBTN">
+    <sts>
+      <st id="ST" editor="BOOL"/>
+      <st id="GPV" editor="DEVTYPE"/>
+    </sts>
+    <cmds>
+      <sends>
+      </sends>
+      <accepts>
+        <cmd id="DON"/>
+        <cmd id="QUERY"/>
+      </accepts>
+    </cmds>
+  </nodedef>
+
+  <nodedef id="T5RL" nls="T5RL">
+    <sts>
+      <st id="ST" editor="BOOL"/>
+      <st id="GPV" editor="DEVTYPE"/>
+    </sts>
+    <cmds>
+      <sends>
+      </sends>
+      <accepts>
+        <cmd id="QUERY"/>
+      </accepts>
+    </cmds>
+  </nodedef>
+
+  <nodedef id="T5RLBUTTON" nls="T5RLBTN">
+    <sts>
+      <st id="ST" editor="BOOL"/>
+      <st id="GPV" editor="DEVTYPE"/>
+    </sts>
+    <cmds>
+      <sends>
+      </sends>
+      <accepts>
+        <cmd id="DON"/>
+        <cmd id="QUERY"/>
+      </accepts>
+    </cmds>
+  </nodedef>
+
+  <nodedef id="T10RL" nls="T10RL">
+    <sts>
+      <st id="ST" editor="BOOL"/>
+      <st id="GPV" editor="DEVTYPE"/>
+    </sts>
+    <cmds>
+      <sends>
+      </sends>
+      <accepts>
+        <cmd id="QUERY"/>
+      </accepts>
+    </cmds>
+  </nodedef>
+
+  <nodedef id="T10RLBUTTON" nls="T10RLBTN">
+    <sts>
+      <st id="ST" editor="BOOL"/>
+      <st id="GPV" editor="DEVTYPE"/>
+    </sts>
+    <cmds>
+      <sends>
+      </sends>
+      <accepts>
+        <cmd id="DON"/>
+        <cmd id="QUERY"/>
+      </accepts>
+    </cmds>
+  </nodedef>
+
+  <nodedef id="T15RL" nls="T15RL">
+    <sts>
+      <st id="ST" editor="BOOL"/>
+      <st id="GPV" editor="DEVTYPE"/>
+    </sts>
+    <cmds>
+      <sends>
+      </sends>
+      <accepts>
+        <cmd id="QUERY"/>
+      </accepts>
+    </cmds>
+  </nodedef>
+
+  <nodedef id="T15RLBUTTON" nls="T15RLBTN">
+    <sts>
+      <st id="ST" editor="BOOL"/>
+      <st id="GPV" editor="DEVTYPE"/>
+    </sts>
+    <cmds>
+      <sends>
+      </sends>
+      <accepts>
+        <cmd id="DON"/>
+        <cmd id="QUERY"/>
+      </accepts>
+    </cmds>
+  </nodedef>
+
+  
 </nodeDefs>
+

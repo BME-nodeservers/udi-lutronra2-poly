@@ -1,30 +1,46 @@
-# poly-template-nodejs
+# udi-poly-lutron-radiora2
 
-This is a Poly template using Node.js.
+Lutron RadioRA 2 NodeServer for Polyglot
 
-It works with both Polyglot V2 (On-premises installation) and Polyglot cloud.
-
-To start developing your Nodeserver, it is easier to set up and test 
-with Polyglot V2. If you don't need such things as oAuth authentication 
-to cloud services, you can fully develop your node server on-premises. 
+- Polyglot V2 (On-premise installation).
+- Testing Platform
+    - ISY FW 5.3
+    - Polisy Polyglot 2.2.9
+    - Lutron RadioRA 2 Main Repeater 12.8.0
 
 To get started with an on-premise installation: 
-1. Install Polyglot-V2. [Instructions here](https://github.com/UniversalDevicesInc/polyglot-v2)
-2. Make sure you have Node.js & NPM installed
+- NodeServer is availble in the Polyglot Store
 
-```
-sudo apt install nodejs
-sudo apt install npm
-```
+[Lutron RadioRA 2 Information](https://www.lutron.com/en-US/Products/Pages/WholeHomeSystems/RadioRA2/Overview.aspx)
 
-3. Install this node server
+[Lutron RadioRA 2 Components](https://www.lutron.com/en-US/Products/Pages/WholeHomeSystems/RadioRA2/Components.aspx)
 
-```
-cd ~/.polyglot/nodeservers
-git clone https://github.com/UniversalDevicesInc/poly-template-nodejs
-npm install
-```
+### Currently Supported Components
+- Occupancy Sensors
+    - Ceiling
+    - Wall
+- Room Occupancy
+- Dimmer
+- Switch
+- Pico Remotes
+    - 2 Button
+    - 2 Button Raise/Lower
+    - 3 Button
+    - 3 Button Raise/Lower
+    - 4 Button
+- Tabletop Keypad
+    - 5 Button Tabletop
+    - 10 Button Tabletop
+    - 15 Button Tabletop
 
-For help developing your node server, refer to the [node.js polyinterface documentation here](https://github.com/UniversalDevicesInc/polyglot-v2-nodejs-interface)
+### In-Development Components
+- Wall Keypads
+- Hybrid Keypads
+- Visor Control Receiver (VCRX)
+- Temperature Control
+    - Pending demand
+- Shades
+    - Pending demand
 
-To get instructions for the cloud version, refer to the [node.js PGC documentation here](https://github.com/UniversalDevicesInc/pgc-nodejs-interface)
+## Notes
+- Keypad raise/lower functionality is not presented to the Admin Console as there's no percentage of scene status available to manipulate.

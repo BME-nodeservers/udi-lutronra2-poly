@@ -108,3 +108,5 @@ _gsdata_/
 .idea/
 
 package-lock.json
+
+.eslintrc.json

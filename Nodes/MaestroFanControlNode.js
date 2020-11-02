@@ -1,66 +1,111 @@
 'use strict';
 
+var eventEmitter = require('../lib/lutronEvents.js');
+var lutronEmitter = eventEmitter.lutronEmitter;
+
 // This is an example NodeServer Node definition.
 // You need one per nodedefs.
 
 // nodeDefId must match the nodedef id in your nodedef
-const nodeDefId = 'VNODE_DIMMER';
+const nodeDefId = 'MAESTRO_FAN';
+let lutronId = '';
 
 module.exports = function(Polyglot) {
 // Utility function provided to facilitate logging.
   const logger = Polyglot.logger;
 
   // This is your custom Node class
-  class MyNode extends Polyglot.Node {
-
-    // polyInterface: handle to the interface
-    // address: Your node address, withouth the leading 'n999_'
-    // primary: Same as address, if the node is a primary node
-    // name: Your node name
+  class MaestroFanControlNode extends Polyglot.Node {
     constructor(polyInterface, primary, address, name) {
       super(nodeDefId, polyInterface, primary, address, name);
 
-      // PGC supports setting the node hint when creating a node
-      // REF: https://github.com/UniversalDevicesInc/hints
-      // Must be a string in this format
-      // If you don't care about the hint, just comment the line.
       this.hint = '0x01020900'; // Example for a Dimmer switch
 
-      // Commands that this node can handle.
-      // Should match the 'accepts' section of the nodedef.
       this.commands = {
         DON: this.onDON,
         DOF: this.onDOF,
-        // You can use the query function from the base class directly
+        GV1: this.onLow,
+        GV2: this.onMed,
+        GV3: this.onMedHigh,
+        GV4: this.onHigh,
         QUERY: this.query,
       };
 
-      // Status that this node has.
-      // Should match the 'sts' section of the nodedef.
       this.drivers = {
         ST: {value: '0', uom: 51},
+        GPV: {value: '12', uom: 25},
+        CLIFRS: {value: '0', uom: 25},
+        GV1: {value: '0', uom: 2},
+        GV2: {value: '0', uom: 2},
+        GV3: {value: '0', uom: 2},
+        GV4: {value: '0', uom: 2},
       };
+
+      this.lutronId = this.address.split('_')[1];
+    }
+
+    query() {
+      lutronEmitter.emit('query', this.lutronId);
     }
 
     onDON(message) {
-      logger.info('DON (%s): %s',
-        this.address,
-        message.value ? message.value : 'No value');
-
       // setDrivers accepts string or number (message.value is a string)
       this.setDriver('ST', message.value ? message.value : '100');
+
+      if (!message.value) {
+        lutronEmitter.emit('on', this.lutronId);
+      } else {
+        lutronEmitter.emit('level', this.lutronId, message.value);
+      }
     }
 
     onDOF() {
-      logger.info('DOF (%s)', this.address);
+      // logger.info('DOF (%s)', this.address);
       this.setDriver('ST', '0');
+      lutronEmitter.emit('off', this.lutronId);
     }
-  };
+
+    onLow(message) {
+      this.setDriver('GV0', '1');
+      this.setDriver('GV1', '1');
+      this.setDriver('GV2', '0');
+      this.setDriver('GV3', '0');
+      this.setDriver('GV4', '0');
+      lutronEmitter.emit('level', this.lutronId, 25);
+    }
+
+    onMed(message) {
+      this.setDriver('GV0', '2');
+      this.setDriver('GV1', '0');
+      this.setDriver('GV2', '1');
+      this.setDriver('GV3', '0');
+      this.setDriver('GV4', '0');
+      lutronEmitter.emit('level', this.lutronId, 50);
+    }
+
+    onMedHigh(message) {
+      this.setDriver('GV0', '3');
+      this.setDriver('GV1', '0');
+      this.setDriver('GV2', '0');
+      this.setDriver('GV3', '1');
+      this.setDriver('GV4', '0');
+      lutronEmitter.emit('level', this.lutronId, 75);
+    }
+
+    onHigh(message) {
+      this.setDriver('GV0', '4');
+      this.setDriver('GV1', '0');
+      this.setDriver('GV2', '0');
+      this.setDriver('GV3', '0');
+      this.setDriver('GV4', '1');
+      lutronEmitter.emit('level', this.lutronId, 100);
+    }
+  }
 
   // Required so that the interface can find this Node class using the nodeDefId
-  MyNode.nodeDefId = nodeDefId;
+  MaestroFanControlNode.nodeDefId = nodeDefId;
 
-  return MyNode;
+  return MaestroFanControlNode;
 };
 
 

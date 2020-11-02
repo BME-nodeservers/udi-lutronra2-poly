@@ -1,18 +1,15 @@
 ND-CONTROLLER-NAME = Node server status
 ND-CONTROLLER-ICON = GenericCtl
 ST-CONTROLLER-ST-NAME = Status
-CMD-CONTROLLER-DISCOVER-NAME = Discover new devices
-CMD-CONTROLLER-CREATE_NEW-NAME = Create a new device
 CMD-CONTROLLER-UPDATE_PROFILE-NAME = Update node server profile
 CMD-CONTROLLER-REMOVE_NOTICES-NAME = Remove node server notices
 CMD-CONTROLLER-QUERY-NAME = Query
 
-ND-VNODE_DIMMER-NAME = Virtual node
-ND-VNODE_DIMMER-ICON = Lamp
-ST-VN-ST-NAME = Status
-CMD-VN-DON-NAME = On
-CMD-VN-DOF-NAME = Off
-CMD-VN-QUERY-NAME = Query
+ND-MAINREPEATER-NAME = RadioRA 2 Main Repeater
+ND-MAINREPEATER-ICON = GenericCtl
+ST-MAINREPEATER-ST-NAME = Status
+ST-MAINREPEATER-GV0-NAME = Phantom Button Pressed
+CMD-MAINREPEATER-PBUTTON-NAME = Press Phantom button
 
 ND-MAESTRO_DIMMER-NAME = Maestro Dimmer
 ND-MAESTRO_DIMMER-ICON = Lamp
@@ -23,5 +20,125 @@ CMD-MD-DOF-NAME = Off
 CMD-MD-QUERY-NAME = Query
 
 ND-MAESTRO_SWITCH-NAME = Maestro Switch
-ND-MAESTRO_SWITCH-ICON = Lamp
+ND-MAESTRO_SWITCH-ICON = Switch
 ST-MS-ST-NAME = Status
+
+ND-MAESTRO_FAN-NAME = Maestro Fan Controller
+ND-MAESTRO_FAN-ICON = GenericCtl
+ST-MFC-ST-NAME = Status
+ST-MFC-CLIFRS-NAME = Speed
+CMD-MFC-GV1-NAME = Low
+CMD-MFC-GV2-NAME = Medium
+CMD-MFC-GV3-NAME = Med High
+CMD-MFC-GV4-NAME = High
+
+FANSPEED-0 = Off
+FANSPEED-1 = Low
+FANSPEED-2 = Medium
+FANSPEED-3 = Medium High
+FANSPEED-4 = High
+
+ND-PICO2B-NAME = 2 Button Pico
+ND-PICO2B-ICON = Output
+ST-2B-ST-NAME = Status
+ST-2B-GV2-NAME = Button 1
+ST-2B-GV4-NAME = Button 3
+
+ND-PICO2BRL-NAME = 2 Button Raise Lower Pico
+ND-PICO2BRL-ICON = Output
+ST-2BRL-ST-NAME = Status
+ST-2BRL-GV2-NAME = Button 1
+ST-2BRL-GV4-NAME = Button 3
+ST-2BRL-GV5-NAME = Button 4
+ST-2BRL-GV6-NAME = Button 5
+
+ND-PICO3B-NAME = 3 Button Pico
+ND-PICO3B-ICON = Output
+ST-3B-ST-NAME = Status
+ST-3B-GV2-NAME = Button 1
+ST-3B-GV3-NAME = Button 2
+ST-3B-GV4-NAME = Button 3
+
+ND-PICO3BRL-NAME = 3 Button Raise Lower Pico
+ND-PICO3BRL-ICON = Output
+ST-3BRL-ST-NAME = Status
+ST-3BRL-GV2-NAME = Button 1
+ST-3BRL-GV3-NAME = Button 2
+ST-3BRL-GV4-NAME = Button 3
+ST-3BRL-GV5-NAME = Button 4
+ST-3BRL-GV6-NAME = Button 5
+
+ND-PICO4B-NAME = 4 Button Pico
+ND-PICO4B-ICON = Output
+ST-4B-ST-NAME = Status
+ST-4B-GV8-NAME = Button 1
+ST-4B-GV9-NAME = Button 2
+ST-4B-GV10-NAME = Button 3
+ST-4B-GV11-NAME = Button 4
+
+ND-OCCUPANCY-NAME = Occupancy Sensor
+ND-OCCUPANCY-ICON = MotionSensor
+ST-OCC-ST-NAME = Status
+
+ND-VCRX-NAME = Visor Control Receiver
+ND-VCRX-ICON = Output
+ST-VCRX-ST-NAME = Status
+ST-VCRX-GV10-NAME = Full / Security
+ST-VCRX-GV11-NAME = Security Flash
+ST-VCRX-GV12-NAME = Input 1
+ST-VCRX-GV13-NAME = Input 2
+
+ND-VCRXBUTTON-NAME = Visor Control Receiver
+ND-VCRXBUTTON-ICON = Output
+ST-VCRXBTN-ST-NAME = Status
+
+ND-T5RL-NAME = Tabletop 5 Button
+ND-T5RL-ICON = Output
+ST-T5RL-ST-NAME = Status
+
+ND-T5RLBUTTON-NAME = Tabletop 5 Button
+ND-T5RLBUTTON-ICON = Output
+ST-T5RLBTN-ST-NAME = Status
+
+ND-T10RL-NAME = Tabletop 10 Button
+ND-T10RL-ICON = Output
+ST-T10RL-ST-NAME = Status
+
+ND-T10RLBUTTON-NAME = Tabletop 10 Button
+ND-T10RLBUTTON-ICON = Output
+ST-T10RLBTN-ST-NAME = Status
+
+ND-T15RL-NAME = Tabletop 15 Button
+ND-T15RL-ICON = Output
+ST-T15RL-ST-NAME = Status
+
+ND-T15RLBUTTON-NAME = Tabletop 15 Button
+ND-T15RLBUTTON-ICON = Output
+ST-T15RLBTN-ST-NAME = Status
+
+ND-ROOMSTATUS-NAME = Room Occupancy
+ND-ROOMSTATUS-ICON = MotionSensor
+ST-ROOMSTATUS-ST-NAME = Status
+
+# Room Status
+ROOMSTATUS-0 = Unknown
+ROOMSTATUS-1 = Occupied
+ROOMSTATUS-2 = Unoccupied
+
+# Device Type Mapping
+DEVTYPE-1 = Main Repeater
+DEVTYPE-2 = Occupancy Sensor
+DEVTYPE-3 = Room Status
+DEVTYPE-4 = 2B Pico
+DEVTYPE-5 = 2BRL Pico
+DEVTYPE-6 = 3B Pico
+DEVTYPE-7 = 3BRL Pico
+DEVTYPE-8 = 4B Pico
+DEVTYPE-9 = Audio Pico
+DEVTYPE-10 = Switch
+DEVTYPE-11 = Dimmer
+DEVTYPE-12 = Fan Controller
+DEVTYPE-13 = Visor Control Receiver
+DEVTYPE-14 = Tabletop 5 Button RL
+DEVTYPE-15 = Tabletop 10 Button RL
+DEVTYPE-16 = Tabletop 15 Button RL

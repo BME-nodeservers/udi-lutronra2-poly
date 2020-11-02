@@ -32,21 +32,20 @@ module.exports = function(Polyglot) {
         RR: this.onRampRate,
         DELAY: this.onDelay,
         QUERY: this.query,
-        // You can use the query function from the base class directly
-        // QUERY: this.query,
       };
 
       this.drivers = {
         ST: {value: '0', uom: 51},
+        GPV: {value: '11', uom: 25},
         RR: {value: '0', uom: 58},
         DELAY: {value: '0', uom: 58},
       };
 
-      lutronId = this.address.split('_')[1];
+      this.lutronId = this.address.split('_')[1];
     }
 
     query() {
-      lutronEmitter.emit('query', lutronId);
+      lutronEmitter.emit('query', this.lutronId);
     }
 
     onDON(message) {
@@ -58,13 +57,10 @@ module.exports = function(Polyglot) {
       let rampRate = parseFloat(rampRateST['value']);
       let delayRate = parseFloat(delayST['value']);
 
-      // logger.debug('========== Ramp Rate: ' + rampRate);
-      // logger.debug('========== Delay Rate: ' + delayRate);
-
       if (!message.value) {
-        lutronEmitter.emit('on', lutronId);
+        lutronEmitter.emit('on', this.lutronId);
       } else {
-        lutronEmitter.emit('level', lutronId, message.value,
+        lutronEmitter.emit('level', this.lutronId, message.value,
             rampRate, delayRate);
       }
     }
@@ -72,7 +68,7 @@ module.exports = function(Polyglot) {
     onDOF() {
       // logger.info('DOF (%s)', this.address);
       this.setDriver('ST', '0');
-      lutronEmitter.emit('off', lutronId);
+      lutronEmitter.emit('off', this.lutronId);
     }
 
     onBRT() {
@@ -80,9 +76,9 @@ module.exports = function(Polyglot) {
       let currentValue = parseInt(driverST['value'], 10);
       let brightIncrease = currentValue + 10;
       if (brightIncrease >= 100) {
-        lutronEmitter.emit('level', lutronId, 100);
+        lutronEmitter.emit('level', this.lutronId, 100);
       } else {
-        lutronEmitter.emit('level', lutronId, brightIncrease);
+        lutronEmitter.emit('level', this.lutronId, brightIncrease);
       }
     }
 
@@ -91,22 +87,22 @@ module.exports = function(Polyglot) {
       let currentValue = parseInt(driverST['value'], 10);
       let dimValue = currentValue - 10;
       if (dimValue <= 0) {
-        lutronEmitter.emit('level', lutronId, 0);
+        lutronEmitter.emit('level', this.lutronId, 0);
       } else {
-        lutronEmitter.emit('level', lutronId, dimValue);
+        lutronEmitter.emit('level', this.lutronId, dimValue);
       }
     }
 
     onFDUP() {
-      lutronEmitter.emit('fdup', lutronId);
+      lutronEmitter.emit('fdup', this.lutronId);
     }
 
     onFDDOWN() {
-      lutronEmitter.emit('fddown', lutronId);
+      lutronEmitter.emit('fddown', this.lutronId);
     }
 
     onFDSTOP() {
-      lutronEmitter.emit('fdstop', lutronId);
+      lutronEmitter.emit('fdstop', this.lutronId);
     }
 
     onRampRate(message) {
