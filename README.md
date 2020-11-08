@@ -93,4 +93,4 @@ If device type is not setup correctly the device will be created wrong or not at
 - Depends on requests
 
 #### Shades
-- Depends on requests
+- Sivoia QS Wireless Shades = 20

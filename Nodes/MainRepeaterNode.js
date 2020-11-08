@@ -27,6 +27,7 @@ module.exports = function(Polyglot) {
   const T5RLNode = require('./T5RLNode.js')(Polyglot);
   const T10RLNode = require('./T10RLNode.js')(Polyglot);
   const T15RLNode = require('./T15RLNode.js')(Polyglot);
+  const SivoiaShadeNode = require('./SivoiaShade.js')(Polyglot);
 
 
   class MainRepeaterNode extends Polyglot.Node {
@@ -301,6 +302,19 @@ module.exports = function(Polyglot) {
           try {
             const result = await this.polyInterface.addNode(
               new T15RLNode(this.polyInterface, _address,
+                _address, _devName)
+            );
+            if (result) {
+              logger.info('Add node worked: %s', result);
+            }
+          } catch (err) {
+            logger.errorStack(err, 'Add node failed:');
+          }
+          break;
+        case 20: // Sivoia QS Wireless Shades
+          try {
+            const result = await this.polyInterface.addNode(
+              new SivoiaShadeNode(this.polyInterface, _address,
                 _address, _devName)
             );
             if (result) {

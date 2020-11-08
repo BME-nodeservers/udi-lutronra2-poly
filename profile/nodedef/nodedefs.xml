@@ -359,6 +359,44 @@
     </cmds>
   </nodedef>
 
-  
+  <nodedef id="SIVOIA_SHADE" nls="SHADE">
+    <sts>
+      <st id="ST" editor="PERCENT"/>
+      <st id="GPV" editor="DEVTYPE"/>
+      <st id="GV0" editor="_79_1"/>
+      <!-- <st id="RR" editor="_58_1"/>
+      <st id="DELAY" editor="_58_1"/> -->
+    </sts>
+    <cmds>
+      <sends>
+        <cmd id="DON"/>
+        <cmd id="DOF"/>
+        <!-- <cmd id="BRT"/> -->
+        <!-- <cmd id="DIM"/> -->
+        <cmd id="FDUP"/>
+        <cmd id="FDDOWN"/>
+        <cmd id="FDSTOP"/>
+      </sends>
+      <accepts>
+        <cmd id="DON">
+          <p id="" editor="_51_1" optional="T"/>
+        </cmd>
+        <cmd id="DOF"/>
+        <!-- <cmd id="RR">
+          <p id="" editor="_58_1" optional="T"/>
+        </cmd>
+        <cmd id="DELAY">
+          <p id="" editor="_58_1" optional="T"/>
+        </cmd> -->
+        <!-- <cmd id="BRT"/> -->
+        <!-- <cmd id="DIM"/> -->
+        <cmd id="FDUP"/>
+        <cmd id="FDDOWN"/>
+        <cmd id="FDSTOP"/>
+        <cmd id="QUERY"/>
+      </accepts>
+    </cmds>
+  </nodedef>
+
 </nodeDefs>
 
