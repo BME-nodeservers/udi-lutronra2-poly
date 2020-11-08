@@ -11,6 +11,17 @@ ST-MAINREPEATER-ST-NAME = Status
 ST-MAINREPEATER-GV0-NAME = Phantom Button Pressed
 CMD-MAINREPEATER-PBUTTON-NAME = Press Phantom button
 
+ND-SIVOIA_SHADE-NAME = Sivoia QS Wireless Shade
+ND-SIVOIA_SHADE-ICON = Output
+ST-SHADE-ST-NAME = Status
+ST-SHADE-GV0-NAME = Shade Status
+CMD-SHADE-DON-NAME = Open
+CMD-SHADE-DOF-NAME = Close
+CMD-SHADE-FDUP-NAME = Start Raising
+CMD-SHADE-FDDOWN-NAME = Start Lowering
+CMD-SHADE-FDSTOP-NAME = Stop Raise/Lower
+CMD-SHADE-QUERY-NAME = Query
+
 ND-MAESTRO_DIMMER-NAME = Maestro Dimmer
 ND-MAESTRO_DIMMER-ICON = Lamp
 ST-MD-ST-NAME = Status
@@ -142,3 +153,4 @@ DEVTYPE-13 = Visor Control Receiver
 DEVTYPE-14 = Tabletop 5 Button RL
 DEVTYPE-15 = Tabletop 10 Button RL
 DEVTYPE-16 = Tabletop 15 Button RL
+DEVTYPE-20 = Sivoia QS Wireless Shades

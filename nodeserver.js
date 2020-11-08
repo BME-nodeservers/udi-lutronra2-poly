@@ -29,6 +29,7 @@ const T10RLNode = require('./Nodes/T10RLNode.js')(Polyglot);
 const T10RLButtonNode = require('./Nodes/T10RLButtonNode.js')(Polyglot);
 const T15RLNode = require('./Nodes/T15RLNode.js')(Polyglot);
 const T15RLButtonNode = require('./Nodes/T15RLButtonNode.js')(Polyglot);
+const SivoiaShadeNode = require('./Nodes/SivoiaShade.js')(Polyglot);
 
 
 const typedParams = [
@@ -63,7 +64,7 @@ const poly = new Polyglot.Interface([ControllerNode, MainRepeaterNode,
   MaestroDimmerNode, MaestroSwitchNode, MaestroFanControlNode, OccupancyNode,
   RoomStatusNode, Pico2BNode, Pico2BRLNode, Pico3BNode, Pico3BRLNode, Pico4BNode,
   VCRXNode, VCRXButtonNode, T5RLNode, T5RLButtonNode, T10RLNode, T10RLButtonNode,
-  T15RLNode, T15RLButtonNode,
+  T15RLNode, T15RLButtonNode, SivoiaShadeNode,
   ]);
 
 poly.on('mqttConnected', function() {
