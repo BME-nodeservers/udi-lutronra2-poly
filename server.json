@@ -8,12 +8,12 @@
   "notice": "",
   "shortPoll": "600",
   "longPoll": "900",
-  "profile_version": "0.1.2",
+  "profile_version": "0.1.3",
   "credits": [
     {
       "title": "Lutron RadioRA 2",
       "author": "Simplex Technology",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "date": "September 25th, 2020",
       "source": "https://github.com/simplextech/udi-poly-lutron-radiora2",
       "license": "MIT"
