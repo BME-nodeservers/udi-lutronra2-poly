@@ -110,3 +110,5 @@ _gsdata_/
 package-lock.json
 
 .eslintrc.json
+
+.vscode/
