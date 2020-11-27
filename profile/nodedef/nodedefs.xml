@@ -26,7 +26,8 @@
       <sends/>
       <accepts>
         <cmd id="PBUTTON">
-          <p id="" editor="PHANTOM" optional="T"/>
+            <p id="" editor="PHANTOM"/>
+          <!-- <p id="" editor="PHANTOM" optional="T"/> -->
         </cmd>
         <cmd id="QUERY"/>
       </accepts>
@@ -74,10 +75,10 @@
         </cmd>
         <cmd id="DOF"/>
         <cmd id="RR">
-          <p id="" editor="_58_1" optional="T"/>
+          <p id="" editor="_58_1"/>
         </cmd>
         <cmd id="DELAY">
-          <p id="" editor="_58_1" optional="T"/>
+          <p id="" editor="_58_1"/>
         </cmd>
         <cmd id="BRT"/>
         <cmd id="DIM"/>

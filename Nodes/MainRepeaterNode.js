@@ -1,10 +1,10 @@
 'use strict';
 
-const RadioRa2 = require('../lib/radiora2');
-let lutronEvents = require('../lib/lutronEvents.js');
-let util = require('../lib/utils.js');
+const LutronLIP = require('../lib/lutronLIP');
+let lutronEvents = require('../lib/lutronEvents');
+let util = require('../lib/utils');
 
-let radiora2 = new RadioRa2();
+let lip = new LutronLIP();
 let lutronEmitter = lutronEvents.lutronEmitter;
 let reconnect = 300000;
 let listenerActive = false;
@@ -58,7 +58,7 @@ module.exports = function(Polyglot) {
 
         if (config.ipAddress) {
           if (listenerActive) {
-            logger.info('RadioRA2 Listener Alive');
+            logger.info('Lutron LIP Listener Alive');
           } else {
             this.listenerSetup();
           }
@@ -90,7 +90,7 @@ module.exports = function(Polyglot) {
         logger.info('Password: ' + _password);
   
         try {
-          radiora2.connect(_host, _username, _password);
+          lip.connect(_host, _username, _password);
           this.getDevices();
           repeaterConnected = true;
         } catch (err) {
@@ -150,7 +150,7 @@ module.exports = function(Polyglot) {
             if (result) {
               logger.info('Add node worked: %s', result);
               await util.sleep(2000);
-              radiora2.queryGroupState(_lutronId)
+              lip.queryGroupState(_lutronId)
             }
           } catch (err) {
             logger.errorStack(err, 'Add node failed:');
@@ -223,7 +223,7 @@ module.exports = function(Polyglot) {
               if (result) {
                 logger.info('Add node worked: %s', result);
                 await util.sleep(2000);
-                radiora2.queryOutputState(_lutronId);
+                lip.queryOutputState(_lutronId);
               }
             } catch (err) {
               logger.errorStack(err, 'Add node failed:');
@@ -238,7 +238,7 @@ module.exports = function(Polyglot) {
             if (result) {
               logger.info('Add node worked: %s', result);
               await util.sleep(2000);
-              radiora2.queryOutputState(_lutronId);
+              lip.queryOutputState(_lutronId);
             }
           } catch (err) {
             logger.errorStack(err, 'Add node failed:');
@@ -253,7 +253,7 @@ module.exports = function(Polyglot) {
             if (result) {
               logger.info('Add node worked: %s', result);
               await util.sleep(2000);
-              radiora2.queryOutputState(_lutronId);
+              lip.queryOutputState(_lutronId);
             }
           } catch (err) {
             logger.errorStack(err, 'Add node failed:');
@@ -311,7 +311,7 @@ module.exports = function(Polyglot) {
             logger.errorStack(err, 'Add node failed:');
           }
           break;
-        case 20: // Sivoia QS Wireless Shades
+        case 30: // Sivoia QS Wireless Shades
           try {
             const result = await this.polyInterface.addNode(
               new SivoiaShadeNode(this.polyInterface, _address,
@@ -332,7 +332,7 @@ module.exports = function(Polyglot) {
 
     onPhantom(button) {
       this.setDriver('GV0', button.value);
-      radiora2.pressButton('1', button.value);
+      lip.pressButton('1', button.value);
     }
 
     // Here you could discover devices from a 3rd party API
@@ -351,35 +351,35 @@ module.exports = function(Polyglot) {
     }
 
     listenerSetup() {
-      radiora2.on('messageReceived', function(data) {
+      lip.on('messageReceived', function(data) {
         logger.info('LUTRON ' + data);
       }.bind(this));
 
-      radiora2.on('loggedIn', function() {
+      lip.on('loggedIn', function() {
         logger.info('Connected to Lutron');
       }.bind(this));
 
-      radiora2.on('sent', function(data) {
+      lip.on('sent', function(data) {
         logger.info('Message Sent' + data);
       }.bind(this));
 
-      radiora2.on('debug', function(data) {
+      lip.on('debug', function(data) {
         logger.info('Debug: ' + data);
       }.bind(this));
 
-      radiora2.on('info', function(data) {
+      lip.on('info', function(data) {
         logger.info('Info: ' + data);
       }.bind(this));
 
-      radiora2.on('warn', function(data) {
+      lip.on('warn', function(data) {
         logger.info('Warn: ' + data);
       }.bind(this));
 
-      radiora2.on('error', function(data) {
+      lip.on('error', function(data) {
         logger.info('Error: ' + data);
       }.bind(this));
 
-      radiora2.on('close', function(data) {
+      lip.on('close', function(data) {
         logger.info(data);
         setTimeout(function() {
           logger.info('Restarting NodeServer...');
@@ -391,7 +391,7 @@ module.exports = function(Polyglot) {
         }.bind(this), reconnect);
       }.bind(this));
 
-      radiora2.on('on', function(id) {
+      lip.on('on', function(id) {
         let nodeAddr = this.address.split('_')[0] + '_' + id;
         let node = this.polyInterface.getNode(nodeAddr);
         if (node) {
@@ -400,7 +400,7 @@ module.exports = function(Polyglot) {
         }
       }.bind(this));
 
-      radiora2.on('off', function(id) {
+      lip.on('off', function(id) {
         let nodeAddr = this.address.split('_')[0] + '_' + id;
         let node = this.polyInterface.getNode(nodeAddr);
         if (node) {
@@ -410,7 +410,7 @@ module.exports = function(Polyglot) {
 
       }.bind(this));
 
-      radiora2.on('level', function(id, level) {
+      lip.on('level', function(id, level) {
         logger.info('ID: ' + id + ' Level: ' + level);
         let nodeAddr = this.address.split('_')[0] + '_' + id;
         // logger.info('Address: ' + nodeAddr);
@@ -453,7 +453,7 @@ module.exports = function(Polyglot) {
         }
       }.bind(this));
 
-      radiora2.on('buttonPress', function(id, buttonId) {
+      lip.on('buttonPress', function(id, buttonId) {
         logger.info(id + ': Button ' + buttonId + ' Pressed');
         let nodeAddr = this.address.split('_')[0] + '_' + id;
         // logger.info('Address: ' + nodeAddr);
@@ -508,7 +508,7 @@ module.exports = function(Polyglot) {
         
       }.bind(this));
 
-      radiora2.on('buttonReleased', function(id, buttonId) {
+      lip.on('buttonReleased', function(id, buttonId) {
         logger.info(id + ': Button Released');
         let nodeAddr = this.address.split('_')[0] + '_' + id;
         // logger.info('Address: ' + nodeAddr);
@@ -563,11 +563,11 @@ module.exports = function(Polyglot) {
         
       }.bind(this));
 
-      radiora2.on('buttonHold', function(data) {
+      lip.on('buttonHold', function(data) {
         logger.info(data);
       }.bind(this));
 
-      radiora2.on('keypadbuttonLEDOn', function(deviceId, buttonId) {
+      lip.on('keypadbuttonLEDOn', function(deviceId, buttonId) {
         logger.info(deviceId + ': KeyPad Button: ' + buttonId + ' LED On');
         let nodeAddr = null;
         let node = null;
@@ -641,7 +641,7 @@ module.exports = function(Polyglot) {
         }
       }.bind(this));
 
-      radiora2.on('keypadbuttonLEDOff', function(deviceId, buttonId) {
+      lip.on('keypadbuttonLEDOff', function(deviceId, buttonId) {
         logger.info(deviceId + ': KeyPad Button: ' + buttonId +' LED Off');
         let nodeAddr = null;
         let node = null;
@@ -715,7 +715,7 @@ module.exports = function(Polyglot) {
         }
       }.bind(this));
 
-      radiora2.on('groupOccupied', function(groupId) {
+      lip.on('groupOccupied', function(groupId) {
         logger.info('Group Id: ' + groupId + ' Occupied')
         // let nodeAddr = this.address + '_' + groupId;
         let nodeAddr = this.address.split('_')[0] + '_' + groupId;
@@ -725,7 +725,7 @@ module.exports = function(Polyglot) {
         }
       }.bind(this));
 
-      radiora2.on('groupUnoccupied', function(groupId) {
+      lip.on('groupUnoccupied', function(groupId) {
         logger.info('Group Id: ' + groupId + ' Unoccupied')
         // let nodeAddr = this.address + '_' + groupId;
         let nodeAddr = this.address.split('_')[0] + '_' + groupId;
@@ -735,7 +735,7 @@ module.exports = function(Polyglot) {
         }
       }.bind(this));
 
-      radiora2.on('groupUnknown', function(groupId) {
+      lip.on('groupUnknown', function(groupId) {
         logger.info('Group Id: ' + groupId + ' Unknown')
         // let nodeAddr = this.address + '_' + groupId;
         let nodeAddr = this.address.split('_')[0] + '_' + groupId;
@@ -747,46 +747,46 @@ module.exports = function(Polyglot) {
 
       // Receive Events from ISY Admin Console
       lutronEmitter.on('query', function(id){
-        radiora2.queryOutputState(id);
+        lip.queryOutputState(id);
       });
 
       lutronEmitter.on('on', function(id) {
         // logger.info('Node On Message: ' + id);
-        radiora2.setSwitch(id, 100);
+        lip.setSwitch(id, 100);
       });
 
       lutronEmitter.on('off', function(id) {
         // logger.info('Node Off Message: ' + id);
-        radiora2.setSwitch(id, 0);
+        lip.setSwitch(id, 0);
       });
 
       lutronEmitter.on('level', function(id, level, fade, delay) {
         // logger.info('Node Level Message: ' + id + ' Level:' + level);
-        radiora2.setDimmer(id, level, fade, delay);
+        lip.setDimmer(id, level, fade, delay);
       });
 
       lutronEmitter.on('fdup', function(id) {
-        radiora2.startRaising(id);
+        lip.startRaising(id);
       });
 
       lutronEmitter.on('fddown', function(id) {
-        radiora2.startLowering(id);
+        lip.startLowering(id);
       });
 
       lutronEmitter.on('fdstop', function(id) {
-        radiora2.stopRaiseLower(id);
+        lip.stopRaiseLower(id);
       });
 
       lutronEmitter.on('buttonPress', function(deviceId, buttonId) {
-        radiora2.pressButton(deviceId, buttonId);
+        lip.pressButton(deviceId, buttonId);
       })
 
       lutronEmitter.on('queryDeviceButton', function(deviceId, buttonId) {
-        radiora2.queryDeviceButtonState(deviceId, buttonId);
+        lip.queryDeviceButtonState(deviceId, buttonId);
       })
 
       lutronEmitter.on('queryGroupState', function(deviceId) {
-        radiora2.queryGroupState(deviceId);
+        lip.queryGroupState(deviceId);
       })
       
       listenerActive = true;

@@ -93,7 +93,7 @@ poly.on('config', function(config) {
         try {
           callAsync(CreateLutronControllers());
         } catch (err) {
-          logger.error('Error while creating RadioRA2 Main Repeater node: ', err);
+          logger.error('Error while creating Main Repeater node: ', err);
         }
       }
     }
@@ -159,7 +159,7 @@ async function doPoll(longPoll) {
 async function autoCreateController() {
   try {
     await poly.addNode(
-      new ControllerNode(poly, 'controller', 'controller', 'RadioRA 2')
+      new ControllerNode(poly, 'controller', 'controller', 'ST-RadioRA2')
     );
   } catch (err) {
     logger.error('Error creating controller node');

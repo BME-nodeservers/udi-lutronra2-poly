@@ -5,7 +5,7 @@ CMD-CONTROLLER-UPDATE_PROFILE-NAME = Update node server profile
 CMD-CONTROLLER-REMOVE_NOTICES-NAME = Remove node server notices
 CMD-CONTROLLER-QUERY-NAME = Query
 
-ND-MAINREPEATER-NAME = RadioRA 2 Main Repeater
+ND-MAINREPEATER-NAME = Main Repeater
 ND-MAINREPEATER-ICON = GenericCtl
 ST-MAINREPEATER-ST-NAME = Status
 ST-MAINREPEATER-GV0-NAME = Phantom Button Pressed
@@ -153,4 +153,4 @@ DEVTYPE-13 = Visor Control Receiver
 DEVTYPE-14 = Tabletop 5 Button RL
 DEVTYPE-15 = Tabletop 10 Button RL
 DEVTYPE-16 = Tabletop 15 Button RL
-DEVTYPE-20 = Sivoia QS Wireless Shades
+DEVTYPE-30 = Sivoia QS Wireless Shades

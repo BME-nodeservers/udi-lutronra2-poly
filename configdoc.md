@@ -49,4 +49,4 @@ If device type is not setup correctly the device will be created wrong or not at
 - Tabletop Keypad 5 Button          | 14 
 - Tabletop Keypad 10 Button         | 15 
 - Tabletop Keypad 15 Button         | 16 
-- Sivoia QS Wireless Shades         | 20 
+- Sivoia QS Wireless Shades         | 30 

@@ -1,12 +1,13 @@
-# udi-poly-lutron-radiora2
+# udi-poly-lutron-st-radiora2
 
-Lutron RadioRA 2 NodeServer for Polyglot
+Lutron NodeServer for Polyglot
 
 - Polyglot V2 (On-premise installation).
 - Testing Platform
     - ISY FW 5.3
     - Polisy Polyglot 2.2.9
     - Lutron RadioRA 2 Main Repeater 12.8.0
+    - Caseta Pro bridge
 
 To get started with an on-premise installation: 
 - NodeServer is availble in the Polyglot Store
@@ -55,7 +56,7 @@ To get started with an on-premise installation:
 - Multiple Control systems connecting to a main repeater or bridge using the same username/password is not supported by Lutron and will cause the main repeater/bridge to lock down the connection requiring a time-out period of 15 minutes or power cycle!
 
 ## RadioRA 2
-- Enter the IP Address, Username, Password for your RadioRa 2 Main Repeater.
+- Enter the IP Address, Username, Password for your RadioRA 2 Main Repeater.
 
 ## RA2 Select
 - Default username and password are lutron/integration and are the defaults for the NodeServer.
@@ -98,4 +99,4 @@ To get started with an on-premise installation:
 | Tabletop Keypad 5 Button          | 14 |
 | Tabletop Keypad 10 Button         | 15 |
 | Tabletop Keypad 15 Button         | 16 |
-| Sivoia QS Wireless Shades         | 20 |
+| Sivoia QS Wireless Shades         | 30 |

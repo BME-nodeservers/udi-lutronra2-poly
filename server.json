@@ -1,22 +1,22 @@
 {
-  "name": "RadioRA2",
-  "docs": "https://github.com/simplextech/udi-poly-lutron-radiora2",
+  "name": "ST-RadioRA2",
+  "docs": "https://github.com/simplextech/udi-poly-lutron-st-radiora2",
   "type": "node",
   "executable": "nodeserver.js",
   "install": "install.sh",
-  "description": "Integrate Lutron RadioRA2",
+  "description": "Polyglot integration of Lutron Integration Protocol for RadioRA 2 ",
   "notice": "",
   "shortPoll": "600",
   "longPoll": "900",
-  "profile_version": "0.1.3",
+  "profile_version": "0.1.4",
   "credits": [
     {
-      "title": "Lutron RadioRA 2",
+      "title": "Polyglot integration of Lutron Integration Protocol for RadioRA 2",
       "author": "Simplex Technology",
-      "version": "0.1.3",
+      "version": "0.1.4",
       "date": "September 25th, 2020",
-      "source": "https://github.com/simplextech/udi-poly-lutron-radiora2",
-      "license": "MIT"
+      "source": "https://github.com/simplextech/udi-poly-lutron-st-radiora2",
+      "license": "https://github.com/simplextech/udi-poly-lutron-st-radiora2/blob/main/LICENSE"
     }
   ]
 }

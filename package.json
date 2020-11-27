@@ -1,14 +1,14 @@
 {
-  "name": "udi-poly-lutron-radiora2",
-  "description": "Polyglot NodeServer template for node.js",
-  "version": "0.1.3",
+  "name": "udi-poly-lutron-st-radiora2",
+  "description": "Polyglot NodeServer for Lutron Integration Protocol for RadioRA 2",
+  "version": "0.1.4",
   "author": "Simplex Technology",
   "license": "MIT",
   "main": "nodeserver.js",
   "scripts": {
     "linter": "eslint --ignore-path .gitignore ."
   },
-  "repository": "simplextech/udi-poly-lutron-radiora2",
+  "repository": "simplextech/udi-poly-lutron-st-radiora2",
   "dependencies": {
     "async-lock": "^1.1.4",
     "markdown": "^0.5.0",
