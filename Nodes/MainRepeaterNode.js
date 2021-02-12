@@ -28,7 +28,16 @@ module.exports = function(Polyglot) {
   const T10RLNode = require('./T10RLNode.js')(Polyglot);
   const T15RLNode = require('./T15RLNode.js')(Polyglot);
   const SivoiaShadeNode = require('./SivoiaShade.js')(Polyglot);
-
+  const W1RLDNode = require('./W1RLDNode.js')(Polyglot);
+  const W2RLDNode = require('./W2RLDNode.js')(Polyglot);
+  const W3BDNode = require('./W3BDNode.js')(Polyglot);
+  const W3BRLNode = require('./W3BRLNode.js')(Polyglot);
+  const W3BSRLNode = require('./W3BSRLNode.js')(Polyglot);
+  const W4SNode = require('./W4SNode.js')(Polyglot);
+  const W5BRLNode = require('./W5BRLNode.js')(Polyglot);
+  const W5BRLIRNode = require('./W5BRLIRNode.js')(Polyglot);
+  const W6BRLNode = require('./W6BRLNode.js')(Polyglot);
+  const W7BNode = require('./W7BNode.js')(Polyglot);
 
   class MainRepeaterNode extends Polyglot.Node {
     constructor(polyInterface, primary, address, name) {
@@ -302,6 +311,136 @@ module.exports = function(Polyglot) {
           try {
             const result = await this.polyInterface.addNode(
               new T15RLNode(this.polyInterface, _address,
+                _address, _devName)
+            );
+            if (result) {
+              logger.info('Add node worked: %s', result);
+            }
+          } catch (err) {
+            logger.errorStack(err, 'Add node failed:');
+          }
+          break;
+        case 18: // W1RLD
+          try {
+            const result = await this.polyInterface.addNode(
+              new W1RLDNode(this.polyInterface, _address,
+                _address, _devName)
+            );
+            if (result) {
+              logger.info('Add node worked: %s', result);
+            }
+          } catch (err) {
+            logger.errorStack(err, 'Add node failed:');
+          }
+          break;
+        case 19: // W2RLD
+          try {
+            const result = await this.polyInterface.addNode(
+              new W2RLDNode(this.polyInterface, _address,
+                _address, _devName)
+            );
+            if (result) {
+              logger.info('Add node worked: %s', result);
+            }
+          } catch (err) {
+            logger.errorStack(err, 'Add node failed:');
+          }
+          break;
+        case 20: // W3BD
+          try {
+            const result = await this.polyInterface.addNode(
+              new W3BDNode(this.polyInterface, _address,
+                _address, _devName)
+            );
+            if (result) {
+              logger.info('Add node worked: %s', result);
+            }
+          } catch (err) {
+            logger.errorStack(err, 'Add node failed:');
+          }
+          break;
+        case 21: // W3BRL
+          try {
+            const result = await this.polyInterface.addNode(
+              new W3BRLNode(this.polyInterface, _address,
+                _address, _devName)
+            );
+            if (result) {
+              logger.info('Add node worked: %s', result);
+            }
+          } catch (err) {
+            logger.errorStack(err, 'Add node failed:');
+          }
+          break;
+        case 22: // W3BSRL
+          try {
+            const result = await this.polyInterface.addNode(
+              new W3BSRLNode(this.polyInterface, _address,
+                _address, _devName)
+            );
+            if (result) {
+              logger.info('Add node worked: %s', result);
+            }
+          } catch (err) {
+            logger.errorStack(err, 'Add node failed:');
+          }
+          break;
+        case 23: // W4S
+          try {
+            const result = await this.polyInterface.addNode(
+              new W4SNode(this.polyInterface, _address,
+                _address, _devName)
+            );
+            if (result) {
+              logger.info('Add node worked: %s', result);
+            }
+          } catch (err) {
+            logger.errorStack(err, 'Add node failed:');
+          }
+          break;
+        case 24: // W5BRL
+          try {
+            const result = await this.polyInterface.addNode(
+              new W5BRLNode(this.polyInterface, _address,
+                _address, _devName)
+            );
+            if (result) {
+              logger.info('Add node worked: %s', result);
+            }
+          } catch (err) {
+            logger.errorStack(err, 'Add node failed:');
+          }
+          break;
+          case 25: // W5BRLIR
+          try {
+            const result = await this.polyInterface.addNode(
+              new W5BRLIRNode(this.polyInterface, _address,
+                _address, _devName)
+            );
+            if (result) {
+              logger.info('Add node worked: %s', result);
+            }
+          } catch (err) {
+            logger.errorStack(err, 'Add node failed:');
+          }
+          break;
+        case 26: // W6BRL
+          try {
+            const result = await this.polyInterface.addNode(
+              new W6BRLNode(this.polyInterface, _address,
+                _address, _devName)
+            );
+            if (result) {
+              logger.info('Add node worked: %s', result);
+            }
+          } catch (err) {
+            logger.errorStack(err, 'Add node failed:');
+          }
+          break;
+        case 27: // W7B
+          try {
+            const result = await this.polyInterface.addNode(
+              new W7BNode(this.polyInterface, _address,
                 _address, _devName)
             );
             if (result) {

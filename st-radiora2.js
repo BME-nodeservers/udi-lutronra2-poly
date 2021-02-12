@@ -30,6 +30,17 @@ const T10RLButtonNode = require('./Nodes/T10RLButtonNode.js')(Polyglot);
 const T15RLNode = require('./Nodes/T15RLNode.js')(Polyglot);
 const T15RLButtonNode = require('./Nodes/T15RLButtonNode.js')(Polyglot);
 const SivoiaShadeNode = require('./Nodes/SivoiaShade.js')(Polyglot);
+const ButtonNode = require('./Nodes/ButtonNode.js')(Polyglot);
+const W1RLDNode = require('./Nodes/W1RLDNode.js')(Polyglot);
+const W2RLDNode = require('./Nodes/W2RLDNode.js')(Polyglot);
+const W3BDNode = require('./Nodes/W3BDNode.js')(Polyglot);
+const W3BRLNode = require('./Nodes/W3BRLNode.js')(Polyglot);
+const W3BSRLNode = require('./Nodes/W3BSRLNode.js')(Polyglot);
+const W4SNode = require('./Nodes/W4SNode.js')(Polyglot);
+const W5BRLNode = require('./Nodes/W5BRLNode.js')(Polyglot);
+const W5BRLIRNode = require('./Nodes/W5BRLIRNode.js')(Polyglot);
+const W6BRLNode = require('./Nodes/W6BRLNode.js')(Polyglot);
+const W7BNode = require('./Nodes/W7BNode.js')(Polyglot);
 
 
 const typedParams = [
@@ -64,7 +75,8 @@ const poly = new Polyglot.Interface([ControllerNode, MainRepeaterNode,
   MaestroDimmerNode, MaestroSwitchNode, MaestroFanControlNode, OccupancyNode,
   RoomStatusNode, Pico2BNode, Pico2BRLNode, Pico3BNode, Pico3BRLNode, Pico4BNode,
   VCRXNode, VCRXButtonNode, T5RLNode, T5RLButtonNode, T10RLNode, T10RLButtonNode,
-  T15RLNode, T15RLButtonNode, SivoiaShadeNode,
+  T15RLNode, T15RLButtonNode, SivoiaShadeNode, ButtonNode, W1RLDNode, W2RLDNode,
+  W3BDNode, W3BRLNode, W3BSRLNode, W4SNode, W5BRLIRNode, W5BRLNode, W6BRLNode, W7BNode
   ]);
 
 poly.on('mqttConnected', function() {

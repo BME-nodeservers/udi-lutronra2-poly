@@ -4,20 +4,6 @@
 ## RadioRA 2
 - Enter the IP Address, Username, Password for your RadioRa 2 Main Repeater.
 
-## RA2 Select
-- Default username and password are lutron/integration and are the defaults for the NodeServer.
-- The Lutron Integration Protocol does not report status of Occupancy sensors for RA 2 Select.  Occupancy sensors added as devices will not report status.
-- Pico remotes are the only keypad available for RA 2 Select.
-
-## Caseta Pro
-- Default username and password are lutron/integration and are the defaults for the NodeServer.
-- Telnet Support must be enabled from the mobile app
-  - Settings -> Advanced -> Integration -> Telnet Suport
-- The Integration Report is accessible from the mobile app.
-  - Settings -> Advanced -> Integration
-- The Lutron Integration Protocol does not report status of Occupancy sensors for Caseta Pro.  Occupancy sensors added as devices will not report status.
-- Pico remotes are the only keypad available for Caseta Pro.
-
 ## Shades
 - Shades are experimental and may not function correctly.
 - Need test equipment or testers
@@ -49,4 +35,5 @@ If device type is not setup correctly the device will be created wrong or not at
 - Tabletop Keypad 5 Button          | 14 
 - Tabletop Keypad 10 Button         | 15 
 - Tabletop Keypad 15 Button         | 16 
+- SeaTouch 6BRL Keypad              | 16
 - Sivoia QS Wireless Shades         | 30 
