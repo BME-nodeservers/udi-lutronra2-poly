@@ -14,8 +14,6 @@ module.exports = function(Polyglot) {
     constructor(polyInterface, primary, address, name) {
       super(nodeDefId, polyInterface, primary, address, name);
 
-      this.hint = '0x01020900'; // Example for a Dimmer switch
-
       this.commands = {
         QUERY: this.query,
       };
