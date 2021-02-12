@@ -107,6 +107,10 @@ ND-T5RL-NAME = Tabletop 5 Button
 ND-T5RL-ICON = Output
 ST-T5RL-ST-NAME = Status
 
+ND-BUTTON-NAME = Button Node
+ND-BUTTON-ICON = Output
+ST-BUTTON-ST-NAME = Status
+
 ND-T5RLBUTTON-NAME = Tabletop 5 Button
 ND-T5RLBUTTON-ICON = Output
 ST-T5RLBTN-ST-NAME = Status
@@ -153,4 +157,5 @@ DEVTYPE-13 = Visor Control Receiver
 DEVTYPE-14 = Tabletop 5 Button RL
 DEVTYPE-15 = Tabletop 10 Button RL
 DEVTYPE-16 = Tabletop 15 Button RL
+DEVTYPE-17 = Button Node
 DEVTYPE-30 = Sivoia QS Wireless Shades

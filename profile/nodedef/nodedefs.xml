@@ -360,6 +360,21 @@
     </cmds>
   </nodedef>
 
+  <nodedef id="BUTTON" nls="BUTTON">
+    <sts>
+      <st id="ST" editor="BOOL"/>
+      <st id="GPV" editor="DEVTYPE"/>
+    </sts>
+    <cmds>
+      <sends>
+      </sends>
+      <accepts>
+        <cmd id="DON"/>
+        <cmd id="QUERY"/>
+      </accepts>
+    </cmds>
+  </nodedef>
+
   <nodedef id="SIVOIA_SHADE" nls="SHADE">
     <sts>
       <st id="ST" editor="PERCENT"/>
