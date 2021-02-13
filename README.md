@@ -7,7 +7,6 @@ Lutron NodeServer for Polyglot
     - ISY FW 5.3
     - Polisy Polyglot 2.2.9
     - Lutron RadioRA 2 Main Repeater 12.8.0
-    - Caseta Pro bridge
 
 To get started with an on-premise installation: 
 - NodeServer is availble in the Polyglot Store
@@ -40,9 +39,19 @@ To get started with an on-premise installation:
     - 5 Button Tabletop
     - 10 Button Tabletop
     - 15 Button Tabletop
-
-### In-Development Components
 - Wall Keypads
+    - 1RLD
+    - 2RLD
+    - 3BD
+    - 3BRL
+    - 3BSRL
+    - 4S
+    - 5BRL
+    - 5BRLIR
+    - 6BRL
+    - 7B
+    
+### In-Development Components
 - Hybrid Keypads
 - Temperature Control
     - Pending demand
@@ -57,20 +66,6 @@ To get started with an on-premise installation:
 
 ## RadioRA 2
 - Enter the IP Address, Username, Password for your RadioRA 2 Main Repeater.
-
-## RA2 Select
-- Default username and password are lutron/integration and are the defaults for the NodeServer.
-- The Lutron Integration Protocol does not report status of Occupancy sensors for RA 2 Select.  Occupancy sensors added as devices will not report status.
-- Pico remotes are the only keypad available for RA 2 Select.
-
-## Caseta Pro
-- Default username and password are lutron/integration and are the defaults for the NodeServer.
-- Telnet Support must be enabled from the mobile app
-  - Settings -> Advanced -> Integration -> Telnet Suport
-- The Integration Report is accessible from the mobile app.
-  - Settings -> Advanced -> Integration
-- The Lutron Integration Protocol does not report status of Occupancy sensors for Caseta Pro.  Occupancy sensors added as devices will not report status.
-- Pico remotes are the only keypad available for Caseta Pro.
 
 ## Adding Devices
 - Devices are added by clicking the 'Add Lutron Devices' button.
@@ -99,4 +94,14 @@ To get started with an on-premise installation:
 | Tabletop Keypad 5 Button          | 14 |
 | Tabletop Keypad 10 Button         | 15 |
 | Tabletop Keypad 15 Button         | 16 |
+- SeaTouch 1RLD Keypad              | 18 |
+- SeaTouch 2RLD Keypad              | 19 |
+- SeaTouch 3BD Keypad               | 20 |
+- SeaTouch 3BRL Keypad              | 21 |
+- SeaTouch 3BSRL Keypad             | 22 |
+- SeaTouch 4S Keypad                | 23 |
+- SeaTouch 5BRL Keypad              | 24 |
+- SeaTouch 5BRLIR Keypad            | 25 |
+- SeaTouch 6BRL Keypad              | 26 |
+- SeaTouch 7B Keypad                | 27 |
 | Sivoia QS Wireless Shades         | 30 |

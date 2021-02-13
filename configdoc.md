@@ -17,23 +17,32 @@ Devices are added by clicking the 'Add Lutron Devices' button.
 - Device Type
 
 # Device Type Mapping Information
-
 If device type is not setup correctly the device will be created wrong or not at all.
 
 ## Device Types:
 - Occupancy Sensors (Wall/Ceiling)  | 2 
 - Room Status                       | 3 
-- Pico 2 Button                     | 4 
-- Pico 2 Button Raise / Lower       | 5 
-- Pico 3 Button                     | 6 
-- Pico 3 Button Raise / Lower       | 7 
-- Pico 4 Button                     | 8 
-- Maestro / Caseta Switch           | 10 
-- Maestro / Caseta Dimmer           | 11 
-- Meastro / Caseta Fan Controller   | 12 
+- Pico 2B                           | 4 
+- Pico 2BRL                         | 5 
+- Pico 3B                           | 6 
+- Pico 3BRL                         | 7 
+- Pico 4B                           | 8 
+- Maestro Switch                    | 10 
+- Maestro Dimmer                    | 11 
+- Meastro Fan Controller            | 12 
 - Visor Control Receiver (VCRX)     | 13 
 - Tabletop Keypad 5 Button          | 14 
 - Tabletop Keypad 10 Button         | 15 
-- Tabletop Keypad 15 Button         | 16 
-- SeaTouch 6BRL Keypad              | 16
+- Tabletop Keypad 15 Button         | 16
+- (Internal Use)                    | 17
+- SeaTouch 1RLD Keypad              | 18
+- SeaTouch 2RLD Keypad              | 19
+- SeaTouch 3BD Keypad               | 20
+- SeaTouch 3BRL Keypad              | 21
+- SeaTouch 3BSRL Keypad             | 22
+- SeaTouch 4S Keypad                | 23
+- SeaTouch 5BRL Keypad              | 24
+- SeaTouch 5BRLIR Keypad            | 25
+- SeaTouch 6BRL Keypad              | 26
+- SeaTouch 7B Keypad                | 27
 - Sivoia QS Wireless Shades         | 30 

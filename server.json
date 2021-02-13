@@ -8,12 +8,12 @@
   "notice": "",
   "shortPoll": "600",
   "longPoll": "900",
-  "profile_version": "0.1.5",
+  "profile_version": "0.1.6",
   "credits": [
     {
       "title": "Polyglot integration of Lutron Integration Protocol for RadioRA 2",
       "author": "Simplex Technology",
-      "version": "0.1.7",
+      "version": "0.1.8",
       "date": "September 25th, 2020",
       "source": "https://github.com/simplextech/udi-poly-lutron-st-radiora2",
       "license": "https://github.com/simplextech/udi-poly-lutron-st-radiora2/blob/main/LICENSE"
