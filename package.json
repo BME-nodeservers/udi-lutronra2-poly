@@ -4,7 +4,7 @@
   "version": "0.1.4",
   "author": "Simplex Technology",
   "license": "MIT",
-  "main": "nodeserver.js",
+  "main": "st-radiora2.js",
   "scripts": {
     "linter": "eslint --ignore-path .gitignore ."
   },
@@ -12,8 +12,7 @@
   "dependencies": {
     "async-lock": "^1.1.4",
     "markdown": "^0.5.0",
-    "polyinterface": "^1.2.0",
-    "pgc_interface": "^1.0.11"
+    "polyinterface-v3": "^3.0.19"
   },
   "devDependencies": {
     "eslint": "^5.12.0",

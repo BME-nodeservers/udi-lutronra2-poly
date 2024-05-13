@@ -5,7 +5,7 @@ trapUncaughtExceptions();
 const fs = require('fs');
 const markdown = require('markdown').markdown; // For Polyglot-V2 only
 const AsyncLock = require('async-lock');
-const Polyglot = require('polyinterface');
+const Polyglot = require('polyinterface-v3');
 const logger = Polyglot.logger;
 const lock = new AsyncLock({ timeout: 500 });
 
