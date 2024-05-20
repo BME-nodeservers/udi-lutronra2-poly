@@ -100,20 +100,23 @@ poly.on('config', function(config) {
       } catch (err) {
         logger.error('Error while auto-creating controller node:', err);
       }
-    } else {
-      if (Object.keys(config.typedCustomData).length > 0) {
-        try {
-          callAsync(CreateLutronControllers());
-        } catch (err) {
-          logger.error('Error while creating Main Repeater node: ', err);
-        }
-      }
     }
 
     if (config.newParamsDetected) {
       logger.info('New parameters detected');
     }
   }
+});
+
+poly.on('customTypedData', function(data) {
+    logger.info('customTypedData = %o', data);
+    if (Object.keys(data).length > 0) {
+      try {
+        callAsync(CreateLutronControllers(data));
+      } catch (err) {
+        logger.error('Error while creating Main Repeater node: ', err);
+      }
+    }
 });
 
 poly.on('poll', function(longPoll) {
