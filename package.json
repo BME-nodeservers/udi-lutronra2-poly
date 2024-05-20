@@ -1,7 +1,7 @@
 {
-  "name": "udi-poly-lutron-st-radiora2",
-  "description": "Polyglot NodeServer for Lutron Integration Protocol for RadioRA 2",
-  "version": "0.1.4",
+  "name": "udi-lutronra2-poly",
+  "description": "Polyglot Plug-in for Lutron Integration Protocol for RadioRA 2",
+  "version": "1.0.1",
   "author": "Simplex Technology",
   "license": "MIT",
   "main": "st-radiora2.js",
