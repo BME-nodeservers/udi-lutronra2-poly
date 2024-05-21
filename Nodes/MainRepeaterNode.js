@@ -65,6 +65,8 @@ module.exports = function(Polyglot) {
       const _config = this.polyInterface.getConfig();
       const config = Object(_config.typedCustomData);
 
+      logger.info('Starting main repeater: ip = %s', config.ipAddress);
+
         if (config.ipAddress) {
           if (listenerActive) {
             logger.info('Lutron LIP Listener Alive');
@@ -490,6 +492,7 @@ module.exports = function(Polyglot) {
     }
 
     listenerSetup() {
+      logger.info('Attempting to setup LIP client');
       lip.on('messageReceived', function(data) {
         logger.info('LUTRON ' + data);
       }.bind(this));
@@ -575,7 +578,7 @@ module.exports = function(Polyglot) {
               node.setDriver('CLIFRS', '2', true, true);
               logger.info('Fan Speed: Medium');
             } else if (currentValue >= 56 && currentValue <= 76) {
-              node.setDriver('CLIFRS', '3', true, true);
+              node.setDriver('CLIFRS', '3', true, tue);
               logger.info('Fan Speed: Med High');
             } else if (currentValue > 76) {
               node.setDriver('CLIFRS', '4', true, true);
