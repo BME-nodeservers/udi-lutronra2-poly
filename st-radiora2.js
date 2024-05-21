@@ -111,17 +111,32 @@ poly.on('config', function(config) {
 });
 
 poly.on('customTypedData', function(data) {
-  // Save data in config object
-  const _config = this.getConfig();
-  _config.typedCustomData = data;
-
   logger.info('GOT customTypedData = %o', data);
   if (Object.keys(data).length > 0) {
     try {
-      logger.info('Creating repeater node');
-      callAsync(CreateLutronControllers(data));
+      let _ipJoin = data.ipAddress.toString().replace(/\./g, '');
+      let _repeaterUID = _ipJoin.substring(_ipJoin.length - 3);
+      let address = _repeaterUID + '_1';;
+      let lutron = poly.getNode(address);
+
+      // First see if the node already exists
+      if (!lutron) {
+        // Create the node
+        try {
+          //callAsync(CreateLutronControllers(data));
+          callAsync(CreateLutronController(address, data.name));
+          lutron = poly.getNode(address);
+        } catch (err) {
+          logger.error('Error while creating Main Repeater node: ', err);
+        }
+      }
+
+      if (lutron) {
+        lutron.startMainRepeater(data);
+      }
+
     } catch (err) {
-      logger.error('Error while creating Main Repeater node: ', err);
+      logger.error('Error while initializing Main Repeater node: ', err);
     }
   }
 });
@@ -193,6 +208,20 @@ async function autoCreateController() {
   poly.addNoticeTemp('newController', 'Controller node initialized', 5);
 }
 
+async function CreateLutronController(address, name) {
+  logger.info('Repeater Name: ' + name);
+  logger.info('Repeater Address: ' + address);
+  let node;
+  try {
+    node = new MainRepeaterNode(poly, address, address, name);
+    await poly.addNode(node);
+  } catch (err) {
+    logger.errorStack(err, 'Error Creating Main Repeater Node');
+  }
+
+  return node;
+}
+
 async function CreateLutronControllers(data) {
   let config = data
 
@@ -209,7 +238,7 @@ async function CreateLutronControllers(data) {
 
     try {
       await poly.addNode(
-        new MainRepeaterNode(poly, address, address, config.name, config)
+        new MainRepeaterNode(poly, address, address, config.name)
       );
     } catch (err) {
       logger.errorStack(err, 'Error Creating Main Repeater Node');

@@ -40,7 +40,7 @@ module.exports = function(Polyglot) {
   const W7BNode = require('./W7BNode.js')(Polyglot);
 
   class MainRepeaterNode extends Polyglot.Node {
-    constructor(polyInterface, primary, address, name, deviceData) {
+    constructor(polyInterface, primary, address, name) {
       super(nodeDefId, polyInterface, primary, address, name);
 
       this.commands = {
@@ -57,7 +57,7 @@ module.exports = function(Polyglot) {
         GV0: {value: '0', uom: 0 },
       };
 
-      this.startMainRepeater(deviceData);
+      //this.startMainRepeater(deviceData);
       this.setDriver('ST', 1);
     }
 
