@@ -123,15 +123,12 @@ poly.on('customTypedData', function(data) {
       if (!lutron) {
         // Create the node
         try {
-          //callAsync(CreateLutronControllers(data));
-          callAsync(CreateLutronController(address, data.name));
-          lutron = poly.getNode(address);
+          callAsync(CreateLutronControllers(data));
+          //callAsync(CreateLutronController(address, data.name));
         } catch (err) {
           logger.error('Error while creating Main Repeater node: ', err);
         }
-      }
-
-      if (lutron) {
+      } else {
         lutron.startMainRepeater(data);
       }
 
@@ -237,9 +234,9 @@ async function CreateLutronControllers(data) {
     let address = _repeaterUID + '_1';;
 
     try {
-      await poly.addNode(
-        new MainRepeaterNode(poly, address, address, config.name)
-      );
+      let node = new MainRepeaterNode(poly, address, address, config.name)
+      await poly.addNode(node);
+      node.startMainRepeater(data);
     } catch (err) {
       logger.errorStack(err, 'Error Creating Main Repeater Node');
     }
