@@ -111,9 +111,10 @@ poly.on('config', function(config) {
 });
 
 poly.on('customTypedData', function(data) {
-    logger.info('customTypedData = %o', data);
+    logger.info('GOT customTypedData = %o', data);
     if (Object.keys(data).length > 0) {
       try {
+        logger.info('Creating repeater node');
         callAsync(CreateLutronControllers(data));
       } catch (err) {
         logger.error('Error while creating Main Repeater node: ', err);
@@ -188,26 +189,29 @@ async function autoCreateController() {
   poly.addNoticeTemp('newController', 'Controller node initialized', 5);
 }
 
-async function CreateLutronControllers() {
-  const _config = poly.getConfig();
-  let config = Object(_config.typedCustomData);
+async function CreateLutronControllers(data) {
+  let config = data
 
   logger.info('Repeater Name: ' + config.name);
   logger.info('Repeater IP: ' + config.ipAddress);
   logger.info('Repeater Username: ' + config.username);
   logger.info('Repeater Password: ' + config.password);
 
-  let _ipJoin = config.ipAddress.toString().replace(/\./g, '');
-  let _repeaterUID = _ipJoin.substring(_ipJoin.length - 3);
-  // let address = 'lip' + _repeaterUID;
-  let address = _repeaterUID + '_1';;
-
   try {
-    await poly.addNode(
-      new MainRepeaterNode(poly, address, address, config.name)
-    );
+    let _ipJoin = config.ipAddress.toString().replace(/\./g, '');
+    let _repeaterUID = _ipJoin.substring(_ipJoin.length - 3);
+    // let address = 'lip' + _repeaterUID;
+    let address = _repeaterUID + '_1';;
+
+    try {
+      await poly.addNode(
+        new MainRepeaterNode(poly, address, address, config.name)
+      );
+    } catch (err) {
+      logger.errorStack(err, 'Error Creating Main Repeater Node');
+    }
   } catch (err) {
-    logger.errorStack(err, 'Error Creating Main Repeater Node');
+    logger.errorStack(err, 'Error in Main Repeater info');
   }
 }
 
