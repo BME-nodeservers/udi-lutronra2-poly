@@ -112,7 +112,7 @@ poly.on('config', function(config) {
 
 poly.on('customTypedData', function(data) {
   // Save data in config object
-  const _config = this.polyInterface.getConfig();
+  const _config = poly.getConfig();
   _config.typedCustomData = data;
 
   logger.info('GOT customTypedData = %o', data);
