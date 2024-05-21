@@ -112,7 +112,7 @@ poly.on('config', function(config) {
 
 poly.on('customTypedData', function(data) {
   // Save data in config object
-  const _config = poly.getConfig();
+  const _config = this.getConfig();
   _config.typedCustomData = data;
 
   logger.info('GOT customTypedData = %o', data);
@@ -209,7 +209,7 @@ async function CreateLutronControllers(data) {
 
     try {
       await poly.addNode(
-        new MainRepeaterNode(poly, address, address, config.name)
+        new MainRepeaterNode(poly, address, address, config.name, config)
       );
     } catch (err) {
       logger.errorStack(err, 'Error Creating Main Repeater Node');

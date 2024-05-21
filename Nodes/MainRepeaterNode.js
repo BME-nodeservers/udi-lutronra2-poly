@@ -40,7 +40,7 @@ module.exports = function(Polyglot) {
   const W7BNode = require('./W7BNode.js')(Polyglot);
 
   class MainRepeaterNode extends Polyglot.Node {
-    constructor(polyInterface, primary, address, name) {
+    constructor(polyInterface, primary, address, name, deviceData) {
       super(nodeDefId, polyInterface, primary, address, name);
 
       this.commands = {
@@ -57,36 +57,30 @@ module.exports = function(Polyglot) {
         GV0: {value: '0', uom: 0 },
       };
 
-      this.startMainRepeater();
+      this.startMainRepeater(deviceData);
       this.setDriver('ST', 1);
     }
 
-    startMainRepeater() {
-      const _config = this.polyInterface.getConfig();
-      const config = Object(_config.typedCustomData);
+    startMainRepeater(deviceData) {
+      logger.info('Starting main repeater: ip = %s', deviceData.ipAddress);
 
-      logger.info('Starting main repeater: ip = %s', config.ipAddress);
-
-        if (config.ipAddress) {
+        if (deviceData.ipAddress) {
           if (listenerActive) {
             logger.info('Lutron LIP Listener Alive');
           } else {
-            this.listenerSetup();
+            this.listenerSetup(deviceData);
           }
 
           if (repeaterConnected) {
             logger.info('Main Repeater already connected');  
           } else {
-            this.repeaterSetup();
+            this.repeaterSetup(deviceData);
           }
         }
       }
 
-    async repeaterSetup() {
+    async repeaterSetup(config) {
       logger.info('Begin Main Repeater Setup...');
-
-      const _config = this.polyInterface.getConfig();
-      const config = Object(_config.typedCustomData);
 
       if (config.ipAddress) {
         let _host = config.ipAddress;
@@ -102,7 +96,7 @@ module.exports = function(Polyglot) {
   
         try {
           lip.connect(_host, _username, _password);
-          this.getDevices();
+          this.getDevices(config);
           repeaterConnected = true;
         } catch (err) {
           logger.errorStack(err, 'Connection to Main Repeater Failed');
@@ -111,9 +105,7 @@ module.exports = function(Polyglot) {
       
     }
 
-    async getDevices() {
-      const _config = this.polyInterface.getConfig();
-      const config = Object(_config.typedCustomData);
+    async getDevices(config) {
       const devices = Object(config.devices);
 
       let devKeys = Object.values(devices);
@@ -491,7 +483,7 @@ module.exports = function(Polyglot) {
       this.polyInterface.removeNoticesAll();
     }
 
-    listenerSetup() {
+    listenerSetup(deviceData) {
       logger.info('Attempting to setup LIP client');
       lip.on('messageReceived', function(data) {
         logger.info('LUTRON ' + data);
