@@ -126,7 +126,7 @@ module.exports = function(Polyglot) {
       let _address = this.address.split('_')[0] + '_' + intId;
       let _lutronId = intId;
       let _devName = devName;
-      let _devType = devType;
+      let _devType = Number(devType);
 
       switch(_devType) {
         case 1: // Main Repeater
@@ -458,7 +458,7 @@ module.exports = function(Polyglot) {
           }
           break;
         default:
-          logger.info('No Device Type Defined');
+          logger.info('No Device of type %d Defined', _devType);
           break;
       }
     }
