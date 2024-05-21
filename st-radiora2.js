@@ -93,6 +93,7 @@ poly.on('config', function(config) {
     const md = fs.readFileSync('./configdoc.md');
     poly.setCustomParamsDoc(markdown.toHTML(md.toString()));
     
+    /*
     if (!nodesCount) {
       try {
         logger.info('Auto-creating controller');
@@ -105,6 +106,7 @@ poly.on('config', function(config) {
     if (config.newParamsDetected) {
       logger.info('New parameters detected');
     }
+    */
   }
 });
 
@@ -171,6 +173,8 @@ async function doPoll(longPoll) {
 }
 
 // Creates the controller node
+//  What is the point of this node?  Seems like it doesn't actually
+//  do anything.
 async function autoCreateController() {
   try {
     await poly.addNode(
