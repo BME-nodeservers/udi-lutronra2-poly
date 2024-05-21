@@ -111,15 +111,19 @@ poly.on('config', function(config) {
 });
 
 poly.on('customTypedData', function(data) {
-    logger.info('GOT customTypedData = %o', data);
-    if (Object.keys(data).length > 0) {
-      try {
-        logger.info('Creating repeater node');
-        callAsync(CreateLutronControllers(data));
-      } catch (err) {
-        logger.error('Error while creating Main Repeater node: ', err);
-      }
+  // Save data in config object
+  const _config = this.polyInterface.getConfig();
+  _config.typedCustomData = data;
+
+  logger.info('GOT customTypedData = %o', data);
+  if (Object.keys(data).length > 0) {
+    try {
+      logger.info('Creating repeater node');
+      callAsync(CreateLutronControllers(data));
+    } catch (err) {
+      logger.error('Error while creating Main Repeater node: ', err);
     }
+  }
 });
 
 poly.on('poll', function(longPoll) {
