@@ -28,13 +28,13 @@ module.exports = function(Polyglot) {
       this.setDriver('GPV', 22, true, true);
       
       this._address1 = this.address + '_' + '1';
-      this.polyInterface.addNode(new ButtonNode(this.polyInterface, this.address1, this._address, 'Scene ' + '1'));
+      this.polyInterface.addNode(new ButtonNode(this.polyInterface, this.address, this._address1, 'Scene ' + '1'));
 
       this._address3 = this.address + '_' + '3';
-      this.polyInterface.addNode(new ButtonNode(this.polyInterface, this.address3, this._address, 'Scene ' + '3'));
+      this.polyInterface.addNode(new ButtonNode(this.polyInterface, this.address, this._address3, 'Scene ' + '3'));
 
       this._address5 = this.address + '_' + '5';
-      this.polyInterface.addNode(new ButtonNode(this.polyInterface, this.address5, this._address, 'Scene ' + '5'));
+      this.polyInterface.addNode(new ButtonNode(this.polyInterface, this.address, this._address5, 'Scene ' + '5'));
     }
 
     query() {
