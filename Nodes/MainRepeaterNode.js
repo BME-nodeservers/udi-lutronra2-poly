@@ -73,13 +73,14 @@ module.exports = function(Polyglot) {
 
           if (repeaterConnected) {
             logger.info('Main Repeater already connected');  
+            this.repeaterSetup(deviceData, true);
           } else {
-            this.repeaterSetup(deviceData);
+            this.repeaterSetup(deviceData, false);
           }
         }
       }
 
-    async repeaterSetup(config) {
+    async repeaterSetup(config, connected) {
       logger.info('Begin Main Repeater Setup...');
 
       if (config.ipAddress) {
@@ -95,7 +96,9 @@ module.exports = function(Polyglot) {
         logger.info('Password: ' + _password);
   
         try {
-          lip.connect(_host, _username, _password);
+          if (!connected) {
+            lip.connect(_host, _username, _password);
+          }
           this.getDevices(config);
           repeaterConnected = true;
         } catch (err) {
@@ -558,6 +561,7 @@ module.exports = function(Polyglot) {
 
           let fanIndex = node.getDriver('CLIFRS');
           if (fanIndex) {
+            logger.info(id + ': is a Fan controller');
             let fanSpeed = node.getDriver('ST');
             let currentValue = parseInt(fanSpeed['value'], 10);
             logger.info('Fan Speed %: ' + currentValue);
@@ -580,7 +584,7 @@ module.exports = function(Polyglot) {
               logger.info('Fan Speed: Off');
             }
           } else {
-            logger.info(id + ': Not a fan controller');
+            logger.debug(id + ': Not a fan controller');
           }
         } else {
           logger.info(id + ': Not a valid Node');
