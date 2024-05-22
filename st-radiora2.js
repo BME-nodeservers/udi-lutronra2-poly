@@ -2,6 +2,7 @@
 
 trapUncaughtExceptions();
 
+const ourpkg = require('./package.json');
 const fs = require('fs');
 const markdown = require('markdown').markdown; // For Polyglot-V2 only
 const AsyncLock = require('async-lock');
@@ -69,7 +70,7 @@ const typedParams = [
   },
 ];
 
-logger.info('Starting Lutron Node Server');
+logger.info('Starting Lutron Node Server V%s', ourpkg.version);
 
 const poly = new Polyglot.Interface([ControllerNode, MainRepeaterNode,
   MaestroDimmerNode, MaestroSwitchNode, MaestroFanControlNode, OccupancyNode,
