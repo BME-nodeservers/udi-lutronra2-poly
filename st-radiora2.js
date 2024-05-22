@@ -92,6 +92,7 @@ poly.on('config', function(config) {
     poly.saveTypedParams(typedParams);
     const md = fs.readFileSync('./configdoc.md');
     poly.setCustomParamsDoc(markdown.toHTML(md.toString()));
+    poly.updateProfile();
     
     /*
     if (!nodesCount) {
