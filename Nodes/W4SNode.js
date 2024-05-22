@@ -35,7 +35,7 @@ module.exports = function(Polyglot) {
         );
       }
       this._address6 = this.address + '_' + '6';
-      this.polyInterface.addNode(new ButtonNode(this.polyInterface, this.address6, this._address, 'Scene ' + '6'));  
+      this.polyInterface.addNode(new ButtonNode(this.polyInterface, this.address, this._address6, 'Scene ' + '6'));  
     }
 
     query() {
