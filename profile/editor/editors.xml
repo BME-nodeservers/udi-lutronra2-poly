@@ -32,7 +32,7 @@
   </editor>
 
   <editor id="PHANTOM">
-    <range uom="0" subset="1-100"/>
+    <range uom="56" subset="1-100"/>
   </editor>
 
 </editors>
