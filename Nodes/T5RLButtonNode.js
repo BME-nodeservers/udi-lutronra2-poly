@@ -46,10 +46,10 @@ module.exports = function(Polyglot) {
         case '5':
           lutronEmitter.emit('queryDeviceButton', this.lutronId, 85);
           break;
-        case '6':
+        case '16':
           this.setDriver('ST', 0);
           break;
-        case '7':
+        case '17':
           this.setDriver('ST', 0);
           break;
         default:

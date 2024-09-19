@@ -30,13 +30,25 @@ module.exports = function(Polyglot) {
       this.setDriver('GPV', 15, true, true);
       
       // T5RL Has 12 Scene Buttons
-      for (let button = 1; button <= 12; button++) {
+      for (let button = 1; button <= 10; button++) {
         this._address = this.address + '_' + button;
         const result = this.polyInterface.addNode(
           new T10RLButtonNode(this.polyInterface, this.address,
             this._address, 'Scene ' + button)
         );
       }      
+
+      this._address = this.address + '_' + 16;
+      result = this.polyInterface.addNode(
+        new T10RLButtonNode(this.polyInterface, this.address,
+          this._address, 'Scene ' + 16)
+      );
+
+      this._address = this.address + '_' + 17;
+      result = this.polyInterface.addNode(
+        new T10RLButtonNode(this.polyInterface, this.address,
+          this._address, 'Scene ' + 17)
+      );
     }
 
     query() {
