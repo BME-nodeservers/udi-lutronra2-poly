@@ -29,7 +29,7 @@ If device type is not setup correctly the device will be created wrong or not at
 - Pico 4B                           | 8 
 - Maestro Switch                    | 10 
 - Maestro Dimmer                    | 11 
-- Meastro Fan Controller            | 12 
+- Maestro Fan Controller            | 12 
 - Visor Control Receiver (VCRX)     | 13 
 - Tabletop Keypad 5 Button          | 14 
 - Tabletop Keypad 10 Button         | 15 

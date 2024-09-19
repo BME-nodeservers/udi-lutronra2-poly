@@ -89,7 +89,7 @@ To get started with an on-premise installation:
 | Pico 4 Button                     | 8 |
 | Maestro / Caseta Switch           | 10 |
 | Maestro / Caseta Dimmer           | 11 |
-| Meastro / Caseta Fan Controller   | 12 |
+| Maestro / Caseta Fan Controller   | 12 |
 | Visor Control Receiver (VCRX)     | 13 |
 | Tabletop Keypad 5 Button          | 14 |
 | Tabletop Keypad 10 Button         | 15 |
