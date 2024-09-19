@@ -94,14 +94,14 @@ To get started with an on-premise installation:
 | Tabletop Keypad 5 Button          | 14 |
 | Tabletop Keypad 10 Button         | 15 |
 | Tabletop Keypad 15 Button         | 16 |
-- SeaTouch 1RLD Keypad              | 18 |
-- SeaTouch 2RLD Keypad              | 19 |
-- SeaTouch 3BD Keypad               | 20 |
-- SeaTouch 3BRL Keypad              | 21 |
-- SeaTouch 3BSRL Keypad             | 22 |
-- SeaTouch 4S Keypad                | 23 |
-- SeaTouch 5BRL Keypad              | 24 |
-- SeaTouch 5BRLIR Keypad            | 25 |
-- SeaTouch 6BRL Keypad              | 26 |
-- SeaTouch 7B Keypad                | 27 |
+- SeeTouch 1RLD Keypad              | 18 |
+- SeeTouch 2RLD Keypad              | 19 |
+- SeeTouch 3BD Keypad               | 20 |
+- SeeTouch 3BRL Keypad              | 21 |
+- SeeTouch 3BSRL Keypad             | 22 |
+- SeeTouch 4S Keypad                | 23 |
+- SeeTouch 5BRL Keypad              | 24 |
+- SeeTouch 5BRLIR Keypad            | 25 |
+- SeeTouch 6BRL Keypad              | 26 |
+- SeeTouch 7B Keypad                | 27 |
 | Sivoia QS Wireless Shades         | 30 |

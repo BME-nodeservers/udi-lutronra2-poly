@@ -135,39 +135,39 @@ ND-BUTTON-NAME = Button Node
 ND-BUTTON-ICON = Output
 ST-BUTTON-ST-NAME = Status
 
-ND-W1RLD-NAME = SeaTouch 1RLD Keypad
+ND-W1RLD-NAME = SeeTouch 1RLD Keypad
 ND-W1RLD-ICON = Output
 ST-W1RLD-ST-NAME = Status
 
-ND-W2RLD-NAME = SeaTouch 2RLD Keypad
+ND-W2RLD-NAME = SeeTouch 2RLD Keypad
 ND-W2RLD-ICON = Output
 ST-W2RLD-ST-NAME = Status
 
-ND-W3BD-NAME = SeaTouch 3BD Keypad
+ND-W3BD-NAME = SeeTouch 3BD Keypad
 ND-W3BD-ICON = Output
 ST-W3BD-ST-NAME = Status
 
-ND-W3BSRL-NAME = SeaTouch 3BSRL Keypad
+ND-W3BSRL-NAME = SeeTouch 3BSRL Keypad
 ND-W3BSRL-ICON = Output
 ST-W3BSRL-ST-NAME = Status
 
-ND-W4S-NAME = SeaTouch 4S Keypad
+ND-W4S-NAME = SeeTouch 4S Keypad
 ND-W4S-ICON = Output
 ST-W4S-ST-NAME = Status
 
-ND-W5BRL-NAME = SeaTouch 5BRL Keypad
+ND-W5BRL-NAME = SeeTouch 5BRL Keypad
 ND-W5BRL-ICON = Output
 ST-W5BRL-ST-NAME = Status
 
-ND-W5BRLIR-NAME = SeaTouch 5BRLIR Keypad
+ND-W5BRLIR-NAME = SeeTouch 5BRLIR Keypad
 ND-W5BRLIR-ICON = Output
 ST-W5BRLIR-ST-NAME = Status
 
-ND-W6BRL-NAME = SeaTouch 6BRL Keypad
+ND-W6BRL-NAME = SeeTouch 6BRL Keypad
 ND-W6BRL-ICON = Output
 ST-W6BRL-ST-NAME = Status
 
-ND-W7B-NAME = SeaTouch 7B Keypad
+ND-W7B-NAME = SeeTouch 7B Keypad
 ND-W7B-ICON = Output
 ST-W7B-ST-NAME = Status
 
@@ -194,14 +194,14 @@ DEVTYPE-14 = Tabletop 5 Button RL
 DEVTYPE-15 = Tabletop 10 Button RL
 DEVTYPE-16 = Tabletop 15 Button RL
 DEVTYPE-17 = Button Node
-DEVTYPE-18 = SeaTouch 1RLD Keypad
-DEVTYPE-19 = SeaTouch 2RLD Keypad
-DEVTYPE-20 = SeaTouch 3BD Keypad
-DEVTYPE-21 = SeaTouch 3BRL Keypad
-DEVTYPE-22 = SeaTouch 3BSRL Keypad
-DEVTYPE-23 = SeaTouch 4S Keypad
-DEVTYPE-24 = SeaTouch 5BRL Keypad
-DEVTYPE-25 = SeaTouch 5BRLIR Keypad
-DEVTYPE-26 = SeaTouch 6BRL Keypad
-DEVTYPE-27 = SeaTouch 7B Keypad
+DEVTYPE-18 = SeeTouch 1RLD Keypad
+DEVTYPE-19 = SeeTouch 2RLD Keypad
+DEVTYPE-20 = SeeTouch 3BD Keypad
+DEVTYPE-21 = SeeTouch 3BRL Keypad
+DEVTYPE-22 = SeeTouch 3BSRL Keypad
+DEVTYPE-23 = SeeTouch 4S Keypad
+DEVTYPE-24 = SeeTouch 5BRL Keypad
+DEVTYPE-25 = SeeTouch 5BRLIR Keypad
+DEVTYPE-26 = SeeTouch 6BRL Keypad
+DEVTYPE-27 = SeeTouch 7B Keypad
 DEVTYPE-30 = Sivoia QS Wireless Shades
